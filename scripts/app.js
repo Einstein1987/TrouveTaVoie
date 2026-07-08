@@ -122,51 +122,64 @@ function pingStats(domainKey) {
 
 function fillCard(domainKey){
   const data = DOMAINS[domainKey];
+  if (!data) return;
+
   document.getElementById('cardEmpty').style.display = 'none';
   const filled = document.getElementById('cardFilled');
-  filled.style.display = 'block';
+  if (filled) filled.style.display = 'block';
   
-  document.getElementById('cardDate').textContent = new Date().toLocaleDateString('fr-FR');
-  document.getElementById('cardMetier').textContent = data.label;
+  const dateEl = document.getElementById('cardDate');
+  if (dateEl) dateEl.textContent = new Date().toLocaleDateString('fr-FR');
+  
+  const metierEl = document.getElementById('cardMetier');
+  if (metierEl) metierEl.textContent = data.label;
 
-  // Formations et Etablissements associés
   const fWrap = document.getElementById('cardFormations');
   const eWrap = document.getElementById('cardEtabs');
-  fWrap.innerHTML = '';
-  eWrap.innerHTML = '';
+  if (fWrap) fWrap.innerHTML = '';
+  if (eWrap) eWrap.innerHTML = '';
 
-  data.formations.forEach(f => {
-    // Remplissage des puces de formations
-    const c = document.createElement('span');
-    c.className = 'chip';
-    c.textContent = f.nom + (f.niveau ? ' (' + f.niveau + ')' : '');
-    fWrap.appendChild(c);
+  if (data.formations) {
+    data.formations.forEach(f => {
+      // 1. Remplissage des puces de formations
+      const c = document.createElement('span');
+      c.className = 'chip';
+      c.textContent = f.nom + (f.niveau ? ' (' + f.niveau + ')' : '');
+      if (fWrap) fWrap.appendChild(c);
 
-    // Remplissage de la liste des lycées PAR formation
-    f.etablissements.forEach(e => {
-      const row = document.createElement('div');
-      row.className = 'estab';
-      row.innerHTML = `<strong>${e.nom}</strong> — ${e.ville} <span style="font-size:11px; color:var(--brass-dark);">[Pour: ${f.nom}]</span>
-                       <div class="t">
-                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0112 2a8 8 0 018 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
-                         Trajet : ${e.transport}
-                       </div>`;
-      eWrap.appendChild(row);
+      // 2. Remplissage de la liste des lycées DANS chaque formation
+      if (f.etablissements && f.etablissements.length > 0) {
+        f.etablissements.forEach(e => {
+          const row = document.createElement('div');
+          row.className = 'estab';
+          row.innerHTML = `<strong>${e.nom}</strong> — ${e.ville} <span style="font-size:11px; color:var(--brass-dark);">[Pour : ${f.nom}]</span>
+                           <div class="t">
+                             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0112 2a8 8 0 018 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
+                             Trajet : ${e.transport}
+                           </div>`;
+          if (eWrap) eWrap.appendChild(row);
+        });
+      }
     });
-  });
+  }
 
-  // Coefficients
+  // 3. Coefficients Affelnet
   const tr = document.getElementById('cardCoeffs');
-  tr.innerHTML = '';
-  data.coeffs.forEach(c => {
-    const td = document.createElement('td');
-    td.textContent = c;
-    tr.appendChild(td);
-  });
+  if (tr) {
+    tr.innerHTML = '';
+    if (data.coeffs) {
+      data.coeffs.forEach(c => {
+        const td = document.createElement('td');
+        td.textContent = c;
+        tr.appendChild(td);
+      });
+    }
+  }
 
-  document.getElementById('printBtn').style.display = 'block';
+  const printBtn = document.getElementById('printBtn');
+  if (printBtn) printBtn.style.display = 'block';
   
-  // Envoi anonyme pour les statistiques
+  // 4. Envoi statistique invisible
   if (typeof pingStats === "function") {
       pingStats(domainKey);
   }
