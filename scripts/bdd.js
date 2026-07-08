@@ -291,3 +291,108 @@ const DOMAINS = {
     ]
   }
 };
+// -----------------------------------------------------------------------------
+// Distances approximatives depuis Corbeil-Essonnes
+// Objectif : trier automatiquement les établissements du plus proche au plus loin.
+// Les distances sont indicatives et servent uniquement à ordonner les listes.
+// -----------------------------------------------------------------------------
+
+const DISTANCES_CORBEIL_ESSONNES = {
+  "Lycée Robert Doisneau|Corbeil-Essonnes": 0,
+
+  "Lycée Château des Coudraies|Étiolles": 5,
+
+  "Lycée Auguste Perret|Évry-Courcouronnes": 6,
+  "Lycée Charles Baudelaire|Évry-Courcouronnes": 6,
+  "Lycée Georges Brassens|Évry-Courcouronnes": 6,
+
+  "Lycée Pierre Mendès France|Ris-Orangis": 8,
+  "Lycée Marie Laurencin|Mennecy": 9,
+
+  "Lycée Les Frères Moreau|Quincy-sous-Sénart": 10,
+  "Lycée Nadar|Draveil": 12,
+  "EREA Jean Isoard|Montgeron": 13,
+
+  "Lycée André-Marie Ampère|Morsang-sur-Orge": 15,
+  "Lycée Paul Langevin|Sainte-Geneviève-des-Bois": 17,
+
+  "Lycée Jean Monnet|Juvisy-sur-Orge": 18,
+  "Lycée Gaspard Monge|Savigny-sur-Orge": 18,
+  "Lycée Louis Armand|Yerres": 18,
+
+  "Lycée Clément Ader|Athis-Mons": 19,
+  "Lycée Léonard de Vinci|Saint-Michel-sur-Orge": 20,
+
+  "Lycée Jean-Pierre Timbaud|Brétigny-sur-Orge": 21,
+  "Lycée Marguerite Yourcenar|Morangis": 22,
+
+  "Lycée Jean Perrin|Longjumeau": 23,
+  "Lycée Alexandre Denis|Cerny": 23,
+
+  "Lycée Paul Belmondo|Arpajon": 25,
+  "Lycée Gustave Eiffel|Massy": 26,
+  "Lycée Parc de Vilgénis|Massy": 27,
+
+  "Lycée Henri Poincaré|Palaiseau": 29,
+  "Lycée L'Essouriau|Les Ulis": 32,
+
+  "Lycée Nelson Mandela|Étampes": 37,
+  "Lycée Geoffroy Saint-Hilaire|Étampes": 37,
+
+  "Lycée Nikola Tesla|Dourdan": 43
+};
+
+function normalizeDistanceKey(value) {
+  return value
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[’']/g, " ")
+    .toLowerCase()
+    .replace(/[^a-z0-9|]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+const NORMALIZED_DISTANCES_CORBEIL = Object.fromEntries(
+  Object.entries(DISTANCES_CORBEIL_ESSONNES).map(([key, distance]) => [
+    normalizeDistanceKey(key),
+    distance
+  ])
+);
+
+function getDistanceFromCorbeil(etablissement) {
+  const fullKey = normalizeDistanceKey(`${etablissement.nom}|${etablissement.ville}`);
+  return NORMALIZED_DISTANCES_CORBEIL[fullKey] ?? 999;
+}
+
+function sortEtablissementsByDistance(domains) {
+  Object.values(domains).forEach(domain => {
+    domain.formations.forEach(formation => {
+      formation.etablissements.forEach(etablissement => {
+        etablissement.distanceKm = getDistanceFromCorbeil(etablissement);
+      });
+
+      formation.etablissements.sort((a, b) => {
+        const distanceDifference = a.distanceKm - b.distanceKm;
+
+        if (distanceDifference !== 0) {
+          return distanceDifference;
+        }
+
+        const cityComparison = a.ville.localeCompare(b.ville, "fr");
+        if (cityComparison !== 0) {
+          return cityComparison;
+        }
+
+        return a.nom.localeCompare(b.nom, "fr");
+      });
+    });
+  });
+}
+
+sortEtablissementsByDistance(DOMAINS);
+
+
+
+
+
