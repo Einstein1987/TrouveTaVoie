@@ -120,56 +120,96 @@ function pingStats(domainKey) {
   console.log("Statistique prête à être envoyée (mode local) : " + domainKey);
 }
 
-function fillCard(domainKey){
-  const data = DOMAINS[domainKey];
-  document.getElementById('cardEmpty').style.display = 'none';
-  const filled = document.getElementById('cardFilled');
-  filled.style.display = 'block';
-  
-  document.getElementById('cardDate').textContent = new Date().toLocaleDateString('fr-FR');
-  document.getElementById('cardMetier').textContent = data.label;
+function fillCard(domainKey) {
+    const data = DOMAINS[domainKey];
+    showFilledCard(data);
+    fillDetails(data);
+    fillCoefficients(data);
+    document.getElementById("printBtn").style.display = "block";
+    if (typeof pingStats === "function") {
+        pingStats(domainKey);
+    }
+}
 
-  // Formations et Etablissements associés
-  const fWrap = document.getElementById('cardFormations');
-  const eWrap = document.getElementById('cardEtabs');
-  fWrap.innerHTML = '';
-  eWrap.innerHTML = '';
+function showFilledCard(data) {
+    document.getElementById("cardEmpty").style.display = "none";
+    const filled = document.getElementById("cardFilled");
+    filled.style.display = "block";
+    document.getElementById("cardDate").textContent =
+        new Date().toLocaleDateString("fr-FR");
+    document.getElementById("cardMetier").textContent = data.label;
+}
 
-  data.formations.forEach(f => {
-    // Remplissage des puces de formations
-    const c = document.createElement('span');
-    c.className = 'chip';
-    c.textContent = f.nom + (f.niveau ? ' (' + f.niveau + ')' : '');
-    fWrap.appendChild(c);
-
-    // Remplissage de la liste des lycées PAR formation
-    f.etablissements.forEach(e => {
-      const row = document.createElement('div');
-      row.className = 'estab';
-      row.innerHTML = `<strong>${e.nom}</strong> — ${e.ville} <span style="font-size:11px; color:var(--brass-dark);">[Pour: ${f.nom}]</span>
-                       <div class="t">
-                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0112 2a8 8 0 018 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
-                         Trajet : ${e.transport}
-                       </div>`;
-      eWrap.appendChild(row);
+function fillDetails(data) {
+    const container = document.getElementById("cardDetailsContainer");
+    container.innerHTML = "";
+    data.formations.forEach(formation => {
+        container.appendChild(createFormationBlock(formation));
     });
-  });
 
-  // Coefficients
-  const tr = document.getElementById('cardCoeffs');
-  tr.innerHTML = '';
-  data.coeffs.forEach(c => {
-    const td = document.createElement('td');
-    td.textContent = c;
-    tr.appendChild(td);
-  });
+}
 
-  document.getElementById('printBtn').style.display = 'block';
-  
-  // Envoi anonyme pour les statistiques
-  if (typeof pingStats === "function") {
-      pingStats(domainKey);
-  }
+function createFormationBlock(formation) {
+    const block = document.createElement("div");
+    block.className = "formation-block";
+    const title = document.createElement("h3");
+    title.className = "formation-title";
+    title.textContent = formation.nom;
+    if (formation.niveau) {
+        title.textContent += ` (${formation.niveau})`;
+    }
+    block.appendChild(title);
+    formation.etablissements.forEach(etablissement => {
+        block.appendChild(createSchoolElement(etablissement));
+    });
+    return block;
+}
+
+function createSchoolElement(etablissement) {
+    const card = document.createElement("div");
+    card.className = "estab";
+    // Nom de l'établissement
+    const school = document.createElement("strong");
+    school.textContent = etablissement.nom;
+    card.appendChild(school);
+    // Ville
+    const city = document.createElement("div");
+    city.textContent = etablissement.ville;
+    card.appendChild(city);
+    // Ligne "Trajet"
+    const travel = document.createElement("div");
+    travel.className = "t";
+    // Icône localisation (SVG)
+    const svgNS = "http://www.w3.org/2000/svg";
+    const svg = document.createElementNS(svgNS, "svg");
+    svg.setAttribute("width", "12");
+    svg.setAttribute("height", "12");
+    svg.setAttribute("viewBox", "0 0 24 24");
+    svg.setAttribute("fill", "none");
+    svg.setAttribute("stroke", "currentColor");
+    svg.setAttribute("stroke-width", "2");
+    const path = document.createElementNS(svgNS, "path");
+    path.setAttribute("d", "M12 22s-8-4.5-8-11.8A8 8 0 0112 2a8 8 0 018 8.2c0 7.3-8 11.8-8 11.8z");
+    const circle = document.createElementNS(svgNS, "circle");
+    circle.setAttribute("cx", "12");
+    circle.setAttribute("cy", "10");
+    circle.setAttribute("r", "3");
+    svg.appendChild(path);
+    svg.appendChild(circle);
+    travel.appendChild(svg);
+    travel.appendChild(document.createTextNode(" Trajet : " + etablissement.transport));
+    card.appendChild(travel);
+    return card;
+}
+
+function fillCoefficients(data) {
+    const row = document.getElementById("cardCoeffs");
+    row.innerHTML = "";
+    data.coeffs.forEach(coeff => {
+        const td = document.createElement("td");
+        td.textContent = coeff;
+        row.appendChild(td);
+    });
 }
 
 function startMenu(){
