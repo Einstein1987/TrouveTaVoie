@@ -227,6 +227,7 @@ function createSchoolElement(etablissement) {
     school.textContent = etablissement.nom;
     card.appendChild(school);
     const city = document.createElement("div");
+    city.className = "school-location";
     if (
         typeof etablissement.distanceKm === "number" &&
         etablissement.distanceKm !== 999
@@ -236,6 +237,12 @@ function createSchoolElement(etablissement) {
         city.textContent = etablissement.ville;
     }
     card.appendChild(city);
+    if (etablissement.transport) {
+        const transport = document.createElement("div");
+        transport.className = "school-transport";
+        transport.textContent = "Transport : " + etablissement.transport;
+        card.appendChild(transport);
+    }
     return card;
 }
 
