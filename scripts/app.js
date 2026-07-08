@@ -284,7 +284,7 @@ function nextQuizStep(answerPayload) {
   if (state === 'quiz_q1') {
     state = 'quiz_q2';
     addBotMessage("Question 2 : Aimes-tu être en contact avec le public ou des clients ?", [
-      {label: "Oui, j'aime aider ou conseiller les autres", action: "quiz_answer", payload: ["relation_client", "sante_social", "restauration_alimentation"]},
+      {label: "Oui, j'aime aider ou conseiller les autres", action: "quiz_answer", payload: ["relation_client", "sante_social", "restauration"]},
       {label: "Non, je préfère la technique ou travailler seul/en équipe", action: "quiz_answer", payload: ["numerique_energie", "batiment", "mecanique_auto"]}
     ]);
   } else if (state === 'quiz_q2') {
