@@ -180,18 +180,116 @@
     color: #fff;
 }
 
-  @media print{
-    body *{visibility:hidden;}
-    #printable, #printable *{visibility:visible;}
-    #printable{position:absolute;top:0;left:0;width:100%;}
-    .printbtn,
-.card-actions,
-.psy-note,
-.app-footer-minimal,
-.panel:first-child {
-    display: none !important;
+ @page {
+    size: A4;
+    margin: 10mm;
 }
-    .grid {display:block;} /* Fix pour l'impression */
-  }
-     ========================================================================== */
-</style>
+
+@media print {
+
+    html,
+    body {
+        background: #ffffff !important;
+        color: var(--ink) !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        display: block !important;
+        min-height: auto !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .wrap {
+        max-width: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        display: block !important;
+    }
+
+    .title,
+    .subtitle,
+    .panel:first-child,
+    .panel > h2,
+    .card-actions,
+    .psy-note,
+    .app-footer-minimal {
+        display: none !important;
+    }
+
+    .grid {
+        display: block !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .grid > .panel:last-child {
+        display: block !important;
+        background: transparent !important;
+        border: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    .card {
+        width: 100% !important;
+        max-width: 190mm !important;
+        margin: 0 auto !important;
+        background: #ffffff !important;
+        border: 1px solid var(--line) !important;
+        border-radius: 10px !important;
+        box-shadow: none !important;
+        overflow: visible !important;
+    }
+
+    #printable {
+        display: block !important;
+        position: static !important;
+        width: 100% !important;
+    }
+
+    #cardEmpty {
+        display: none !important;
+    }
+
+    #cardFilled {
+        display: block !important;
+    }
+
+    .card-top {
+        background: var(--ink) !important;
+        color: #F3EEDC !important;
+    }
+
+    .card-body {
+        padding: 16px !important;
+    }
+
+    .formation-block {
+        background: var(--paper) !important;
+        border: 1px solid var(--line) !important;
+        border-radius: 8px !important;
+        margin-bottom: 12px !important;
+        padding: 10px !important;
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+
+    .coeffs-table {
+        background: rgba(255, 255, 255, 0.6) !important;
+    }
+
+    .coeffs-table th,
+    .coeffs-table td {
+        border: 1px solid rgba(0, 0, 0, 0.25) !important;
+    }
+
+    .estab {
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+
+    .stamp {
+        border-color: var(--brass) !important;
+        color: var(--brass-dark) !important;
+    }
+}
