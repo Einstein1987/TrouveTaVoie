@@ -1,9 +1,34 @@
+// =============================================================================
+// OrienTeen — Base de données des formations professionnelles publiques
+// Secteur : bassin de Corbeil-Essonnes / Essonne (91)
+// Source  : CIO d'Évry — "Formations professionnelles post-3e en Essonne",
+//           "Bacs professionnels en Essonne", "Fiche technique n°21 (coefficients)"
+//           et "Fichier formations pro / vœux bassin" — Rentrée 2026.
+// NB : établissements PUBLICS uniquement. Données indicatives, à revérifier
+//      chaque année sur ONISEP / AFFELNET (offre et coefficients susceptibles d'évoluer).
+// =============================================================================
+
 const DOMAINS = {
   relation_client: {
-    label: "Métiers de la Relation Client & Gestion",
-    keywords: ["commerce", "vente", "vendre", "client", "magasin", "accueil", "boutique", "relation client", "mrc", "mcva", "mcvb", "agora", "gestion", "administration"],
-    coeffs: [6, 5, 4, 5, 3, 3, 4], // fallback : les coefficients sont maintenant aussi définis formation par formation
+    label: "Métiers de la Relation Client",
+    keywords: ["commerce", "vente", "vendre", "client", "clientele", "magasin", "accueil", "boutique", "relation client", "mrc", "mcv", "mcva", "mcvb", "caisse"],
+    coeffs: [6, 5, 4, 5, 3, 3, 4],
     formations: [
+      {
+        nom: "Bac Pro Métiers de l'accueil",
+        niveau: "Bac Pro",
+        coeffs: [6, 5, 4, 5, 3, 3, 4],
+        etablissements: [
+          { nom: "Lycée Paul Belmondo", ville: "Arpajon", transport: "Bus 91-04 (env. 60 min)" },
+          { nom: "Lycée Nikola Tesla", ville: "Dourdan", transport: "RER D puis RER C (env. 1h30)" },
+          { nom: "Lycée Charles Baudelaire", ville: "Évry-Courcouronnes", transport: "Bus 401 (env. 30 min)" },
+          { nom: "Lycée Jean Monnet", ville: "Juvisy-sur-Orge", transport: "RER D (env. 30 min)" },
+          { nom: "Lycée Jean Perrin", ville: "Longjumeau", transport: "RER D puis Bus (env. 50 min)" },
+          { nom: "Lycée Pierre Mendès France", ville: "Ris-Orangis", transport: "RER D (env. 25 min)" },
+          { nom: "Lycée Paul Langevin", ville: "Sainte-Geneviève-des-Bois", transport: "RER D puis Bus (env. 50 min)" },
+          { nom: "Lycée Louis Armand", ville: "Yerres", transport: "RER D (env. 35 min)" }
+        ]
+      },
       {
         nom: "Bac Pro Métiers du Commerce et de la Vente (Options A et B)",
         niveau: "Bac Pro",
@@ -12,6 +37,7 @@ const DOMAINS = {
           { nom: "Lycée Paul Belmondo", ville: "Arpajon", transport: "Bus 91-04 (env. 60 min)" },
           { nom: "Lycée Robert Doisneau", ville: "Corbeil-Essonnes", transport: "Bus 401 ou à pied (env. 15 min)" },
           { nom: "Lycée Nikola Tesla", ville: "Dourdan", transport: "RER D puis RER C (env. 1h30)" },
+          { nom: "Lycée Nadar", ville: "Draveil", transport: "RER D puis Bus (env. 45 min)" },
           { nom: "Lycée Nelson Mandela", ville: "Étampes", transport: "RER D puis RER C (env. 1h15)" },
           { nom: "Lycée Charles Baudelaire", ville: "Évry-Courcouronnes", transport: "Bus 401 (env. 30 min)" },
           { nom: "Lycée Jean Monnet", ville: "Juvisy-sur-Orge", transport: "RER D (env. 30 min)" },
@@ -19,25 +45,6 @@ const DOMAINS = {
           { nom: "Lycée Marguerite Yourcenar", ville: "Morangis", transport: "RER D puis Bus (env. 1h)" },
           { nom: "Lycée Henri Poincaré", ville: "Palaiseau", transport: "RER D puis Bus (env. 1h)" },
           { nom: "Lycée Pierre Mendès France", ville: "Ris-Orangis", transport: "RER D (env. 25 min)" },
-          { nom: "Lycée Paul Langevin", ville: "Sainte-Geneviève-des-Bois", transport: "RER D puis Bus (env. 50 min)" },
-          { nom: "Lycée Louis Armand", ville: "Yerres", transport: "RER D (env. 35 min)" }
-        ]
-      },
-      {
-        nom: "Bac Pro AGORA (Assistance à la Gestion des Organisations et de leurs Activités)",
-        niveau: "Bac Pro",
-        coeffs: [6, 5, 4, 5, 3, 3, 4],
-        etablissements: [
-          { nom: "Lycée Paul Belmondo", ville: "Arpajon", transport: "Bus 91-04 (env. 60 min)" },
-          { nom: "Lycée Robert Doisneau", ville: "Corbeil-Essonnes", transport: "Bus 401 ou à pied (env. 15 min)" },
-          { nom: "Lycée Nikola Tesla", ville: "Dourdan", transport: "RER D puis RER C (env. 1h30)" },
-          { nom: "Lycée Geoffroy Saint-Hilaire", ville: "Étampes", transport: "RER D puis RER C (env. 1h15)" },
-          { nom: "Lycée Jean Monnet", ville: "Juvisy-sur-Orge", transport: "RER D (env. 30 min)" },
-          { nom: "Lycée L'Essouriau", ville: "Les Ulis", transport: "RER D puis Bus (env. 1h15)" },
-          { nom: "Lycée Jean Perrin", ville: "Longjumeau", transport: "RER D puis Bus (env. 50 min)" },
-          { nom: "Lycée Parc de Vilgénis", ville: "Massy", transport: "RER D puis Tram 12 (env. 1h)" },
-          { nom: "Lycée Marie Laurencin", ville: "Mennecy", transport: "RER D (env. 15 min)" },
-          { nom: "Lycée Marguerite Yourcenar", ville: "Morangis", transport: "RER D puis Bus (env. 1h)" },
           { nom: "Lycée Paul Langevin", ville: "Sainte-Geneviève-des-Bois", transport: "RER D puis Bus (env. 50 min)" },
           { nom: "Lycée Louis Armand", ville: "Yerres", transport: "RER D (env. 35 min)" }
         ]
@@ -61,9 +68,61 @@ const DOMAINS = {
     ]
   },
 
+  gestion_logistique: {
+    label: "Métiers de la Gestion, du Transport et de la Logistique",
+    keywords: ["gestion", "administration", "administratif", "agora", "secretariat", "bureau", "logistique", "transport", "entrepot", "magasinier", "stock", "conducteur", "routier", "camion"],
+    coeffs: [6, 5, 4, 5, 3, 3, 4],
+    formations: [
+      {
+        nom: "Bac Pro AGORA (Assistance à la Gestion des Organisations et de leurs Activités)",
+        niveau: "Bac Pro",
+        coeffs: [6, 5, 4, 5, 3, 3, 4],
+        etablissements: [
+          { nom: "Lycée Paul Belmondo", ville: "Arpajon", transport: "Bus 91-04 (env. 60 min)" },
+          { nom: "Lycée Robert Doisneau", ville: "Corbeil-Essonnes", transport: "Bus 401 ou à pied (env. 15 min)" },
+          { nom: "Lycée Nikola Tesla", ville: "Dourdan", transport: "RER D puis RER C (env. 1h30)" },
+          { nom: "Lycée Geoffroy Saint-Hilaire", ville: "Étampes", transport: "RER D puis RER C (env. 1h15)" },
+          { nom: "Lycée Jean Monnet", ville: "Juvisy-sur-Orge", transport: "RER D (env. 30 min)" },
+          { nom: "Lycée L'Essouriau", ville: "Les Ulis", transport: "RER D puis Bus (env. 1h15)" },
+          { nom: "Lycée Jean Perrin", ville: "Longjumeau", transport: "RER D puis Bus (env. 50 min)" },
+          { nom: "Lycée Parc de Vilgénis", ville: "Massy", transport: "RER D puis Tram 12 (env. 1h)" },
+          { nom: "Lycée Marie Laurencin", ville: "Mennecy", transport: "RER D (env. 15 min)" },
+          { nom: "Lycée Marguerite Yourcenar", ville: "Morangis", transport: "RER D puis Bus (env. 1h)" },
+          { nom: "Lycée Paul Langevin", ville: "Sainte-Geneviève-des-Bois", transport: "RER D puis Bus (env. 50 min)" },
+          { nom: "Lycée Louis Armand", ville: "Yerres", transport: "RER D (env. 35 min)" }
+        ]
+      },
+      {
+        nom: "Bac Pro Logistique",
+        niveau: "Bac Pro",
+        coeffs: [6, 5, 4, 5, 3, 3, 4],
+        etablissements: [
+          { nom: "Lycée Alexandre Denis", ville: "Cerny", transport: "RER D jusqu'à Mennecy puis Bus (env. 45 min)" },
+          { nom: "Lycée Gaspard Monge", ville: "Savigny-sur-Orge", transport: "RER D puis RER C (env. 45 min)" }
+        ]
+      },
+      {
+        nom: "Bac Pro Organisation de transport de marchandises",
+        niveau: "Bac Pro",
+        coeffs: [6, 5, 4, 5, 3, 3, 4],
+        etablissements: [
+          { nom: "Lycée Gaspard Monge", ville: "Savigny-sur-Orge", transport: "RER D puis RER C (env. 45 min)" }
+        ]
+      },
+      {
+        nom: "Bac Pro Conducteur routier de marchandises",
+        niveau: "Bac Pro",
+        coeffs: [6, 5, 4, 5, 3, 3, 4],
+        etablissements: [
+          { nom: "Lycée Alexandre Denis", ville: "Cerny", transport: "RER D jusqu'à Mennecy puis Bus (env. 45 min)" }
+        ]
+      }
+    ]
+  },
+
   sante_social: {
-    label: "Santé, Social et Soins",
-    keywords: ["sante", "social", "soin", "enfant", "personnes agees", "hopital", "medical", "infirmier", "aide", "assp", "petite enfance", "aepe", "aepa"],
+    label: "Santé, Social, Soin et Animation",
+    keywords: ["sante", "social", "soin", "enfant", "petite enfance", "personnes agees", "hopital", "medical", "infirmier", "aide", "assp", "animation", "aepa", "hygiene", "proprete", "sterilisation"],
     coeffs: [5, 4, 3, 3, 4, 4, 7],
     formations: [
       {
@@ -81,6 +140,24 @@ const DOMAINS = {
         ]
       },
       {
+        nom: "Bac Pro Animation-enfance et personnes âgées (AEPA)",
+        niveau: "Bac Pro",
+        coeffs: [5, 4, 3, 3, 4, 4, 7],
+        etablissements: [
+          { nom: "Lycée Nelson Mandela", ville: "Étampes", transport: "RER D puis RER C (env. 1h15)" },
+          { nom: "Lycée Henri Poincaré", ville: "Palaiseau", transport: "RER D puis Bus (env. 1h)" },
+          { nom: "Lycée Léonard de Vinci", ville: "Saint-Michel-sur-Orge", transport: "RER D puis RER C (env. 45 min)" }
+        ]
+      },
+      {
+        nom: "Bac Pro Hygiène, Propreté, Stérilisation",
+        niveau: "Bac Pro",
+        coeffs: [5, 3, 4, 3, 5, 2, 8],
+        etablissements: [
+          { nom: "Lycée Léonard de Vinci", ville: "Saint-Michel-sur-Orge", transport: "RER D puis RER C (env. 45 min)" }
+        ]
+      },
+      {
         nom: "CAP Accompagnant éducatif petite enfance",
         niveau: "CAP",
         coeffs: [5, 4, 3, 3, 4, 4, 7],
@@ -92,9 +169,33 @@ const DOMAINS = {
     ]
   },
 
+  beaute: {
+    label: "Métiers de la Beauté et du Bien-être",
+    keywords: ["beaute", "bien-etre", "bien etre", "esthetique", "cosmetique", "parfumerie", "coiffure", "coiffeur", "maquillage", "onglerie"],
+    coeffs: [5, 4, 3, 3, 4, 4, 7],
+    formations: [
+      {
+        nom: "Bac Pro Esthétique, cosmétique, parfumerie",
+        niveau: "Bac Pro",
+        coeffs: [5, 4, 3, 3, 4, 4, 7],
+        etablissements: [
+          { nom: "Lycée Charles Baudelaire", ville: "Évry-Courcouronnes", transport: "Bus 401 (env. 30 min)" }
+        ]
+      },
+      {
+        nom: "Bac Pro Métiers de la coiffure",
+        niveau: "Bac Pro",
+        coeffs: [5, 4, 3, 3, 4, 4, 7],
+        etablissements: [
+          { nom: "Lycée Charles Baudelaire", ville: "Évry-Courcouronnes", transport: "Bus 401 (env. 30 min)" }
+        ]
+      }
+    ]
+  },
+
   numerique_energie: {
     label: "Transitions Numérique et Énergétique",
-    keywords: ["informatique", "ordinateur", "numerique", "electricite", "electricien", "ciel", "melec", "energie", "code", "technologie", "climatisation", "froid"],
+    keywords: ["informatique", "ordinateur", "numerique", "reseau", "cybersecurite", "electricite", "electricien", "ciel", "melec", "energie", "code", "electronique", "climatisation", "chauffage", "froid", "photonique", "optique"],
     coeffs: [5, 6, 3, 4, 3, 2, 7],
     formations: [
       {
@@ -105,6 +206,7 @@ const DOMAINS = {
           { nom: "Lycée Paul Belmondo", ville: "Arpajon", transport: "Bus 91-04 (env. 60 min)" },
           { nom: "Lycée Clément Ader", ville: "Athis-Mons", transport: "RER D (env. 40 min)" },
           { nom: "Lycée Robert Doisneau", ville: "Corbeil-Essonnes", transport: "Bus 401 ou à pied (env. 15 min)" },
+          { nom: "Lycée Nikola Tesla", ville: "Dourdan", transport: "RER D puis RER C (env. 1h30)" },
           { nom: "Lycée Nadar", ville: "Draveil", transport: "RER D puis Bus (env. 45 min)" },
           { nom: "Lycée L'Essouriau", ville: "Les Ulis", transport: "RER D puis Bus (env. 1h15)" },
           { nom: "Lycée Jean Perrin", ville: "Longjumeau", transport: "RER D puis Bus (env. 50 min)" },
@@ -128,6 +230,39 @@ const DOMAINS = {
         ]
       },
       {
+        nom: "Bac Pro Installateur en chauffage, climatisation et énergies renouvelables",
+        niveau: "Bac Pro",
+        coeffs: [5, 6, 3, 4, 3, 2, 7],
+        etablissements: [
+          { nom: "Lycée Gustave Eiffel", ville: "Massy", transport: "RER D puis Tram 12 (env. 1h)" },
+          { nom: "Lycée Pierre Mendès France", ville: "Ris-Orangis", transport: "RER D (env. 25 min)" }
+        ]
+      },
+      {
+        nom: "Bac Pro Maintenance et efficacité énergétique",
+        niveau: "Bac Pro",
+        coeffs: [5, 6, 3, 4, 3, 2, 7],
+        etablissements: [
+          { nom: "Lycée Auguste Perret", ville: "Évry-Courcouronnes", transport: "Bus 401 (env. 25 min)" }
+        ]
+      },
+      {
+        nom: "Bac Pro Métiers du froid et des énergies renouvelables",
+        niveau: "Bac Pro",
+        coeffs: [5, 6, 3, 4, 3, 2, 7],
+        etablissements: [
+          { nom: "Lycée Pierre Mendès France", ville: "Ris-Orangis", transport: "RER D (env. 25 min)" }
+        ]
+      },
+      {
+        nom: "Bac Pro Optique Photonique - Technologies de la Lumière",
+        niveau: "Bac Pro",
+        coeffs: [4, 6, 3, 4, 3, 2, 8],
+        etablissements: [
+          { nom: "Lycée International Paris-Saclay", ville: "Palaiseau", transport: "RER B puis Bus (env. 1h10)" }
+        ]
+      },
+      {
         nom: "CAP Électricien",
         niveau: "CAP",
         coeffs: [4, 6, 3, 4, 3, 2, 8],
@@ -147,33 +282,45 @@ const DOMAINS = {
   },
 
   batiment: {
-    label: "Métiers de la Construction, du Bâtiment et Travaux Publics",
-    keywords: ["batiment", "construire", "construction", "menuisier", "menuiserie", "maçon", "travaux", "chantier", "architecture", "peintre"],
+    label: "Construction, Bâtiment et Travaux Publics",
+    keywords: ["batiment", "construire", "construction", "maçon", "macon", "maçonnerie", "gros oeuvre", "metallerie", "travaux", "chantier", "peintre", "finition", "menuiserie aluminium", "travaux publics"],
     coeffs: [5, 6, 3, 4, 3, 2, 7],
     formations: [
       {
-        nom: "Bac Pro Technicien d'études du bâtiment - Option A : études et économie",
+        nom: "Bac Pro Technicien du bâtiment : organisation et réalisation du gros œuvre",
         niveau: "Bac Pro",
-        coeffs: [4, 6, 4, 2, 4, 3, 7],
-        aVerifier: "Établissements à confirmer sur ONISEP : le fichier vœux bassin et le tableau CIO Essonne ne donnent pas exactement la même granularité.",
+        coeffs: [5, 6, 3, 4, 3, 2, 7],
         etablissements: [
           { nom: "Lycée Auguste Perret", ville: "Évry-Courcouronnes", transport: "Bus 401 (env. 25 min)" },
-          { nom: "Lycée Jean-Pierre Timbaud", ville: "Brétigny-sur-Orge", transport: "RER D puis RER C (env. 60 min)" },
-          { nom: "Lycée Gustave Eiffel", ville: "Massy", transport: "RER D puis Tram 12 (env. 1h)" }
-        ]
-      },
-      {
-        nom: "Bac Pro Technicien d'études du bâtiment - Option B : assistant en architecture",
-        niveau: "Bac Pro",
-        coeffs: [4, 6, 4, 2, 4, 3, 7],
-        aVerifier: "Établissements à confirmer sur ONISEP : le fichier vœux bassin et le tableau CIO Essonne ne donnent pas exactement la même granularité.",
-        etablissements: [
-          { nom: "Lycée Jean-Pierre Timbaud", ville: "Brétigny-sur-Orge", transport: "RER D puis RER C (env. 60 min)" },
           { nom: "Lycée Gustave Eiffel", ville: "Massy", transport: "RER D puis Tram 12 (env. 1h)" }
         ]
       },
       {
         nom: "Bac Pro Aménagement et finition du bâtiment",
+        niveau: "Bac Pro",
+        coeffs: [5, 6, 3, 4, 3, 2, 7],
+        etablissements: [
+          { nom: "Lycée Jean-Pierre Timbaud", ville: "Brétigny-sur-Orge", transport: "RER D puis RER C (env. 60 min)" }
+        ]
+      },
+      {
+        nom: "Bac Pro Interventions sur le patrimoine bâti - Option maçonnerie",
+        niveau: "Bac Pro",
+        coeffs: [5, 6, 3, 4, 3, 2, 7],
+        etablissements: [
+          { nom: "Lycée Jean-Pierre Timbaud", ville: "Brétigny-sur-Orge", transport: "RER D puis RER C (env. 60 min)" }
+        ]
+      },
+      {
+        nom: "Bac Pro Ouvrages du bâtiment : métallerie",
+        niveau: "Bac Pro",
+        coeffs: [5, 6, 3, 4, 3, 2, 7],
+        etablissements: [
+          { nom: "Lycée Jean-Pierre Timbaud", ville: "Brétigny-sur-Orge", transport: "RER D puis RER C (env. 60 min)" }
+        ]
+      },
+      {
+        nom: "Bac Pro Menuiserie aluminium-verre",
         niveau: "Bac Pro",
         coeffs: [5, 6, 3, 4, 3, 2, 7],
         etablissements: [
@@ -192,9 +339,217 @@ const DOMAINS = {
     ]
   },
 
+  etudes_batiment: {
+    label: "Études et Modélisation Numérique du Bâtiment",
+    keywords: ["etudes du batiment", "modelisation", "geometre", "topographe", "dessin batiment", "architecture", "plan", "bureau d'etudes", "economie de la construction"],
+    coeffs: [4, 6, 4, 2, 4, 3, 7],
+    formations: [
+      {
+        nom: "Bac Pro Technicien d'études du bâtiment - Option A : études et économie",
+        niveau: "Bac Pro",
+        coeffs: [4, 6, 4, 2, 4, 3, 7],
+        etablissements: [
+          { nom: "Lycée Jean-Pierre Timbaud", ville: "Brétigny-sur-Orge", transport: "RER D puis RER C (env. 60 min)" },
+          { nom: "Lycée Auguste Perret", ville: "Évry-Courcouronnes", transport: "Bus 401 (env. 25 min)" },
+          { nom: "Lycée Gustave Eiffel", ville: "Massy", transport: "RER D puis Tram 12 (env. 1h)" }
+        ]
+      },
+      {
+        nom: "Bac Pro Technicien d'études du bâtiment - Option B : assistant en architecture",
+        niveau: "Bac Pro",
+        coeffs: [4, 6, 4, 2, 4, 3, 7],
+        etablissements: [
+          { nom: "Lycée Jean-Pierre Timbaud", ville: "Brétigny-sur-Orge", transport: "RER D puis RER C (env. 60 min)" },
+          { nom: "Lycée Gustave Eiffel", ville: "Massy", transport: "RER D puis Tram 12 (env. 1h)" }
+        ]
+      },
+      {
+        nom: "Bac Pro Géomètre (ex Technicien géomètre-topographe)",
+        niveau: "Bac Pro",
+        coeffs: [4, 6, 4, 2, 4, 3, 7],
+        etablissements: [
+          { nom: "Lycée Jean-Pierre Timbaud", ville: "Brétigny-sur-Orge", transport: "RER D puis RER C (env. 60 min)" }
+        ]
+      }
+    ]
+  },
+
+  agencement_bois: {
+    label: "Agencement, Menuiserie et Ameublement",
+    keywords: ["menuiserie", "menuisier", "bois", "agencement", "ameublement", "meuble", "agenceur", "fabrication bois"],
+    coeffs: [4, 6, 4, 2, 4, 3, 7],
+    formations: [
+      {
+        nom: "Bac Pro Technicien menuisier agenceur",
+        niveau: "Bac Pro",
+        coeffs: [4, 6, 4, 2, 4, 3, 7],
+        etablissements: [
+          { nom: "Lycée Auguste Perret", ville: "Évry-Courcouronnes", transport: "Bus 401 (env. 25 min)" },
+          { nom: "Lycée Gustave Eiffel", ville: "Massy", transport: "RER D puis Tram 12 (env. 1h)" }
+        ]
+      },
+      {
+        nom: "Bac Pro Technicien de fabrication bois et matériaux associés",
+        niveau: "Bac Pro",
+        coeffs: [4, 6, 4, 2, 4, 3, 7],
+        etablissements: [
+          { nom: "Lycée Auguste Perret", ville: "Évry-Courcouronnes", transport: "Bus 401 (env. 25 min)" }
+        ]
+      },
+      {
+        nom: "Bac Pro Étude et réalisation d'agencement",
+        niveau: "Bac Pro",
+        coeffs: [4, 6, 4, 2, 4, 3, 7],
+        etablissements: [
+          { nom: "Lycée Gustave Eiffel", ville: "Massy", transport: "RER D puis Tram 12 (env. 1h)" }
+        ]
+      }
+    ]
+  },
+
+  realisation_mecanique: {
+    label: "Réalisation d'Ensembles Mécaniques et Industriels",
+    keywords: ["usinage", "chaudronnerie", "soudure", "soudage", "industrie", "industriel", "mecanique industrielle", "microtechnique", "prototypage", "fabrication mecanique", "production", "tournage", "fraisage"],
+    coeffs: [5, 6, 3, 4, 3, 2, 7],
+    formations: [
+      {
+        nom: "Bac Pro Technicien en réalisation de produits mécaniques - Option réalisation et suivi de productions",
+        niveau: "Bac Pro",
+        coeffs: [5, 6, 3, 4, 3, 2, 7],
+        etablissements: [
+          { nom: "Lycée Robert Doisneau", ville: "Corbeil-Essonnes", transport: "Bus 401 ou à pied (env. 15 min)" },
+          { nom: "Lycée Parc de Vilgénis", ville: "Massy", transport: "RER D puis Tram 12 (env. 1h)" },
+          { nom: "Lycée Les Frères Moreau", ville: "Quincy-sous-Sénart", transport: "RER D (env. 40 min)" }
+        ]
+      },
+      {
+        nom: "Bac Pro Technicien en chaudronnerie industrielle",
+        niveau: "Bac Pro",
+        coeffs: [5, 6, 3, 4, 3, 2, 7],
+        etablissements: [
+          { nom: "Lycée Jean-Pierre Timbaud", ville: "Brétigny-sur-Orge", transport: "RER D puis RER C (env. 60 min)" },
+          { nom: "Lycée Jean Perrin", ville: "Longjumeau", transport: "RER D puis Bus (env. 50 min)" }
+        ]
+      },
+      {
+        nom: "Bac Pro Microtechniques",
+        niveau: "Bac Pro",
+        coeffs: [5, 6, 3, 4, 3, 2, 7],
+        etablissements: [
+          { nom: "Lycée Georges Brassens", ville: "Évry-Courcouronnes", transport: "Bus 401 puis Bus 402 (env. 40 min)" },
+          { nom: "Lycée Parc de Vilgénis", ville: "Massy", transport: "RER D puis Tram 12 (env. 1h)" }
+        ]
+      },
+      {
+        nom: "Bac Pro Modélisation et prototypage 3D",
+        niveau: "Bac Pro",
+        coeffs: [5, 6, 3, 4, 3, 2, 7],
+        etablissements: [
+          { nom: "Lycée Jean Perrin", ville: "Longjumeau", transport: "RER D puis Bus (env. 50 min)" }
+        ]
+      }
+    ]
+  },
+
+  pilotage_maintenance: {
+    label: "Pilotage et Maintenance d'Installations Automatisées",
+    keywords: ["automatisme", "automatise", "maintenance industrielle", "robot", "pilotage", "installations automatisees", "production connectee", "mspc", "usine"],
+    coeffs: [5, 6, 3, 4, 3, 2, 7],
+    formations: [
+      {
+        nom: "Bac Pro Maintenance des systèmes de production connectés",
+        niveau: "Bac Pro",
+        coeffs: [5, 6, 3, 4, 3, 2, 7],
+        etablissements: [
+          { nom: "Lycée Paul Belmondo", ville: "Arpajon", transport: "Bus 91-04 (env. 60 min)" },
+          { nom: "Lycée Clément Ader", ville: "Athis-Mons", transport: "RER D (env. 40 min)" },
+          { nom: "Lycée Nikola Tesla", ville: "Dourdan", transport: "RER D puis RER C (env. 1h30)" },
+          { nom: "Lycée Nadar", ville: "Draveil", transport: "RER D puis Bus (env. 45 min)" },
+          { nom: "Lycée L'Essouriau", ville: "Les Ulis", transport: "RER D puis Bus (env. 1h15)" },
+          { nom: "Lycée Jean Perrin", ville: "Longjumeau", transport: "RER D puis Bus (env. 50 min)" }
+        ]
+      }
+    ]
+  },
+
+  mecanique_auto: {
+    label: "Maintenance des Matériels, Véhicules et Aéronautique",
+    keywords: ["voiture", "mecanique", "mecanicien", "auto", "automobile", "garage", "carrosserie", "moteur", "maintenance", "avion", "aeronautique", "materiels", "engins", "agricole"],
+    coeffs: [4, 6, 3, 4, 3, 2, 8],
+    formations: [
+      {
+        nom: "Bac Pro Maintenance des véhicules - Option véhicules légers",
+        niveau: "Bac Pro",
+        coeffs: [4, 6, 3, 4, 3, 2, 8],
+        etablissements: [
+          { nom: "Lycée Alexandre Denis", ville: "Cerny", transport: "RER D jusqu'à Mennecy puis Bus (env. 45 min)" },
+          { nom: "Lycée Les Frères Moreau", ville: "Quincy-sous-Sénart", transport: "RER D (env. 40 min)" },
+          { nom: "Lycée Gaspard Monge", ville: "Savigny-sur-Orge", transport: "RER D puis RER C (env. 45 min)" }
+        ]
+      },
+      {
+        nom: "Bac Pro Maintenance des matériels - Option A : matériels agricoles",
+        niveau: "Bac Pro",
+        coeffs: [4, 6, 3, 4, 3, 2, 8],
+        etablissements: [
+          { nom: "Lycée Nikola Tesla", ville: "Dourdan", transport: "RER D puis RER C (env. 1h30)" }
+        ]
+      },
+      {
+        nom: "Bac Pro Maintenance des matériels - Option B : matériels de construction et de manutention",
+        niveau: "Bac Pro",
+        coeffs: [4, 6, 3, 4, 3, 2, 8],
+        etablissements: [
+          { nom: "Lycée Nikola Tesla", ville: "Dourdan", transport: "RER D puis RER C (env. 1h30)" }
+        ]
+      },
+      {
+        nom: "Bac Pro Maintenance des matériels - Option C : matériels d'espaces verts",
+        niveau: "Bac Pro",
+        coeffs: [4, 6, 3, 4, 3, 2, 8],
+        etablissements: [
+          { nom: "Lycée Nikola Tesla", ville: "Dourdan", transport: "RER D puis RER C (env. 1h30)" }
+        ]
+      },
+      {
+        nom: "Bac Pro Carrossier peintre automobile",
+        niveau: "Bac Pro",
+        coeffs: [4, 6, 3, 4, 3, 2, 8],
+        etablissements: [
+          { nom: "Lycée Alexandre Denis", ville: "Cerny", transport: "RER D jusqu'à Mennecy puis Bus (env. 45 min)" },
+          { nom: "Lycée Gaspard Monge", ville: "Savigny-sur-Orge", transport: "RER D puis RER C (env. 45 min)" }
+        ]
+      },
+      {
+        nom: "Bac Pro Aéronautique - Option avionique",
+        niveau: "Bac Pro",
+        coeffs: [4, 6, 3, 4, 3, 2, 8],
+        etablissements: [
+          { nom: "Lycée Alexandre Denis", ville: "Cerny", transport: "RER D jusqu'à Mennecy puis Bus (env. 45 min)" }
+        ]
+      },
+      {
+        nom: "Bac Pro Aéronautique - Option systèmes",
+        niveau: "Bac Pro",
+        coeffs: [4, 6, 3, 4, 3, 2, 8],
+        etablissements: [
+          { nom: "Lycée Alexandre Denis", ville: "Cerny", transport: "RER D jusqu'à Mennecy puis Bus (env. 45 min)" }
+        ]
+      },
+      {
+        nom: "Bac Pro Aviation générale",
+        niveau: "Bac Pro",
+        coeffs: [4, 6, 3, 4, 3, 2, 8],
+        etablissements: [
+          { nom: "Lycée Alexandre Denis", ville: "Cerny", transport: "RER D jusqu'à Mennecy puis Bus (env. 45 min)" }
+        ]
+      }
+    ]
+  },
+
   restauration: {
     label: "Hôtellerie, Restauration et Alimentation",
-    keywords: ["cuisine", "cuisinier", "cuisiniere", "restaurant", "restauration", "chef", "patissier", "patisserie", "boulanger", "manger", "hotellerie", "boulangerie", "serveur"],
+    keywords: ["cuisine", "cuisinier", "restaurant", "restauration", "chef", "patissier", "patisserie", "boulanger", "boulangerie", "hotellerie", "serveur", "service", "alimentation"],
     coeffs: [5, 4, 3, 3, 4, 4, 7],
     formations: [
       {
@@ -240,57 +595,57 @@ const DOMAINS = {
     ]
   },
 
-  mecanique_auto: {
-    label: "Maintenance et Mécanique (Auto & Aéronautique)",
-    keywords: ["voiture", "mecanique", "mecanicien", "auto", "automobile", "garage", "carrosserie", "moteur", "maintenance", "avion", "aeronautique"],
-    coeffs: [4, 6, 3, 4, 3, 2, 8],
+  securite: {
+    label: "Métiers de la Sécurité",
+    keywords: ["securite", "agent de securite", "surveillance", "gardien", "pompier", "police", "gendarme", "secours", "prevention"],
+    coeffs: [5, 3, 4, 3, 5, 2, 8],
     formations: [
       {
-        nom: "Bac Pro Maintenance des véhicules - Option véhicules légers",
+        nom: "Bac Pro Métiers de la sécurité",
         niveau: "Bac Pro",
-        coeffs: [4, 6, 3, 4, 3, 2, 8],
+        coeffs: [5, 3, 4, 3, 5, 2, 8],
         etablissements: [
-          { nom: "Lycée Alexandre Denis", ville: "Cerny", transport: "RER D jusqu'à Mennecy puis Bus (env. 45 min)" },
-          { nom: "Lycée Les Frères Moreau", ville: "Quincy-sous-Sénart", transport: "RER D (env. 40 min)" },
-          { nom: "Lycée Gaspard Monge", ville: "Savigny-sur-Orge", transport: "RER D puis RER C (env. 45 min)" }
+          { nom: "Lycée Nadar", ville: "Draveil", transport: "RER D puis Bus (env. 45 min)" },
+          { nom: "Lycée Paul Belmondo", ville: "Arpajon", transport: "Bus 91-04 (env. 60 min)" }
+        ]
+      }
+    ]
+  },
+
+  mode_art: {
+    label: "Métiers de la Mode, du Cuir et de l'Artisanat d'Art",
+    keywords: ["couture", "confection", "mode", "vetement", "cuir", "maroquinerie", "artisanat", "art", "metiers d'art", "marchandisage", "vitrine", "stylisme", "textile"],
+    coeffs: [4, 5, 3, 3, 3, 6, 6],
+    formations: [
+      {
+        nom: "Bac Pro Métiers de la couture et de la confection",
+        niveau: "Bac Pro",
+        coeffs: [4, 5, 3, 3, 3, 6, 6],
+        etablissements: [
+          { nom: "Lycée Jean Monnet", ville: "Juvisy-sur-Orge", transport: "RER D (env. 30 min)" },
+          { nom: "Lycée Gustave Eiffel", ville: "Massy", transport: "RER D puis Tram 12 (env. 1h)" }
         ]
       },
       {
-        nom: "Bac Pro Carrossier peintre automobile",
+        nom: "Bac Pro Métiers du cuir - Option maroquinerie",
         niveau: "Bac Pro",
-        coeffs: [4, 6, 3, 4, 3, 2, 8],
+        coeffs: [4, 5, 3, 3, 3, 6, 6],
         etablissements: [
-          { nom: "Lycée Alexandre Denis", ville: "Cerny", transport: "RER D jusqu'à Mennecy puis Bus (env. 45 min)" },
-          { nom: "Lycée Gaspard Monge", ville: "Savigny-sur-Orge", transport: "RER D puis RER C (env. 45 min)" }
+          { nom: "Lycée Jean Monnet", ville: "Juvisy-sur-Orge", transport: "RER D (env. 30 min)" }
         ]
       },
       {
-        nom: "Bac Pro Aéronautique - Option avionique",
+        nom: "Bac Pro Artisanat et métiers d'art - Option marchandisage visuel",
         niveau: "Bac Pro",
-        coeffs: [4, 6, 3, 4, 3, 2, 8],
+        coeffs: [4, 6, 4, 2, 4, 3, 7],
         etablissements: [
-          { nom: "Lycée Alexandre Denis", ville: "Cerny", transport: "RER D jusqu'à Mennecy puis Bus (env. 45 min)" }
-        ]
-      },
-      {
-        nom: "Bac Pro Aéronautique - Option systèmes",
-        niveau: "Bac Pro",
-        coeffs: [4, 6, 3, 4, 3, 2, 8],
-        etablissements: [
-          { nom: "Lycée Alexandre Denis", ville: "Cerny", transport: "RER D jusqu'à Mennecy puis Bus (env. 45 min)" }
-        ]
-      },
-      {
-        nom: "Bac Pro Aviation générale",
-        niveau: "Bac Pro",
-        coeffs: [4, 6, 3, 4, 3, 2, 8],
-        etablissements: [
-          { nom: "Lycée Alexandre Denis", ville: "Cerny", transport: "RER D jusqu'à Mennecy puis Bus (env. 45 min)" }
+          { nom: "Lycée Gustave Eiffel", ville: "Massy", transport: "RER D puis Tram 12 (env. 1h)" }
         ]
       }
     ]
   }
 };
+
 // -----------------------------------------------------------------------------
 // Distances approximatives depuis Corbeil-Essonnes
 // Objectif : trier automatiquement les établissements du plus proche au plus loin.
@@ -334,6 +689,7 @@ const DISTANCES_CORBEIL_ESSONNES = {
   "Lycée Parc de Vilgénis|Massy": 27,
 
   "Lycée Henri Poincaré|Palaiseau": 29,
+  "Lycée International Paris-Saclay|Palaiseau": 30,
   "Lycée L'Essouriau|Les Ulis": 32,
 
   "Lycée Nelson Mandela|Étampes": 37,
@@ -391,8 +747,3 @@ function sortEtablissementsByDistance(domains) {
 }
 
 sortEtablissementsByDistance(DOMAINS);
-
-
-
-
-
