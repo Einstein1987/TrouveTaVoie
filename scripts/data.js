@@ -1,8 +1,7 @@
-<script>
 /* ==========================================================================
-   DEBUT DU FICHIER JS (À extraire dans data.js ou app.js plus tard)
+   DEBUT DU FICHIER JS
    BASE DE DONNÉES RESTRUCTUREE (Liaison stricte Formation -> Etablissement)
-   ========================================================================== */
+========================================================================== */
 const DOMAINS = {
   relation_client: {
     label: "Métiers de la Relation Client (Commerce, Vente, Accueil)",
@@ -547,5 +546,3 @@ if(!SpeechRecognitionAPI){
 
 // Initialisation
 setTimeout(startMenu, 400);
-
-</script>
