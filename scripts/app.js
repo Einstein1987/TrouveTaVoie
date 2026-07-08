@@ -129,25 +129,30 @@ function fillCard(domainKey){
   document.getElementById('cardDate').textContent = new Date().toLocaleDateString('fr-FR');
   document.getElementById('cardMetier').textContent = data.label;
 
-  const container = document.getElementById('cardDetailsContainer');
-  container.innerHTML = '';
-  
+  // Formations et Etablissements associés
+  const fWrap = document.getElementById('cardFormations');
+  const eWrap = document.getElementById('cardEtabs');
+  fWrap.innerHTML = '';
+  eWrap.innerHTML = '';
+
   data.formations.forEach(f => {
-    let block = document.createElement('div');
-    block.className = 'formation-block';
-    let html = `<div class="formation-name">${f.nom} <span class="chip">${f.niveau}</span></div>`;
-    
+    // Remplissage des puces de formations
+    const c = document.createElement('span');
+    c.className = 'chip';
+    c.textContent = f.nom + (f.niveau ? ' (' + f.niveau + ')' : '');
+    fWrap.appendChild(c);
+
+    // Remplissage de la liste des lycées PAR formation
     f.etablissements.forEach(e => {
-      html += `<div class="estab">
-                 <strong>${e.nom}</strong> — ${e.ville}
-                 <div class="t">
-                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0112 2a8 8 0 018 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
-                   Trajet : ${e.transport}
-                 </div>
-               </div>`;
+      const row = document.createElement('div');
+      row.className = 'estab';
+      row.innerHTML = `<strong>${e.nom}</strong> — ${e.ville} <span style="font-size:11px; color:var(--brass-dark);">[Pour: ${f.nom}]</span>
+                       <div class="t">
+                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0112 2a8 8 0 018 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
+                         Trajet : ${e.transport}
+                       </div>`;
+      eWrap.appendChild(row);
     });
-    block.innerHTML = html;
-    container.appendChild(block);
   });
 
   // Coefficients
@@ -160,7 +165,11 @@ function fillCard(domainKey){
   });
 
   document.getElementById('printBtn').style.display = 'block';
-  pingStats(domainKey);
+  
+  // Envoi anonyme pour les statistiques
+  if (typeof pingStats === "function") {
+      pingStats(domainKey);
+  }
 }
 
 function startMenu(){
