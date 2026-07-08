@@ -124,7 +124,6 @@ function fillCard(domainKey) {
     const data = DOMAINS[domainKey];
     showFilledCard(data);
     fillDetails(data);
-    fillCoefficients(data);
     document.getElementById("printBtn").style.display = "block";
     if (typeof pingStats === "function") {
         pingStats(domainKey);
@@ -146,7 +145,7 @@ function fillDetails(data) {
     data.formations.forEach(formation => {
         container.appendChild(createFormationBlock(formation));
     });
-
+    hideGlobalCoefficientsTable();
 }
 
 function createFormationBlock(formation) {
@@ -156,49 +155,87 @@ function createFormationBlock(formation) {
     title.className = "formation-title";
     title.textContent = formation.nom;
     if (formation.niveau) {
-        title.textContent += ` (${formation.niveau})`;
+        const level = document.createElement("span");
+        level.className = "formation-level";
+        level.textContent = " — " + formation.niveau;
+        title.appendChild(level);
     }
     block.appendChild(title);
+    if (formation.aVerifier) {
+        const warning = document.createElement("p");
+        warning.className = "formation-warning";
+        warning.textContent = "À vérifier : " + formation.aVerifier;
+        block.appendChild(warning);
+    }
+    if (formation.coeffs && Array.isArray(formation.coeffs)) {
+        block.appendChild(createCoefficientsTable(formation.coeffs));
+    }
+    const schoolsTitle = document.createElement("div");
+    schoolsTitle.className = "schools-title";
+    schoolsTitle.textContent = "Établissements publics en Essonne";
+    block.appendChild(schoolsTitle);
     formation.etablissements.forEach(etablissement => {
         block.appendChild(createSchoolElement(etablissement));
     });
     return block;
 }
 
+function createCoefficientsTable(coeffs) {
+    const subjects = [
+        "Français",
+        "Maths",
+        "Hist.-Géo",
+        "Langues",
+        "EPS",
+        "Arts",
+        "Sciences-Techno"
+    ];
+    const wrapper = document.createElement("div");
+    wrapper.className = "coeffs-wrapper";
+    const label = document.createElement("div");
+    label.className = "coeffs-title";
+    label.textContent = "Coefficients AFFELNET";
+    wrapper.appendChild(label);
+    const table = document.createElement("table");
+    table.className = "coeffs-table";
+    const thead = document.createElement("thead");
+    const headRow = document.createElement("tr");
+    subjects.forEach(subject => {
+        const th = document.createElement("th");
+        th.textContent = subject;
+        headRow.appendChild(th);
+    });
+    thead.appendChild(headRow);
+    table.appendChild(thead);
+    const tbody = document.createElement("tbody");
+    const coeffRow = document.createElement("tr");
+    coeffs.forEach(coeff => {
+        const td = document.createElement("td");
+        td.textContent = coeff;
+        coeffRow.appendChild(td);
+    });
+    tbody.appendChild(coeffRow);
+    table.appendChild(tbody);
+    wrapper.appendChild(table);
+    return wrapper;
+}
+
 function createSchoolElement(etablissement) {
     const card = document.createElement("div");
     card.className = "estab";
-    // Nom de l'établissement
     const school = document.createElement("strong");
     school.textContent = etablissement.nom;
     card.appendChild(school);
-    // Ville
     const city = document.createElement("div");
-    city.textContent = etablissement.ville;
+    if (
+        typeof etablissement.distanceKm === "number" &&
+        etablissement.distanceKm !== 999
+    ) {
+        city.textContent = `${etablissement.ville} — environ ${etablissement.distanceKm} km`;
+    } else {
+        city.textContent = etablissement.ville;
+    }
     card.appendChild(city);
-    // Ligne "Trajet"
-    const travel = document.createElement("div");
-    travel.className = "t";
-    // Icône localisation (SVG)
-    const svgNS = "http://www.w3.org/2000/svg";
-    const svg = document.createElementNS(svgNS, "svg");
-    svg.setAttribute("width", "12");
-    svg.setAttribute("height", "12");
-    svg.setAttribute("viewBox", "0 0 24 24");
-    svg.setAttribute("fill", "none");
-    svg.setAttribute("stroke", "currentColor");
-    svg.setAttribute("stroke-width", "2");
-    const path = document.createElementNS(svgNS, "path");
-    path.setAttribute("d", "M12 22s-8-4.5-8-11.8A8 8 0 0112 2a8 8 0 018 8.2c0 7.3-8 11.8-8 11.8z");
-    const circle = document.createElementNS(svgNS, "circle");
-    circle.setAttribute("cx", "12");
-    circle.setAttribute("cy", "10");
-    circle.setAttribute("r", "3");
-    svg.appendChild(path);
-    svg.appendChild(circle);
-    travel.appendChild(svg);
-    travel.appendChild(document.createTextNode(" Trajet : " + etablissement.transport));
-    card.appendChild(travel);
     return card;
 }
 
