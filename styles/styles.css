@@ -146,11 +146,51 @@
   .app-footer-minimal a {color: var(--teal); text-decoration: none;}
   .app-footer-minimal a:hover {text-decoration: underline;}
 
+.card-actions {
+    display: flex;
+    gap: 10px;
+    padding: 0 18px 16px;
+}
+
+.card-action-btn {
+    flex: 1;
+    margin-top: 12px;
+    background: var(--ink);
+    border: 1px solid var(--ink);
+    color: #fff;
+    border-radius: 8px;
+    padding: 10px;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 13.5px;
+    font-family: inherit;
+}
+
+.card-action-btn:hover {
+    filter: brightness(1.08);
+}
+
+.card-action-btn.secondary {
+    background: transparent;
+    color: var(--ink);
+}
+
+.card-action-btn.secondary:hover {
+    background: var(--ink);
+    color: #fff;
+}
+
   @media print{
     body *{visibility:hidden;}
     #printable, #printable *{visibility:visible;}
     #printable{position:absolute;top:0;left:0;width:100%;}
-    .printbtn, .psy-note, .app-footer-minimal, .panel:first-child {display:none;}
+    .printbtn,
+.card-actions,
+.psy-note,
+.app-footer-minimal,
+.panel:first-child {
+    display: none !important;
+}
     .grid {display:block;} /* Fix pour l'impression */
   }
      ========================================================================== */
