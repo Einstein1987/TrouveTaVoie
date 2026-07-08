@@ -387,7 +387,6 @@ input.addEventListener('keydown', e => {
     handleFreeText(text);
   }
 });
-document.getElementById('printBtn').addEventListener('click', () => window.print());
 
 const micBtn = document.getElementById('micBtn');
 const micNote = document.getElementById('micNote');
