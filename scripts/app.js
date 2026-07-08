@@ -248,16 +248,6 @@ function createSchoolElement(etablissement) {
     return card;
 }
 
-function fillCoefficients(data) {
-    const row = document.getElementById("cardCoeffs");
-    row.innerHTML = "";
-    data.coeffs.forEach(coeff => {
-        const td = document.createElement("td");
-        td.textContent = coeff;
-        row.appendChild(td);
-    });
-}
-
 function startMenu(){
   state = 'start';
   pendingDomain = null;
