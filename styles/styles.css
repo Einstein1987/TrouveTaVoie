@@ -70,6 +70,76 @@
   .printbtn{width:100%;margin-top:12px;background:transparent;border:1px solid var(--ink);color:var(--ink);border-radius:8px;padding:9px;font-weight:600;cursor:pointer;font-size:13.5px;}
   .printbtn:hover{background:var(--ink);color:#fff;}
 
+.formation-block {
+    margin-bottom: 22px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.formation-title {
+    margin: 0 0 8px;
+    font-size: 1.05rem;
+    font-weight: 800;
+}
+
+.formation-level {
+    font-weight: 500;
+    color: #555;
+}
+
+.formation-warning {
+    margin: 6px 0 10px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    background: #fff3cd;
+    color: #6b4e00;
+    font-size: 0.85rem;
+}
+
+.coeffs-wrapper {
+    margin: 10px 0 12px;
+}
+
+.coeffs-title {
+    margin-bottom: 4px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #555;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.coeffs-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.75rem;
+    background: rgba(255, 255, 255, 0.45);
+}
+
+.coeffs-table th,
+.coeffs-table td {
+    border: 1px solid rgba(0, 0, 0, 0.18);
+    padding: 4px 5px;
+    text-align: center;
+}
+
+.coeffs-table th {
+    font-weight: 700;
+}
+
+.schools-title {
+    margin: 10px 0 6px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #555;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.estab {
+    margin-bottom: 8px;
+}
+
   /* Footers */
   .psy-note {text-align: center; font-size: 14px; font-weight: 500; color: var(--brass-dark); margin: 30px 0 10px;}
   .app-footer-minimal {border-top: 1px solid var(--line); padding: 15px 20px; text-align: center; font-size: 13px; color: #8a8470; background: var(--paper2);}
