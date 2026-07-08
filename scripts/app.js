@@ -124,7 +124,10 @@ function fillCard(domainKey) {
     const data = DOMAINS[domainKey];
     showFilledCard(data);
     fillDetails(data);
-    document.getElementById("printBtn").style.display = "block";
+    const cardActions = document.getElementById("cardActions");
+    if (cardActions) {
+        cardActions.style.display = "flex";
+    }
     if (typeof pingStats === "function") {
         pingStats(domainKey);
     }
