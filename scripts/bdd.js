@@ -883,7 +883,6 @@ const DOMAINS = {
     ]
   }
 };
-
 const DUREES_TRANSPORT_CORBEIL = {
   "Lycée Robert Doisneau|Corbeil-Essonnes": {
     "dureeMin": 26,
@@ -1010,22 +1009,52 @@ const DUREES_TRANSPORT_CORBEIL = {
     "trajet": "Bus 4245"
   }
 }
-
 const NORMALIZED_DUREES_CORBEIL = Object.fromEntries(
   Object.entries(DUREES_TRANSPORT_CORBEIL).map(([k, v]) => [normalizeDistanceKey(k), v])
 );
-
 function getDureeFromCorbeil(etablissement) {
   const key = normalizeDistanceKey(`${etablissement.nom}|${etablissement.ville}`);
   return NORMALIZED_DUREES_CORBEIL[key] ?? null;
 }
-
 function normalizeDistanceKey(value) {
   return value
     .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
     .replace(/[’']/g, " ").toLowerCase()
     .replace(/[^a-z0-9|]+/g, " ").replace(/\s+/g, " ").trim();
 }
+const DISTANCES_CORBEIL_ESSONNES = {
+  "Lycée Robert Doisneau|Corbeil-Essonnes": 0,
+  "Lycée Château des Coudraies|Étiolles": 5,
+  "Lycée Auguste Perret|Évry-Courcouronnes": 6,
+  "Lycée Charles Baudelaire|Évry-Courcouronnes": 6,
+  "Lycée Georges Brassens|Évry-Courcouronnes": 6,
+  "Lycée Pierre Mendès France|Ris-Orangis": 8,
+  "Lycée Marie Laurencin|Mennecy": 9,
+  "Lycée Les Frères Moreau|Quincy-sous-Sénart": 10,
+  "Lycée Nadar|Draveil": 12,
+  "EREA Jean Isoard|Montgeron": 13,
+  "Lycée André-Marie Ampère|Morsang-sur-Orge": 15,
+  "Lycée Paul Langevin|Sainte-Geneviève-des-Bois": 17,
+  "Lycée Jean Monnet|Juvisy-sur-Orge": 18,
+  "Lycée Gaspard Monge|Savigny-sur-Orge": 18,
+  "Lycée Louis Armand|Yerres": 18,
+  "Lycée Clément Ader|Athis-Mons": 19,
+  "Lycée Léonard de Vinci|Saint-Michel-sur-Orge": 20,
+  "Lycée Jean-Pierre Timbaud|Brétigny-sur-Orge": 21,
+  "Lycée Marguerite Yourcenar|Morangis": 22,
+  "Lycée Jean Perrin|Longjumeau": 23,
+  "Lycée Alexandre Denis|Cerny": 23,
+  "Lycée Paul Belmondo|Arpajon": 25,
+  "EREA Le Château du Lac|Ollainville": 26,
+  "Lycée Gustave Eiffel|Massy": 26,
+  "Lycée Parc de Vilgénis|Massy": 27,
+  "Lycée Henri Poincaré|Palaiseau": 29,
+  "Lycée International Paris-Saclay|Palaiseau": 30,
+  "Lycée L'Essouriau|Les Ulis": 32,
+  "Lycée Nelson Mandela|Étampes": 37,
+  "Lycée Geoffroy Saint-Hilaire|Étampes": 37,
+  "Lycée Nikola Tesla|Dourdan": 43
+};
 const NORMALIZED_DISTANCES_CORBEIL = Object.fromEntries(
   Object.entries(DISTANCES_CORBEIL_ESSONNES).map(([key, distance]) => [normalizeDistanceKey(key), distance])
 );
