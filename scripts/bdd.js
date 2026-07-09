@@ -884,73 +884,133 @@ const DOMAINS = {
   }
 };
 
-const DISTANCES_CORBEIL_ESSONNES = {
-  "Lycée Robert Doisneau|Corbeil-Essonnes": 0,
-  "Lycée Château des Coudraies|Étiolles": 5,
-  "Lycée Auguste Perret|Évry-Courcouronnes": 6,
-  "Lycée Charles Baudelaire|Évry-Courcouronnes": 6,
-  "Lycée Georges Brassens|Évry-Courcouronnes": 6,
-  "Lycée Pierre Mendès France|Ris-Orangis": 8,
-  "Lycée Marie Laurencin|Mennecy": 9,
-  "Lycée Les Frères Moreau|Quincy-sous-Sénart": 10,
-  "Lycée Nadar|Draveil": 12,
-  "EREA Jean Isoard|Montgeron": 13,
-  "Lycée André-Marie Ampère|Morsang-sur-Orge": 15,
-  "Lycée Paul Langevin|Sainte-Geneviève-des-Bois": 17,
-  "Lycée Jean Monnet|Juvisy-sur-Orge": 18,
-  "Lycée Gaspard Monge|Savigny-sur-Orge": 18,
-  "Lycée Louis Armand|Yerres": 18,
-  "Lycée Clément Ader|Athis-Mons": 19,
-  "Lycée Léonard de Vinci|Saint-Michel-sur-Orge": 20,
-  "Lycée Jean-Pierre Timbaud|Brétigny-sur-Orge": 21,
-  "Lycée Marguerite Yourcenar|Morangis": 22,
-  "Lycée Jean Perrin|Longjumeau": 23,
-  "Lycée Alexandre Denis|Cerny": 23,
-  "Lycée Paul Belmondo|Arpajon": 25,
-  "EREA Le Château du Lac|Ollainville": 26,
-  "Lycée Gustave Eiffel|Massy": 26,
-  "Lycée Parc de Vilgénis|Massy": 27,
-  "Lycée Henri Poincaré|Palaiseau": 29,
-  "Lycée International Paris-Saclay|Palaiseau": 30,
-  "Lycée L'Essouriau|Les Ulis": 32,
-  "Lycée Nelson Mandela|Étampes": 37,
-  "Lycée Geoffroy Saint-Hilaire|Étampes": 37,
-  "Lycée Nikola Tesla|Dourdan": 43
-};
-
 const DUREES_TRANSPORT_CORBEIL = {
-  "Lycée Robert Doisneau|Corbeil-Essonnes": 26,
-  "Lycée Charles Baudelaire|Évry-Courcouronnes": 42,
-  "Lycée Auguste Perret|Évry-Courcouronnes": 42,
-  "Lycée Pierre Mendès France|Ris-Orangis": 35,
-  "Lycée Château des Coudraies|Étiolles": 34,
-  "Lycée Marie Laurencin|Mennecy": 41,
-  "Lycée Les Frères Moreau|Quincy-sous-Sénart": 71,
-  "Lycée Nadar|Draveil": 71,
-  "EREA Jean Isoard|Montgeron": 74,
-  "Lycée André-Marie Ampère|Morsang-sur-Orge": 81,
-  "Lycée Paul Langevin|Sainte-Geneviève-des-Bois": 65,
-  "Lycée Jean Monnet|Juvisy-sur-Orge": 46,
-  "Lycée Gaspard Monge|Savigny-sur-Orge": 68,
-  "Lycée Louis Armand|Yerres": 64,
-  "Lycée Clément Ader|Athis-Mons": 70,
-  "Lycée Léonard de Vinci|Saint-Michel-sur-Orge": 77,
-  "Lycée Jean-Pierre Timbaud|Brétigny-sur-Orge": 64,
-  "Lycée Marguerite Yourcenar|Morangis": 83,
-  "Lycée Jean Perrin|Longjumeau": 90,
-  "Lycée Alexandre Denis|Cerny": 59,
-  "Lycée Paul Belmondo|Arpajon": 77,
-  "EREA Le Château du Lac|Ollainville": 98,
-  "Lycée Gustave Eiffel|Massy": 110,
-  "Lycée Parc de Vilgénis|Massy": 93,
-  "Lycée Henri Poincaré|Palaiseau": 110,
-  "Lycée International Paris-Saclay|Palaiseau": 108,
-  "Lycée L'Essouriau|Les Ulis": 98,
-  "Lycée Nelson Mandela|Étampes": 120,
-  "Lycée Geoffroy Saint-Hilaire|Étampes": 110,
-  "Lycée Nikola Tesla|Dourdan": 133,
-  "Lycée Georges Brassens|Évry-Courcouronnes": 35
-};
+  {
+  "Lycée Robert Doisneau|Corbeil-Essonnes": {
+    "dureeMin": 26,
+    "trajet": "Bus 4245"
+  },
+  "Lycée Charles Baudelaire|Évry-Courcouronnes": {
+    "dureeMin": 42,
+    "trajet": "Bus 4245 puis Bus 4204"
+  },
+  "Lycée Auguste Perret|Évry-Courcouronnes": {
+    "dureeMin": 42,
+    "trajet": "Bus 4245 puis Bus 4204"
+  },
+  "Lycée Pierre Mendès France|Ris-Orangis": {
+    "dureeMin": 35,
+    "trajet": "Bus 4245 puis RER D"
+  },
+  "Lycée Château des Coudraies|Étiolles": {
+    "dureeMin": 34,
+    "trajet": "Bus 4245 puis RER D puis Bus 3703"
+  },
+  "Lycée Marie Laurencin|Mennecy": {
+    "dureeMin": 41,
+    "trajet": "Bus 4245 puis Bus 4307"
+  },
+  "Lycée Les Frères Moreau|Quincy-sous-Sénart": {
+    "dureeMin": 71,
+    "trajet": "Bus 4245 puis RER D puis RER D"
+  },
+  "Lycée Nadar|Draveil": {
+    "dureeMin": 71,
+    "trajet": "Bus 4245 puis RER D puis Bus 4116"
+  },
+  "EREA Jean Isoard|Montgeron": {
+    "dureeMin": 74,
+    "trajet": "Bus 4245 puis RER D puis RER D"
+  },
+  "Lycée André-Marie Ampère|Morsang-sur-Orge": {
+    "dureeMin": 81,
+    "trajet": "Bus 4245 puis Tram T12 puis Bus 4521"
+  },
+  "Lycée Paul Langevin|Sainte-Geneviève-des-Bois": {
+    "dureeMin": 65,
+    "trajet": "Bus 4245 puis Bus 4504"
+  },
+  "Lycée Jean Monnet|Juvisy-sur-Orge": {
+    "dureeMin": 46,
+    "trajet": "Bus 4245 puis RER D puis Bus 487"
+  },
+  "Lycée Gaspard Monge|Savigny-sur-Orge": {
+    "dureeMin": 68,
+    "trajet": "Bus 4245 puis RER D puis RER C"
+  },
+  "Lycée Louis Armand|Yerres": {
+    "dureeMin": 64,
+    "trajet": "Bus 4245 puis RER D puis RER D"
+  },
+  "Lycée Clément Ader|Athis-Mons": {
+    "dureeMin": 70,
+    "trajet": "Bus 4245 puis RER D puis RER C"
+  },
+  "Lycée Léonard de Vinci|Saint-Michel-sur-Orge": {
+    "dureeMin": 77,
+    "trajet": "Bus 4245 puis Bus 4504 puis Bus 4501"
+  },
+  "Lycée Jean-Pierre Timbaud|Brétigny-sur-Orge": {
+    "dureeMin": 64,
+    "trajet": "Bus 4245 puis Bus 4504"
+  },
+  "Lycée Marguerite Yourcenar|Morangis": {
+    "dureeMin": 83,
+    "trajet": "RER D puis RER D puis Bus 399"
+  },
+  "Lycée Jean Perrin|Longjumeau": {
+    "dureeMin": 90,
+    "trajet": "Bus 4245 puis RER D puis RER C puis Bus 4501"
+  },
+  "Lycée Alexandre Denis|Cerny": {
+    "dureeMin": 59,
+    "trajet": "Bus 4243 puis RER D puis Bus 4306 puis Bus 4306"
+  },
+  "Lycée Paul Belmondo|Arpajon": {
+    "dureeMin": 77,
+    "trajet": "Bus 4245 puis Bus 4504 puis Bus 9114"
+  },
+  "EREA Le Château du Lac|Ollainville": {
+    "dureeMin": 98,
+    "trajet": "Bus 4245 puis RER D puis RER C"
+  },
+  "Lycée Gustave Eiffel|Massy": {
+    "dureeMin": 110,
+    "trajet": "RER D puis RER D puis Bus 399 puis Bus 319"
+  },
+  "Lycée Parc de Vilgénis|Massy": {
+    "dureeMin": 93,
+    "trajet": "Bus 4245 puis Tram T12 puis Bus 119"
+  },
+  "Lycée Henri Poincaré|Palaiseau": {
+    "dureeMin": 110,
+    "trajet": "RER D puis RER D puis RER C puis RER B"
+  },
+  "Lycée International Paris-Saclay|Palaiseau": {
+    "dureeMin": 108,
+    "trajet": "RER D puis RER D puis Bus 9105"
+  },
+  "Lycée L'Essouriau|Les Ulis": {
+    "dureeMin": 98,
+    "trajet": "RER D puis RER D puis Bus 9105 puis Bus 4603"
+  },
+  "Lycée Nelson Mandela|Étampes": {
+    "dureeMin": 120,
+    "trajet": "RER D puis RER D puis RER C"
+  },
+  "Lycée Geoffroy Saint-Hilaire|Étampes": {
+    "dureeMin": 110,
+    "trajet": "RER D puis RER D puis RER C"
+  },
+  "Lycée Nikola Tesla|Dourdan": {
+    "dureeMin": 133,
+    "trajet": "Bus 4245 puis Tram T12 puis Bus 9103"
+  },
+  "Lycée Georges Brassens|Évry-Courcouronnes": {
+    "dureeMin": 35,
+    "trajet": "Bus 4245"
+  }
+}
 
 const NORMALIZED_DUREES_CORBEIL = Object.fromEntries(
   Object.entries(DUREES_TRANSPORT_CORBEIL).map(([k, v]) => [normalizeDistanceKey(k), v])
@@ -977,7 +1037,14 @@ function getDistanceFromCorbeil(etablissement) {
 function sortEtablissementsByDistance(domains) {
   Object.values(domains).forEach(domain => {
     domain.formations.forEach(formation => {
-      formation.etablissements.forEach(e => { e.distanceKm = getDistanceFromCorbeil(e); e.dureeMin = getDureeFromCorbeil(e); });
+      formation.etablissements.forEach(e => { 
+        e.distanceKm = getDistanceFromCorbeil(e); 
+        const d = getDureeFromCorbeil(e);
+        if (d) { 
+          e.dureeMin = d.dureeMin; 
+          e.trajet = d.trajet; 
+        }
+      });
       formation.etablissements.sort((a, b) => {
         const d = a.distanceKm - b.distanceKm;
         if (d !== 0) return d;
