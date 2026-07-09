@@ -190,10 +190,12 @@ function fillCardCustom(selection) {
     if (cardActions) {
         cardActions.style.display = "flex";
     }
+  
     const psyNote = document.getElementById("psyNote");
     if (psyNote) {
       psyNote.style.display = "block";
     }
+  
     if (typeof pingStats === "function" && selection.statKey) {
         pingStats(selection.statKey);
     }
@@ -304,6 +306,10 @@ function createSchoolElement(etablissement) {
 function startMenu(){
   state = 'start';
   pendingSelection = null;
+  const psyNote = document.getElementById("psyNote");
+  if (psyNote) {
+    psyNote.style.display = "none";
+  }
   addBotMessage("Bonjour ! Je suis là pour t'aider. Où en es-tu ?", [
     {label: "Je cherche les lycées qui propose la formation que je souhaite", action: "set_state", payload: "search_formation"},
     {label: "Je connais la famille de métiers ou le domaine qui m'intéresse", action: "set_state", payload: "search_domaine"},
