@@ -284,7 +284,7 @@ function createSchoolElement(etablissement) {
         city.textContent = etablissement.ville;
     }
     card.appendChild(city);
-    const ligne = e.trajet || etablissement.transport;
+    const ligne = etablissement.trajet || etablissement.transport;
     if (ligne || typeof etablissement.dureeMin === "number") {
       const transport = document.createElement("div");
       transport.className = "school-transport";
