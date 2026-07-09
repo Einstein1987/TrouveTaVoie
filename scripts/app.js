@@ -284,16 +284,15 @@ function createSchoolElement(etablissement) {
         city.textContent = etablissement.ville;
     }
     card.appendChild(city);
-    if (etablissement.transport || typeof etablissement.dureeMin === "number") {
+    const ligne = e.trajet || etablissement.transport;
+    if (ligne || typeof etablissement.dureeMin === "number") {
       const transport = document.createElement("div");
       transport.className = "school-transport";
       const morceaux = [];
-      if (typeof etablissement.dureeMin === "number") {
-        morceaux.push(`environ ${etablissement.dureeMin} min`);
-      }
-      if (etablissement.transport) morceaux.push(etablissement.transport);
-        transport.textContent = "Trajet : " + morceaux.join(" — ");
-        card.appendChild(transport);
+      if (typeof etablissement.dureeMin === "number") morceaux.push(`environ ${etablissement.dureeMin} min`);
+      if (ligne) morceaux.push(ligne);
+      transport.textContent = "Trajet : " + morceaux.join(" — ");
+      card.appendChild(transport);
     }
     return card;
 }
