@@ -18,14 +18,14 @@ const DOMAINS = {
         niveau: "Bac Pro",
         coeffs: [6, 5, 4, 5, 3, 3, 4],
         etablissements: [
-          { nom: "Lycée Paul Belmondo", ville: "Arpajon", transport: "Bus 91-04 (env. 60 min)" },
-          { nom: "Lycée Nikola Tesla", ville: "Dourdan", transport: "RER D puis RER C (env. 1h30)" },
-          { nom: "Lycée Charles Baudelaire", ville: "Évry-Courcouronnes", transport: "Bus 401 (env. 30 min)" },
-          { nom: "Lycée Jean Monnet", ville: "Juvisy-sur-Orge", transport: "RER D (env. 30 min)" },
-          { nom: "Lycée Jean Perrin", ville: "Longjumeau", transport: "RER D puis Bus (env. 50 min)" },
-          { nom: "Lycée Pierre Mendès France", ville: "Ris-Orangis", transport: "RER D (env. 25 min)" },
-          { nom: "Lycée Paul Langevin", ville: "Sainte-Geneviève-des-Bois", transport: "RER D puis Bus (env. 50 min)" },
-          { nom: "Lycée Louis Armand", ville: "Yerres", transport: "RER D (env. 35 min)" }
+          { nom: "Lycée Paul Belmondo", ville: "Arpajon", transport: "Bus 91-04" },
+          { nom: "Lycée Nikola Tesla", ville: "Dourdan", transport: "RER D puis RER C" },
+          { nom: "Lycée Charles Baudelaire", ville: "Évry-Courcouronnes", transport: "Bus 401" },
+          { nom: "Lycée Jean Monnet", ville: "Juvisy-sur-Orge", transport: "RER D" },
+          { nom: "Lycée Jean Perrin", ville: "Longjumeau", transport: "RER D puis Bus" },
+          { nom: "Lycée Pierre Mendès France", ville: "Ris-Orangis", transport: "RER D" },
+          { nom: "Lycée Paul Langevin", ville: "Sainte-Geneviève-des-Bois", transport: "RER D puis Bus" },
+          { nom: "Lycée Louis Armand", ville: "Yerres", transport: "RER D" }
         ]
       },
       {
@@ -33,19 +33,19 @@ const DOMAINS = {
         niveau: "Bac Pro",
         coeffs: [6, 5, 4, 5, 3, 3, 4],
         etablissements: [
-          { nom: "Lycée Paul Belmondo", ville: "Arpajon", transport: "Bus 91-04 (env. 60 min)" },
-          { nom: "Lycée Robert Doisneau", ville: "Corbeil-Essonnes", transport: "Bus 401 ou à pied (env. 15 min)" },
-          { nom: "Lycée Nikola Tesla", ville: "Dourdan", transport: "RER D puis RER C (env. 1h30)" },
-          { nom: "Lycée Nadar", ville: "Draveil", transport: "RER D puis Bus (env. 45 min)" },
-          { nom: "Lycée Nelson Mandela", ville: "Étampes", transport: "RER D puis RER C (env. 1h15)" },
-          { nom: "Lycée Charles Baudelaire", ville: "Évry-Courcouronnes", transport: "Bus 401 (env. 30 min)" },
-          { nom: "Lycée Jean Monnet", ville: "Juvisy-sur-Orge", transport: "RER D (env. 30 min)" },
-          { nom: "Lycée Jean Perrin", ville: "Longjumeau", transport: "RER D puis Bus (env. 50 min)" },
-          { nom: "Lycée Marguerite Yourcenar", ville: "Morangis", transport: "RER D puis Bus (env. 1h)" },
-          { nom: "Lycée Henri Poincaré", ville: "Palaiseau", transport: "RER D puis Bus (env. 1h)" },
-          { nom: "Lycée Pierre Mendès France", ville: "Ris-Orangis", transport: "RER D (env. 25 min)" },
-          { nom: "Lycée Paul Langevin", ville: "Sainte-Geneviève-des-Bois", transport: "RER D puis Bus (env. 50 min)" },
-          { nom: "Lycée Louis Armand", ville: "Yerres", transport: "RER D (env. 35 min)" }
+          { nom: "Lycée Paul Belmondo", ville: "Arpajon", transport: "Bus 91-04" },
+          { nom: "Lycée Robert Doisneau", ville: "Corbeil-Essonnes", transport: "Bus 401 ou à pied" },
+          { nom: "Lycée Nikola Tesla", ville: "Dourdan", transport: "RER D puis RER C" },
+          { nom: "Lycée Nadar", ville: "Draveil", transport: "RER D puis Bus" },
+          { nom: "Lycée Nelson Mandela", ville: "Étampes", transport: "RER D puis RER C" },
+          { nom: "Lycée Charles Baudelaire", ville: "Évry-Courcouronnes", transport: "Bus 401" },
+          { nom: "Lycée Jean Monnet", ville: "Juvisy-sur-Orge", transport: "RER D" },
+          { nom: "Lycée Jean Perrin", ville: "Longjumeau", transport: "RER D puis Bus" },
+          { nom: "Lycée Marguerite Yourcenar", ville: "Morangis", transport: "RER D puis Bus" },
+          { nom: "Lycée Henri Poincaré", ville: "Palaiseau", transport: "RER D puis Bus" },
+          { nom: "Lycée Pierre Mendès France", ville: "Ris-Orangis", transport: "RER D" },
+          { nom: "Lycée Paul Langevin", ville: "Sainte-Geneviève-des-Bois", transport: "RER D puis Bus" },
+          { nom: "Lycée Louis Armand", ville: "Yerres", transport: "RER D" }
         ]
       },
       {
@@ -53,15 +53,15 @@ const DOMAINS = {
         niveau: "CAP",
         coeffs: [6, 5, 4, 5, 3, 3, 4],
         etablissements: [
-          { nom: "Lycée Nadar", ville: "Draveil", transport: "RER D puis Bus (env. 45 min)" },
-          { nom: "Lycée Nelson Mandela", ville: "Étampes", transport: "RER D puis RER C (env. 1h15)" },
-          { nom: "Lycée Charles Baudelaire", ville: "Évry-Courcouronnes", transport: "Bus 401 (env. 30 min)" },
-          { nom: "EREA Jean Isoard", ville: "Montgeron", transport: "RER D (env. 35 min)" },
-          { nom: "Lycée Marguerite Yourcenar", ville: "Morangis", transport: "RER D puis Bus (env. 1h)" },
-          { nom: "Lycée Henri Poincaré", ville: "Palaiseau", transport: "RER D puis Bus (env. 1h)" },
-          { nom: "Lycée Pierre Mendès France", ville: "Ris-Orangis", transport: "RER D (env. 25 min)" },
-          { nom: "Lycée Paul Langevin", ville: "Sainte-Geneviève-des-Bois", transport: "RER D puis Bus (env. 50 min)" },
-          { nom: "Lycée Louis Armand", ville: "Yerres", transport: "RER D (env. 35 min)" }
+          { nom: "Lycée Nadar", ville: "Draveil", transport: "RER D puis Bus" },
+          { nom: "Lycée Nelson Mandela", ville: "Étampes", transport: "RER D puis RER C" },
+          { nom: "Lycée Charles Baudelaire", ville: "Évry-Courcouronnes", transport: "Bus 401" },
+          { nom: "EREA Jean Isoard", ville: "Montgeron", transport: "RER D" },
+          { nom: "Lycée Marguerite Yourcenar", ville: "Morangis", transport: "RER D puis Bus" },
+          { nom: "Lycée Henri Poincaré", ville: "Palaiseau", transport: "RER D puis Bus" },
+          { nom: "Lycée Pierre Mendès France", ville: "Ris-Orangis", transport: "RER D" },
+          { nom: "Lycée Paul Langevin", ville: "Sainte-Geneviève-des-Bois", transport: "RER D puis Bus" },
+          { nom: "Lycée Louis Armand", ville: "Yerres", transport: "RER D" }
         ]
       }
     ]
@@ -77,18 +77,18 @@ const DOMAINS = {
         niveau: "Bac Pro",
         coeffs: [6, 5, 4, 5, 3, 3, 4],
         etablissements: [
-          { nom: "Lycée Paul Belmondo", ville: "Arpajon", transport: "Bus 91-04 (env. 60 min)" },
-          { nom: "Lycée Robert Doisneau", ville: "Corbeil-Essonnes", transport: "Bus 401 ou à pied (env. 15 min)" },
-          { nom: "Lycée Nikola Tesla", ville: "Dourdan", transport: "RER D puis RER C (env. 1h30)" },
-          { nom: "Lycée Geoffroy Saint-Hilaire", ville: "Étampes", transport: "RER D puis RER C (env. 1h15)" },
-          { nom: "Lycée Jean Monnet", ville: "Juvisy-sur-Orge", transport: "RER D (env. 30 min)" },
-          { nom: "Lycée L'Essouriau", ville: "Les Ulis", transport: "RER D puis Bus (env. 1h15)" },
-          { nom: "Lycée Jean Perrin", ville: "Longjumeau", transport: "RER D puis Bus (env. 50 min)" },
-          { nom: "Lycée Parc de Vilgénis", ville: "Massy", transport: "RER D puis Tram 12 (env. 1h)" },
-          { nom: "Lycée Marie Laurencin", ville: "Mennecy", transport: "RER D (env. 15 min)" },
-          { nom: "Lycée Marguerite Yourcenar", ville: "Morangis", transport: "RER D puis Bus (env. 1h)" },
-          { nom: "Lycée Paul Langevin", ville: "Sainte-Geneviève-des-Bois", transport: "RER D puis Bus (env. 50 min)" },
-          { nom: "Lycée Louis Armand", ville: "Yerres", transport: "RER D (env. 35 min)" }
+          { nom: "Lycée Paul Belmondo", ville: "Arpajon", transport: "Bus 91-04" },
+          { nom: "Lycée Robert Doisneau", ville: "Corbeil-Essonnes", transport: "Bus 401 ou à pied" },
+          { nom: "Lycée Nikola Tesla", ville: "Dourdan", transport: "RER D puis RER C" },
+          { nom: "Lycée Geoffroy Saint-Hilaire", ville: "Étampes", transport: "RER D puis RER C" },
+          { nom: "Lycée Jean Monnet", ville: "Juvisy-sur-Orge", transport: "RER D" },
+          { nom: "Lycée L'Essouriau", ville: "Les Ulis", transport: "RER D puis Bus" },
+          { nom: "Lycée Jean Perrin", ville: "Longjumeau", transport: "RER D puis Bus" },
+          { nom: "Lycée Parc de Vilgénis", ville: "Massy", transport: "RER D puis Tram 12" },
+          { nom: "Lycée Marie Laurencin", ville: "Mennecy", transport: "RER D" },
+          { nom: "Lycée Marguerite Yourcenar", ville: "Morangis", transport: "RER D puis Bus" },
+          { nom: "Lycée Paul Langevin", ville: "Sainte-Geneviève-des-Bois", transport: "RER D puis Bus" },
+          { nom: "Lycée Louis Armand", ville: "Yerres", transport: "RER D" }
         ]
       },
       {
@@ -96,8 +96,8 @@ const DOMAINS = {
         niveau: "Bac Pro",
         coeffs: [6, 5, 4, 5, 3, 3, 4],
         etablissements: [
-          { nom: "Lycée Alexandre Denis", ville: "Cerny", transport: "RER D jusqu'à Mennecy puis Bus (env. 45 min)" },
-          { nom: "Lycée Gaspard Monge", ville: "Savigny-sur-Orge", transport: "RER D puis RER C (env. 45 min)" }
+          { nom: "Lycée Alexandre Denis", ville: "Cerny", transport: "RER D jusqu'à Mennecy puis Bus" },
+          { nom: "Lycée Gaspard Monge", ville: "Savigny-sur-Orge", transport: "RER D puis RER C" }
         ]
       },
       {
@@ -105,7 +105,7 @@ const DOMAINS = {
         niveau: "Bac Pro",
         coeffs: [6, 5, 4, 5, 3, 3, 4],
         etablissements: [
-          { nom: "Lycée Gaspard Monge", ville: "Savigny-sur-Orge", transport: "RER D puis RER C (env. 45 min)" }
+          { nom: "Lycée Gaspard Monge", ville: "Savigny-sur-Orge", transport: "RER D puis RER C" }
         ]
       },
       {
@@ -113,7 +113,7 @@ const DOMAINS = {
         niveau: "Bac Pro",
         coeffs: [6, 5, 4, 5, 3, 3, 4],
         etablissements: [
-          { nom: "Lycée Alexandre Denis", ville: "Cerny", transport: "RER D jusqu'à Mennecy puis Bus (env. 45 min)" }
+          { nom: "Lycée Alexandre Denis", ville: "Cerny", transport: "RER D jusqu'à Mennecy puis Bus" }
         ]
       },
       {
@@ -121,7 +121,7 @@ const DOMAINS = {
         niveau: "CAP",
         coeffs: [6, 5, 4, 5, 3, 3, 4],
         etablissements: [
-          { nom: "Lycée Alexandre Denis", ville: "Cerny", transport: "RER D jusqu'à Mennecy puis Bus (env. 45 min)" }
+          { nom: "Lycée Alexandre Denis", ville: "Cerny", transport: "RER D jusqu'à Mennecy puis Bus" }
         ]
       },
       {
@@ -129,8 +129,8 @@ const DOMAINS = {
         niveau: "CAP",
         coeffs: [6, 5, 4, 5, 3, 3, 4],
         etablissements: [
-          { nom: "Lycée Alexandre Denis", ville: "Cerny", transport: "RER D jusqu'à Mennecy puis Bus (env. 45 min)" },
-          { nom: "Lycée Gaspard Monge", ville: "Savigny-sur-Orge", transport: "RER D puis RER C (env. 45 min)" }
+          { nom: "Lycée Alexandre Denis", ville: "Cerny", transport: "RER D jusqu'à Mennecy puis Bus" },
+          { nom: "Lycée Gaspard Monge", ville: "Savigny-sur-Orge", transport: "RER D puis RER C" }
         ]
       }
     ]
@@ -146,13 +146,13 @@ const DOMAINS = {
         niveau: "Bac Pro",
         coeffs: [5, 4, 3, 3, 4, 4, 7],
         etablissements: [
-          { nom: "Lycée Nelson Mandela", ville: "Étampes", transport: "RER D puis RER C (env. 1h15)" },
-          { nom: "Lycée Charles Baudelaire", ville: "Évry-Courcouronnes", transport: "Bus 401 (env. 30 min)" },
-          { nom: "Lycée Jean Monnet", ville: "Juvisy-sur-Orge", transport: "RER D (env. 30 min)" },
-          { nom: "Lycée Jean Perrin", ville: "Longjumeau", transport: "RER D puis Bus (env. 50 min)" },
-          { nom: "Lycée Henri Poincaré", ville: "Palaiseau", transport: "RER D puis Bus (env. 1h)" },
-          { nom: "Lycée Les Frères Moreau", ville: "Quincy-sous-Sénart", transport: "RER D (env. 40 min)" },
-          { nom: "Lycée Léonard de Vinci", ville: "Saint-Michel-sur-Orge", transport: "RER D puis RER C (env. 45 min)" }
+          { nom: "Lycée Nelson Mandela", ville: "Étampes", transport: "RER D puis RER C" },
+          { nom: "Lycée Charles Baudelaire", ville: "Évry-Courcouronnes", transport: "Bus 401" },
+          { nom: "Lycée Jean Monnet", ville: "Juvisy-sur-Orge", transport: "RER D" },
+          { nom: "Lycée Jean Perrin", ville: "Longjumeau", transport: "RER D puis Bus" },
+          { nom: "Lycée Henri Poincaré", ville: "Palaiseau", transport: "RER D puis Bus" },
+          { nom: "Lycée Les Frères Moreau", ville: "Quincy-sous-Sénart", transport: "RER D" },
+          { nom: "Lycée Léonard de Vinci", ville: "Saint-Michel-sur-Orge", transport: "RER D puis RER C" }
         ]
       },
       {
@@ -160,9 +160,9 @@ const DOMAINS = {
         niveau: "Bac Pro",
         coeffs: [5, 4, 3, 3, 4, 4, 7],
         etablissements: [
-          { nom: "Lycée Nelson Mandela", ville: "Étampes", transport: "RER D puis RER C (env. 1h15)" },
-          { nom: "Lycée Henri Poincaré", ville: "Palaiseau", transport: "RER D puis Bus (env. 1h)" },
-          { nom: "Lycée Léonard de Vinci", ville: "Saint-Michel-sur-Orge", transport: "RER D puis RER C (env. 45 min)" }
+          { nom: "Lycée Nelson Mandela", ville: "Étampes", transport: "RER D puis RER C" },
+          { nom: "Lycée Henri Poincaré", ville: "Palaiseau", transport: "RER D puis Bus" },
+          { nom: "Lycée Léonard de Vinci", ville: "Saint-Michel-sur-Orge", transport: "RER D puis RER C" }
         ]
       },
       {
@@ -170,7 +170,7 @@ const DOMAINS = {
         niveau: "Bac Pro",
         coeffs: [5, 3, 4, 3, 5, 2, 8],
         etablissements: [
-          { nom: "Lycée Léonard de Vinci", ville: "Saint-Michel-sur-Orge", transport: "RER D puis RER C (env. 45 min)" }
+          { nom: "Lycée Léonard de Vinci", ville: "Saint-Michel-sur-Orge", transport: "RER D puis RER C" }
         ]
       },
       {
@@ -178,8 +178,8 @@ const DOMAINS = {
         niveau: "CAP",
         coeffs: [5, 4, 3, 3, 4, 4, 7],
         etablissements: [
-          { nom: "Lycée Charles Baudelaire", ville: "Évry-Courcouronnes", transport: "Bus 401 (env. 30 min)" },
-          { nom: "Lycée Jean Perrin", ville: "Longjumeau", transport: "RER D puis Bus (env. 50 min)" }
+          { nom: "Lycée Charles Baudelaire", ville: "Évry-Courcouronnes", transport: "Bus 401" },
+          { nom: "Lycée Jean Perrin", ville: "Longjumeau", transport: "RER D puis Bus" }
         ]
       },
       {
@@ -187,11 +187,11 @@ const DOMAINS = {
         niveau: "CAP",
         coeffs: [5, 4, 3, 3, 4, 4, 7],
         etablissements: [
-          { nom: "Lycée Paul Belmondo", ville: "Arpajon", transport: "Bus 91-04 (env. 60 min)" },
-          { nom: "Lycée Nelson Mandela", ville: "Étampes", transport: "RER D puis RER C (env. 1h15)" },
-          { nom: "Lycée Charles Baudelaire", ville: "Évry-Courcouronnes", transport: "Bus 401 (env. 30 min)" },
-          { nom: "EREA Jean Isoard", ville: "Montgeron", transport: "RER D (env. 35 min)" },
-          { nom: "Lycée Léonard de Vinci", ville: "Saint-Michel-sur-Orge", transport: "RER D puis RER C (env. 45 min)" }
+          { nom: "Lycée Paul Belmondo", ville: "Arpajon", transport: "Bus 91-04" },
+          { nom: "Lycée Nelson Mandela", ville: "Étampes", transport: "RER D puis RER C" },
+          { nom: "Lycée Charles Baudelaire", ville: "Évry-Courcouronnes", transport: "Bus 401" },
+          { nom: "EREA Jean Isoard", ville: "Montgeron", transport: "RER D" },
+          { nom: "Lycée Léonard de Vinci", ville: "Saint-Michel-sur-Orge", transport: "RER D puis RER C" }
         ]
       }
     ]
@@ -207,7 +207,7 @@ const DOMAINS = {
         niveau: "Bac Pro",
         coeffs: [5, 4, 3, 3, 4, 4, 7],
         etablissements: [
-          { nom: "Lycée Charles Baudelaire", ville: "Évry-Courcouronnes", transport: "Bus 401 (env. 30 min)" }
+          { nom: "Lycée Charles Baudelaire", ville: "Évry-Courcouronnes", transport: "Bus 401" }
         ]
       },
       {
@@ -215,7 +215,7 @@ const DOMAINS = {
         niveau: "Bac Pro",
         coeffs: [5, 4, 3, 3, 4, 4, 7],
         etablissements: [
-          { nom: "Lycée Charles Baudelaire", ville: "Évry-Courcouronnes", transport: "Bus 401 (env. 30 min)" }
+          { nom: "Lycée Charles Baudelaire", ville: "Évry-Courcouronnes", transport: "Bus 401" }
         ]
       },
       {
@@ -223,7 +223,7 @@ const DOMAINS = {
         niveau: "CAP",
         coeffs: [5, 4, 3, 3, 4, 4, 7],
         etablissements: [
-          { nom: "Lycée Charles Baudelaire", ville: "Évry-Courcouronnes", transport: "Bus 401 (env. 30 min)" }
+          { nom: "Lycée Charles Baudelaire", ville: "Évry-Courcouronnes", transport: "Bus 401" }
         ]
       }
     ]
@@ -239,18 +239,18 @@ const DOMAINS = {
         niveau: "Bac Pro",
         coeffs: [5, 6, 3, 4, 3, 2, 7],
         etablissements: [
-          { nom: "Lycée Paul Belmondo", ville: "Arpajon", transport: "Bus 91-04 (env. 60 min)" },
-          { nom: "Lycée Clément Ader", ville: "Athis-Mons", transport: "RER D (env. 40 min)" },
-          { nom: "Lycée Robert Doisneau", ville: "Corbeil-Essonnes", transport: "Bus 401 ou à pied (env. 15 min)" },
-          { nom: "Lycée Nikola Tesla", ville: "Dourdan", transport: "RER D puis RER C (env. 1h30)" },
-          { nom: "Lycée Nadar", ville: "Draveil", transport: "RER D puis Bus (env. 45 min)" },
-          { nom: "Lycée L'Essouriau", ville: "Les Ulis", transport: "RER D puis Bus (env. 1h15)" },
-          { nom: "Lycée Jean Perrin", ville: "Longjumeau", transport: "RER D puis Bus (env. 50 min)" },
-          { nom: "Lycée Parc de Vilgénis", ville: "Massy", transport: "RER D puis Tram 12 (env. 1h)" },
-          { nom: "Lycée André-Marie Ampère", ville: "Morsang-sur-Orge", transport: "RER D puis Bus (env. 50 min)" },
-          { nom: "Lycée Les Frères Moreau", ville: "Quincy-sous-Sénart", transport: "RER D (env. 40 min)" },
-          { nom: "Lycée Pierre Mendès France", ville: "Ris-Orangis", transport: "RER D (env. 25 min)" },
-          { nom: "Lycée Léonard de Vinci", ville: "Saint-Michel-sur-Orge", transport: "RER D puis RER C (env. 45 min)" }
+          { nom: "Lycée Paul Belmondo", ville: "Arpajon", transport: "Bus 91-04" },
+          { nom: "Lycée Clément Ader", ville: "Athis-Mons", transport: "RER D" },
+          { nom: "Lycée Robert Doisneau", ville: "Corbeil-Essonnes", transport: "Bus 401 ou à pied" },
+          { nom: "Lycée Nikola Tesla", ville: "Dourdan", transport: "RER D puis RER C" },
+          { nom: "Lycée Nadar", ville: "Draveil", transport: "RER D puis Bus" },
+          { nom: "Lycée L'Essouriau", ville: "Les Ulis", transport: "RER D puis Bus" },
+          { nom: "Lycée Jean Perrin", ville: "Longjumeau", transport: "RER D puis Bus" },
+          { nom: "Lycée Parc de Vilgénis", ville: "Massy", transport: "RER D puis Tram 12" },
+          { nom: "Lycée André-Marie Ampère", ville: "Morsang-sur-Orge", transport: "RER D puis Bus" },
+          { nom: "Lycée Les Frères Moreau", ville: "Quincy-sous-Sénart", transport: "RER D" },
+          { nom: "Lycée Pierre Mendès France", ville: "Ris-Orangis", transport: "RER D" },
+          { nom: "Lycée Léonard de Vinci", ville: "Saint-Michel-sur-Orge", transport: "RER D puis RER C" }
         ]
       },
       {
@@ -258,11 +258,11 @@ const DOMAINS = {
         niveau: "Bac Pro",
         coeffs: [5, 6, 3, 4, 3, 2, 7],
         etablissements: [
-          { nom: "Lycée Nikola Tesla", ville: "Dourdan", transport: "RER D puis RER C (env. 1h30)" },
-          { nom: "Lycée Georges Brassens", ville: "Évry-Courcouronnes", transport: "Bus 401 puis Bus 402 (env. 40 min)" },
-          { nom: "Lycée L'Essouriau", ville: "Les Ulis", transport: "RER D puis Bus (env. 1h15)" },
-          { nom: "Lycée Parc de Vilgénis", ville: "Massy", transport: "RER D puis Tram 12 (env. 1h)" },
-          { nom: "Lycée André-Marie Ampère", ville: "Morsang-sur-Orge", transport: "RER D puis Bus (env. 50 min)" }
+          { nom: "Lycée Nikola Tesla", ville: "Dourdan", transport: "RER D puis RER C" },
+          { nom: "Lycée Georges Brassens", ville: "Évry-Courcouronnes", transport: "Bus 401 puis Bus 402" },
+          { nom: "Lycée L'Essouriau", ville: "Les Ulis", transport: "RER D puis Bus" },
+          { nom: "Lycée Parc de Vilgénis", ville: "Massy", transport: "RER D puis Tram 12" },
+          { nom: "Lycée André-Marie Ampère", ville: "Morsang-sur-Orge", transport: "RER D puis Bus" }
         ]
       },
       {
@@ -270,8 +270,8 @@ const DOMAINS = {
         niveau: "Bac Pro",
         coeffs: [5, 6, 3, 4, 3, 2, 7],
         etablissements: [
-          { nom: "Lycée Gustave Eiffel", ville: "Massy", transport: "RER D puis Tram 12 (env. 1h)" },
-          { nom: "Lycée Pierre Mendès France", ville: "Ris-Orangis", transport: "RER D (env. 25 min)" }
+          { nom: "Lycée Gustave Eiffel", ville: "Massy", transport: "RER D puis Tram 12" },
+          { nom: "Lycée Pierre Mendès France", ville: "Ris-Orangis", transport: "RER D" }
         ]
       },
       {
@@ -279,7 +279,7 @@ const DOMAINS = {
         niveau: "Bac Pro",
         coeffs: [5, 6, 3, 4, 3, 2, 7],
         etablissements: [
-          { nom: "Lycée Auguste Perret", ville: "Évry-Courcouronnes", transport: "Bus 401 (env. 25 min)" }
+          { nom: "Lycée Auguste Perret", ville: "Évry-Courcouronnes", transport: "Bus 401" }
         ]
       },
       {
@@ -287,7 +287,7 @@ const DOMAINS = {
         niveau: "Bac Pro",
         coeffs: [5, 6, 3, 4, 3, 2, 7],
         etablissements: [
-          { nom: "Lycée Pierre Mendès France", ville: "Ris-Orangis", transport: "RER D (env. 25 min)" }
+          { nom: "Lycée Pierre Mendès France", ville: "Ris-Orangis", transport: "RER D" }
         ]
       },
       {
@@ -295,7 +295,7 @@ const DOMAINS = {
         niveau: "Bac Pro",
         coeffs: [4, 6, 3, 4, 3, 2, 8],
         etablissements: [
-          { nom: "Lycée International Paris-Saclay", ville: "Palaiseau", transport: "RER B puis Bus (env. 1h10)" }
+          { nom: "Lycée International Paris-Saclay", ville: "Palaiseau", transport: "RER B puis Bus" }
         ]
       },
       {
@@ -303,15 +303,15 @@ const DOMAINS = {
         niveau: "CAP",
         coeffs: [4, 6, 3, 4, 3, 2, 8],
         etablissements: [
-          { nom: "Lycée Clément Ader", ville: "Athis-Mons", transport: "RER D (env. 40 min)" },
-          { nom: "Lycée Robert Doisneau", ville: "Corbeil-Essonnes", transport: "Bus 401 ou à pied (env. 15 min)" },
-          { nom: "Lycée Nadar", ville: "Draveil", transport: "RER D puis Bus (env. 45 min)" },
-          { nom: "Lycée Nelson Mandela", ville: "Étampes", transport: "RER D puis RER C (env. 1h15)" },
-          { nom: "Lycée L'Essouriau", ville: "Les Ulis", transport: "RER D puis Bus (env. 1h15)" },
-          { nom: "EREA Jean Isoard", ville: "Montgeron", transport: "RER D (env. 35 min)" },
-          { nom: "Lycée André-Marie Ampère", ville: "Morsang-sur-Orge", transport: "RER D puis Bus (env. 50 min)" },
-          { nom: "Lycée Les Frères Moreau", ville: "Quincy-sous-Sénart", transport: "RER D (env. 40 min)" },
-          { nom: "Lycée Pierre Mendès France", ville: "Ris-Orangis", transport: "RER D (env. 25 min)" }
+          { nom: "Lycée Clément Ader", ville: "Athis-Mons", transport: "RER D" },
+          { nom: "Lycée Robert Doisneau", ville: "Corbeil-Essonnes", transport: "Bus 401 ou à pied" },
+          { nom: "Lycée Nadar", ville: "Draveil", transport: "RER D puis Bus" },
+          { nom: "Lycée Nelson Mandela", ville: "Étampes", transport: "RER D puis RER C" },
+          { nom: "Lycée L'Essouriau", ville: "Les Ulis", transport: "RER D puis Bus" },
+          { nom: "EREA Jean Isoard", ville: "Montgeron", transport: "RER D" },
+          { nom: "Lycée André-Marie Ampère", ville: "Morsang-sur-Orge", transport: "RER D puis Bus" },
+          { nom: "Lycée Les Frères Moreau", ville: "Quincy-sous-Sénart", transport: "RER D" },
+          { nom: "Lycée Pierre Mendès France", ville: "Ris-Orangis", transport: "RER D" }
         ]
       },
       {
@@ -319,7 +319,7 @@ const DOMAINS = {
         niveau: "CAP",
         coeffs: [4, 6, 3, 3, 3, 3, 8],
         etablissements: [
-          { nom: "Lycée Pierre Mendès France", ville: "Ris-Orangis", transport: "RER D (env. 25 min)" }
+          { nom: "Lycée Pierre Mendès France", ville: "Ris-Orangis", transport: "RER D" }
         ]
       },
       {
@@ -327,7 +327,7 @@ const DOMAINS = {
         niveau: "CAP",
         coeffs: [4, 6, 3, 3, 3, 3, 8],
         etablissements: [
-          { nom: "Lycée Auguste Perret", ville: "Évry-Courcouronnes", transport: "Bus 401 (env. 25 min)" }
+          { nom: "Lycée Auguste Perret", ville: "Évry-Courcouronnes", transport: "Bus 401" }
         ]
       }
     ]
@@ -343,8 +343,8 @@ const DOMAINS = {
         niveau: "Bac Pro",
         coeffs: [5, 6, 3, 4, 3, 2, 7],
         etablissements: [
-          { nom: "Lycée Auguste Perret", ville: "Évry-Courcouronnes", transport: "Bus 401 (env. 25 min)" },
-          { nom: "Lycée Gustave Eiffel", ville: "Massy", transport: "RER D puis Tram 12 (env. 1h)" }
+          { nom: "Lycée Auguste Perret", ville: "Évry-Courcouronnes", transport: "Bus 401" },
+          { nom: "Lycée Gustave Eiffel", ville: "Massy", transport: "RER D puis Tram 12" }
         ]
       },
       {
@@ -352,7 +352,7 @@ const DOMAINS = {
         niveau: "Bac Pro",
         coeffs: [5, 6, 3, 4, 3, 2, 7],
         etablissements: [
-          { nom: "Lycée Jean-Pierre Timbaud", ville: "Brétigny-sur-Orge", transport: "RER D puis RER C (env. 60 min)" }
+          { nom: "Lycée Jean-Pierre Timbaud", ville: "Brétigny-sur-Orge", transport: "RER D puis RER C" }
         ]
       },
       {
@@ -360,7 +360,7 @@ const DOMAINS = {
         niveau: "Bac Pro",
         coeffs: [5, 6, 3, 4, 3, 2, 7],
         etablissements: [
-          { nom: "Lycée Jean-Pierre Timbaud", ville: "Brétigny-sur-Orge", transport: "RER D puis RER C (env. 60 min)" }
+          { nom: "Lycée Jean-Pierre Timbaud", ville: "Brétigny-sur-Orge", transport: "RER D puis RER C" }
         ]
       },
       {
@@ -368,7 +368,7 @@ const DOMAINS = {
         niveau: "Bac Pro",
         coeffs: [5, 6, 3, 4, 3, 2, 7],
         etablissements: [
-          { nom: "Lycée Jean-Pierre Timbaud", ville: "Brétigny-sur-Orge", transport: "RER D puis RER C (env. 60 min)" }
+          { nom: "Lycée Jean-Pierre Timbaud", ville: "Brétigny-sur-Orge", transport: "RER D puis RER C" }
         ]
       },
       {
@@ -376,7 +376,7 @@ const DOMAINS = {
         niveau: "Bac Pro",
         coeffs: [5, 6, 3, 4, 3, 2, 7],
         etablissements: [
-          { nom: "Lycée Jean-Pierre Timbaud", ville: "Brétigny-sur-Orge", transport: "RER D puis RER C (env. 60 min)" }
+          { nom: "Lycée Jean-Pierre Timbaud", ville: "Brétigny-sur-Orge", transport: "RER D puis RER C" }
         ]
       },
       {
@@ -384,9 +384,9 @@ const DOMAINS = {
         niveau: "CAP",
         coeffs: [4, 6, 4, 2, 4, 3, 7],
         etablissements: [
-          { nom: "Lycée Auguste Perret", ville: "Évry-Courcouronnes", transport: "Bus 401 (env. 25 min)" },
-          { nom: "Lycée Jean-Pierre Timbaud", ville: "Brétigny-sur-Orge", transport: "RER D puis RER C (env. 60 min)" },
-          { nom: "EREA Le Château du Lac", ville: "Ollainville", transport: "RER D puis Bus (env. 1h15)" }
+          { nom: "Lycée Auguste Perret", ville: "Évry-Courcouronnes", transport: "Bus 401" },
+          { nom: "Lycée Jean-Pierre Timbaud", ville: "Brétigny-sur-Orge", transport: "RER D puis RER C" },
+          { nom: "EREA Le Château du Lac", ville: "Ollainville", transport: "RER D puis Bus" }
         ]
       },
       {
@@ -394,7 +394,7 @@ const DOMAINS = {
         niveau: "CAP",
         coeffs: [4, 6, 4, 2, 4, 3, 7],
         etablissements: [
-          { nom: "Lycée Gustave Eiffel", ville: "Massy", transport: "RER D puis Tram 12 (env. 1h)" }
+          { nom: "Lycée Gustave Eiffel", ville: "Massy", transport: "RER D puis Tram 12" }
         ]
       },
       {
@@ -402,7 +402,7 @@ const DOMAINS = {
         niveau: "CAP",
         coeffs: [4, 6, 4, 2, 4, 3, 7],
         etablissements: [
-          { nom: "Lycée Gustave Eiffel", ville: "Massy", transport: "RER D puis Tram 12 (env. 1h)" }
+          { nom: "Lycée Gustave Eiffel", ville: "Massy", transport: "RER D puis Tram 12" }
         ]
       },
       {
@@ -410,7 +410,7 @@ const DOMAINS = {
         niveau: "CAP",
         coeffs: [4, 6, 4, 2, 4, 3, 7],
         etablissements: [
-          { nom: "Lycée Gustave Eiffel", ville: "Massy", transport: "RER D puis Tram 12 (env. 1h)" }
+          { nom: "Lycée Gustave Eiffel", ville: "Massy", transport: "RER D puis Tram 12" }
         ]
       },
       {
@@ -418,7 +418,7 @@ const DOMAINS = {
         niveau: "CAP",
         coeffs: [4, 6, 4, 2, 4, 3, 7],
         etablissements: [
-          { nom: "Lycée Jean-Pierre Timbaud", ville: "Brétigny-sur-Orge", transport: "RER D puis RER C (env. 60 min)" }
+          { nom: "Lycée Jean-Pierre Timbaud", ville: "Brétigny-sur-Orge", transport: "RER D puis RER C" }
         ]
       },
       {
@@ -426,7 +426,7 @@ const DOMAINS = {
         niveau: "CAP",
         coeffs: [4, 6, 4, 2, 4, 3, 7],
         etablissements: [
-          { nom: "EREA Le Château du Lac", ville: "Ollainville", transport: "RER D puis Bus (env. 1h15)" }
+          { nom: "EREA Le Château du Lac", ville: "Ollainville", transport: "RER D puis Bus" }
         ]
       },
       {
@@ -434,8 +434,8 @@ const DOMAINS = {
         niveau: "CAP",
         coeffs: [4, 6, 4, 2, 4, 3, 7],
         etablissements: [
-          { nom: "Lycée Auguste Perret", ville: "Évry-Courcouronnes", transport: "Bus 401 (env. 25 min)" },
-          { nom: "Lycée Gustave Eiffel", ville: "Massy", transport: "RER D puis Tram 12 (env. 1h)" }
+          { nom: "Lycée Auguste Perret", ville: "Évry-Courcouronnes", transport: "Bus 401" },
+          { nom: "Lycée Gustave Eiffel", ville: "Massy", transport: "RER D puis Tram 12" }
         ]
       },
       {
@@ -443,7 +443,7 @@ const DOMAINS = {
         niveau: "CAP",
         coeffs: [4, 6, 4, 2, 4, 3, 7],
         etablissements: [
-          { nom: "Lycée Auguste Perret", ville: "Évry-Courcouronnes", transport: "Bus 401 (env. 25 min)" }
+          { nom: "Lycée Auguste Perret", ville: "Évry-Courcouronnes", transport: "Bus 401" }
         ]
       }
     ]
@@ -459,9 +459,9 @@ const DOMAINS = {
         niveau: "Bac Pro",
         coeffs: [4, 6, 4, 2, 4, 3, 7],
         etablissements: [
-          { nom: "Lycée Jean-Pierre Timbaud", ville: "Brétigny-sur-Orge", transport: "RER D puis RER C (env. 60 min)" },
-          { nom: "Lycée Auguste Perret", ville: "Évry-Courcouronnes", transport: "Bus 401 (env. 25 min)" },
-          { nom: "Lycée Gustave Eiffel", ville: "Massy", transport: "RER D puis Tram 12 (env. 1h)" }
+          { nom: "Lycée Jean-Pierre Timbaud", ville: "Brétigny-sur-Orge", transport: "RER D puis RER C" },
+          { nom: "Lycée Auguste Perret", ville: "Évry-Courcouronnes", transport: "Bus 401" },
+          { nom: "Lycée Gustave Eiffel", ville: "Massy", transport: "RER D puis Tram 12" }
         ]
       },
       {
@@ -469,8 +469,8 @@ const DOMAINS = {
         niveau: "Bac Pro",
         coeffs: [4, 6, 4, 2, 4, 3, 7],
         etablissements: [
-          { nom: "Lycée Jean-Pierre Timbaud", ville: "Brétigny-sur-Orge", transport: "RER D puis RER C (env. 60 min)" },
-          { nom: "Lycée Gustave Eiffel", ville: "Massy", transport: "RER D puis Tram 12 (env. 1h)" }
+          { nom: "Lycée Jean-Pierre Timbaud", ville: "Brétigny-sur-Orge", transport: "RER D puis RER C" },
+          { nom: "Lycée Gustave Eiffel", ville: "Massy", transport: "RER D puis Tram 12" }
         ]
       },
       {
@@ -478,7 +478,7 @@ const DOMAINS = {
         niveau: "Bac Pro",
         coeffs: [4, 6, 4, 2, 4, 3, 7],
         etablissements: [
-          { nom: "Lycée Jean-Pierre Timbaud", ville: "Brétigny-sur-Orge", transport: "RER D puis RER C (env. 60 min)" }
+          { nom: "Lycée Jean-Pierre Timbaud", ville: "Brétigny-sur-Orge", transport: "RER D puis RER C" }
         ]
       }
     ]
@@ -494,8 +494,8 @@ const DOMAINS = {
         niveau: "Bac Pro",
         coeffs: [4, 6, 4, 2, 4, 3, 7],
         etablissements: [
-          { nom: "Lycée Auguste Perret", ville: "Évry-Courcouronnes", transport: "Bus 401 (env. 25 min)" },
-          { nom: "Lycée Gustave Eiffel", ville: "Massy", transport: "RER D puis Tram 12 (env. 1h)" }
+          { nom: "Lycée Auguste Perret", ville: "Évry-Courcouronnes", transport: "Bus 401" },
+          { nom: "Lycée Gustave Eiffel", ville: "Massy", transport: "RER D puis Tram 12" }
         ]
       },
       {
@@ -503,7 +503,7 @@ const DOMAINS = {
         niveau: "Bac Pro",
         coeffs: [4, 6, 4, 2, 4, 3, 7],
         etablissements: [
-          { nom: "Lycée Auguste Perret", ville: "Évry-Courcouronnes", transport: "Bus 401 (env. 25 min)" }
+          { nom: "Lycée Auguste Perret", ville: "Évry-Courcouronnes", transport: "Bus 401" }
         ]
       },
       {
@@ -511,7 +511,7 @@ const DOMAINS = {
         niveau: "Bac Pro",
         coeffs: [4, 6, 4, 2, 4, 3, 7],
         etablissements: [
-          { nom: "Lycée Gustave Eiffel", ville: "Massy", transport: "RER D puis Tram 12 (env. 1h)" }
+          { nom: "Lycée Gustave Eiffel", ville: "Massy", transport: "RER D puis Tram 12" }
         ]
       },
       {
@@ -519,8 +519,8 @@ const DOMAINS = {
         niveau: "CAP",
         coeffs: [4, 6, 4, 2, 4, 3, 7],
         etablissements: [
-          { nom: "Lycée Auguste Perret", ville: "Évry-Courcouronnes", transport: "Bus 401 (env. 25 min)" },
-          { nom: "EREA Le Château du Lac", ville: "Ollainville", transport: "RER D puis Bus (env. 1h15)" }
+          { nom: "Lycée Auguste Perret", ville: "Évry-Courcouronnes", transport: "Bus 401" },
+          { nom: "EREA Le Château du Lac", ville: "Ollainville", transport: "RER D puis Bus" }
         ]
       }
     ]
@@ -536,9 +536,9 @@ const DOMAINS = {
         niveau: "Bac Pro",
         coeffs: [5, 6, 3, 4, 3, 2, 7],
         etablissements: [
-          { nom: "Lycée Robert Doisneau", ville: "Corbeil-Essonnes", transport: "Bus 401 ou à pied (env. 15 min)" },
-          { nom: "Lycée Parc de Vilgénis", ville: "Massy", transport: "RER D puis Tram 12 (env. 1h)" },
-          { nom: "Lycée Les Frères Moreau", ville: "Quincy-sous-Sénart", transport: "RER D (env. 40 min)" }
+          { nom: "Lycée Robert Doisneau", ville: "Corbeil-Essonnes", transport: "Bus 401 ou à pied" },
+          { nom: "Lycée Parc de Vilgénis", ville: "Massy", transport: "RER D puis Tram 12" },
+          { nom: "Lycée Les Frères Moreau", ville: "Quincy-sous-Sénart", transport: "RER D" }
         ]
       },
       {
@@ -546,8 +546,8 @@ const DOMAINS = {
         niveau: "Bac Pro",
         coeffs: [5, 6, 3, 4, 3, 2, 7],
         etablissements: [
-          { nom: "Lycée Jean-Pierre Timbaud", ville: "Brétigny-sur-Orge", transport: "RER D puis RER C (env. 60 min)" },
-          { nom: "Lycée Jean Perrin", ville: "Longjumeau", transport: "RER D puis Bus (env. 50 min)" }
+          { nom: "Lycée Jean-Pierre Timbaud", ville: "Brétigny-sur-Orge", transport: "RER D puis RER C" },
+          { nom: "Lycée Jean Perrin", ville: "Longjumeau", transport: "RER D puis Bus" }
         ]
       },
       {
@@ -555,8 +555,8 @@ const DOMAINS = {
         niveau: "Bac Pro",
         coeffs: [5, 6, 3, 4, 3, 2, 7],
         etablissements: [
-          { nom: "Lycée Georges Brassens", ville: "Évry-Courcouronnes", transport: "Bus 401 puis Bus 402 (env. 40 min)" },
-          { nom: "Lycée Parc de Vilgénis", ville: "Massy", transport: "RER D puis Tram 12 (env. 1h)" }
+          { nom: "Lycée Georges Brassens", ville: "Évry-Courcouronnes", transport: "Bus 401 puis Bus 402" },
+          { nom: "Lycée Parc de Vilgénis", ville: "Massy", transport: "RER D puis Tram 12" }
         ]
       },
       {
@@ -564,7 +564,7 @@ const DOMAINS = {
         niveau: "Bac Pro",
         coeffs: [5, 6, 3, 4, 3, 2, 7],
         etablissements: [
-          { nom: "Lycée Jean Perrin", ville: "Longjumeau", transport: "RER D puis Bus (env. 50 min)" }
+          { nom: "Lycée Jean Perrin", ville: "Longjumeau", transport: "RER D puis Bus" }
         ]
       },
       {
@@ -572,7 +572,7 @@ const DOMAINS = {
         niveau: "CAP",
         coeffs: [4, 6, 3, 4, 3, 2, 8],
         etablissements: [
-          { nom: "Lycée Jean-Pierre Timbaud", ville: "Brétigny-sur-Orge", transport: "RER D puis RER C (env. 60 min)" }
+          { nom: "Lycée Jean-Pierre Timbaud", ville: "Brétigny-sur-Orge", transport: "RER D puis RER C" }
         ]
       }
     ]
@@ -588,12 +588,12 @@ const DOMAINS = {
         niveau: "Bac Pro",
         coeffs: [5, 6, 3, 4, 3, 2, 7],
         etablissements: [
-          { nom: "Lycée Paul Belmondo", ville: "Arpajon", transport: "Bus 91-04 (env. 60 min)" },
-          { nom: "Lycée Clément Ader", ville: "Athis-Mons", transport: "RER D (env. 40 min)" },
-          { nom: "Lycée Nikola Tesla", ville: "Dourdan", transport: "RER D puis RER C (env. 1h30)" },
-          { nom: "Lycée Nadar", ville: "Draveil", transport: "RER D puis Bus (env. 45 min)" },
-          { nom: "Lycée L'Essouriau", ville: "Les Ulis", transport: "RER D puis Bus (env. 1h15)" },
-          { nom: "Lycée Jean Perrin", ville: "Longjumeau", transport: "RER D puis Bus (env. 50 min)" }
+          { nom: "Lycée Paul Belmondo", ville: "Arpajon", transport: "Bus 91-04" },
+          { nom: "Lycée Clément Ader", ville: "Athis-Mons", transport: "RER D" },
+          { nom: "Lycée Nikola Tesla", ville: "Dourdan", transport: "RER D puis RER C" },
+          { nom: "Lycée Nadar", ville: "Draveil", transport: "RER D puis Bus" },
+          { nom: "Lycée L'Essouriau", ville: "Les Ulis", transport: "RER D puis Bus" },
+          { nom: "Lycée Jean Perrin", ville: "Longjumeau", transport: "RER D puis Bus" }
         ]
       },
       {
@@ -601,7 +601,7 @@ const DOMAINS = {
         niveau: "CAP",
         coeffs: [5, 6, 3, 4, 3, 2, 7],
         etablissements: [
-          { nom: "Lycée L'Essouriau", ville: "Les Ulis", transport: "RER D puis Bus (env. 1h15)" }
+          { nom: "Lycée L'Essouriau", ville: "Les Ulis", transport: "RER D puis Bus" }
         ]
       }
     ]
@@ -617,9 +617,9 @@ const DOMAINS = {
         niveau: "Bac Pro",
         coeffs: [4, 6, 3, 4, 3, 2, 8],
         etablissements: [
-          { nom: "Lycée Alexandre Denis", ville: "Cerny", transport: "RER D jusqu'à Mennecy puis Bus (env. 45 min)" },
-          { nom: "Lycée Les Frères Moreau", ville: "Quincy-sous-Sénart", transport: "RER D (env. 40 min)" },
-          { nom: "Lycée Gaspard Monge", ville: "Savigny-sur-Orge", transport: "RER D puis RER C (env. 45 min)" }
+          { nom: "Lycée Alexandre Denis", ville: "Cerny", transport: "RER D jusqu'à Mennecy puis Bus" },
+          { nom: "Lycée Les Frères Moreau", ville: "Quincy-sous-Sénart", transport: "RER D" },
+          { nom: "Lycée Gaspard Monge", ville: "Savigny-sur-Orge", transport: "RER D puis RER C" }
         ]
       },
       {
@@ -627,7 +627,7 @@ const DOMAINS = {
         niveau: "Bac Pro",
         coeffs: [4, 6, 3, 4, 3, 2, 8],
         etablissements: [
-          { nom: "Lycée Nikola Tesla", ville: "Dourdan", transport: "RER D puis RER C (env. 1h30)" }
+          { nom: "Lycée Nikola Tesla", ville: "Dourdan", transport: "RER D puis RER C" }
         ]
       },
       {
@@ -635,7 +635,7 @@ const DOMAINS = {
         niveau: "Bac Pro",
         coeffs: [4, 6, 3, 4, 3, 2, 8],
         etablissements: [
-          { nom: "Lycée Nikola Tesla", ville: "Dourdan", transport: "RER D puis RER C (env. 1h30)" }
+          { nom: "Lycée Nikola Tesla", ville: "Dourdan", transport: "RER D puis RER C" }
         ]
       },
       {
@@ -643,7 +643,7 @@ const DOMAINS = {
         niveau: "Bac Pro",
         coeffs: [4, 6, 3, 4, 3, 2, 8],
         etablissements: [
-          { nom: "Lycée Nikola Tesla", ville: "Dourdan", transport: "RER D puis RER C (env. 1h30)" }
+          { nom: "Lycée Nikola Tesla", ville: "Dourdan", transport: "RER D puis RER C" }
         ]
       },
       {
@@ -651,8 +651,8 @@ const DOMAINS = {
         niveau: "Bac Pro",
         coeffs: [4, 6, 3, 4, 3, 2, 8],
         etablissements: [
-          { nom: "Lycée Alexandre Denis", ville: "Cerny", transport: "RER D jusqu'à Mennecy puis Bus (env. 45 min)" },
-          { nom: "Lycée Gaspard Monge", ville: "Savigny-sur-Orge", transport: "RER D puis RER C (env. 45 min)" }
+          { nom: "Lycée Alexandre Denis", ville: "Cerny", transport: "RER D jusqu'à Mennecy puis Bus" },
+          { nom: "Lycée Gaspard Monge", ville: "Savigny-sur-Orge", transport: "RER D puis RER C" }
         ]
       },
       {
@@ -660,7 +660,7 @@ const DOMAINS = {
         niveau: "Bac Pro",
         coeffs: [4, 6, 3, 4, 3, 2, 8],
         etablissements: [
-          { nom: "Lycée Alexandre Denis", ville: "Cerny", transport: "RER D jusqu'à Mennecy puis Bus (env. 45 min)" }
+          { nom: "Lycée Alexandre Denis", ville: "Cerny", transport: "RER D jusqu'à Mennecy puis Bus" }
         ]
       },
       {
@@ -668,7 +668,7 @@ const DOMAINS = {
         niveau: "Bac Pro",
         coeffs: [4, 6, 3, 4, 3, 2, 8],
         etablissements: [
-          { nom: "Lycée Alexandre Denis", ville: "Cerny", transport: "RER D jusqu'à Mennecy puis Bus (env. 45 min)" }
+          { nom: "Lycée Alexandre Denis", ville: "Cerny", transport: "RER D jusqu'à Mennecy puis Bus" }
         ]
       },
       {
@@ -676,7 +676,7 @@ const DOMAINS = {
         niveau: "Bac Pro",
         coeffs: [4, 6, 3, 4, 3, 2, 8],
         etablissements: [
-          { nom: "Lycée Alexandre Denis", ville: "Cerny", transport: "RER D jusqu'à Mennecy puis Bus (env. 45 min)" }
+          { nom: "Lycée Alexandre Denis", ville: "Cerny", transport: "RER D jusqu'à Mennecy puis Bus" }
         ]
       },
       {
@@ -684,7 +684,7 @@ const DOMAINS = {
         niveau: "CAP",
         coeffs: [4, 6, 3, 4, 3, 2, 8],
         etablissements: [
-          { nom: "Lycée Alexandre Denis", ville: "Cerny", transport: "RER D jusqu'à Mennecy puis Bus (env. 45 min)" }
+          { nom: "Lycée Alexandre Denis", ville: "Cerny", transport: "RER D jusqu'à Mennecy puis Bus" }
         ]
       },
       {
@@ -692,9 +692,9 @@ const DOMAINS = {
         niveau: "CAP",
         coeffs: [4, 6, 3, 4, 3, 2, 8],
         etablissements: [
-          { nom: "Lycée Alexandre Denis", ville: "Cerny", transport: "RER D jusqu'à Mennecy puis Bus (env. 45 min)" },
-          { nom: "Lycée Les Frères Moreau", ville: "Quincy-sous-Sénart", transport: "RER D (env. 40 min)" },
-          { nom: "Lycée Gaspard Monge", ville: "Savigny-sur-Orge", transport: "RER D puis RER C (env. 45 min)" }
+          { nom: "Lycée Alexandre Denis", ville: "Cerny", transport: "RER D jusqu'à Mennecy puis Bus" },
+          { nom: "Lycée Les Frères Moreau", ville: "Quincy-sous-Sénart", transport: "RER D" },
+          { nom: "Lycée Gaspard Monge", ville: "Savigny-sur-Orge", transport: "RER D puis RER C" }
         ]
       },
       {
@@ -702,8 +702,8 @@ const DOMAINS = {
         niveau: "CAP",
         coeffs: [4, 6, 3, 4, 3, 2, 8],
         etablissements: [
-          { nom: "Lycée Alexandre Denis", ville: "Cerny", transport: "RER D jusqu'à Mennecy puis Bus (env. 45 min)" },
-          { nom: "Lycée Gaspard Monge", ville: "Savigny-sur-Orge", transport: "RER D puis RER C (env. 45 min)" }
+          { nom: "Lycée Alexandre Denis", ville: "Cerny", transport: "RER D jusqu'à Mennecy puis Bus" },
+          { nom: "Lycée Gaspard Monge", ville: "Savigny-sur-Orge", transport: "RER D puis RER C" }
         ]
       },
       {
@@ -711,7 +711,7 @@ const DOMAINS = {
         niveau: "CAP",
         coeffs: [4, 6, 3, 4, 3, 2, 8],
         etablissements: [
-          { nom: "EREA Le Château du Lac", ville: "Ollainville", transport: "RER D puis Bus (env. 1h15)" }
+          { nom: "EREA Le Château du Lac", ville: "Ollainville", transport: "RER D puis Bus" }
         ]
       }
     ]
@@ -727,7 +727,7 @@ const DOMAINS = {
         niveau: "Bac Pro",
         coeffs: [5, 4, 3, 3, 4, 4, 7],
         etablissements: [
-          { nom: "Lycée Château des Coudraies", ville: "Étiolles", transport: "Bus 7001 (env. 20 min)" }
+          { nom: "Lycée Château des Coudraies", ville: "Étiolles", transport: "Bus 7001" }
         ]
       },
       {
@@ -735,7 +735,7 @@ const DOMAINS = {
         niveau: "Bac Pro",
         coeffs: [5, 4, 3, 3, 4, 4, 7],
         etablissements: [
-          { nom: "Lycée Château des Coudraies", ville: "Étiolles", transport: "Bus 7001 (env. 20 min)" }
+          { nom: "Lycée Château des Coudraies", ville: "Étiolles", transport: "Bus 7001" }
         ]
       },
       {
@@ -743,7 +743,7 @@ const DOMAINS = {
         niveau: "Bac Pro",
         coeffs: [4, 6, 3, 3, 3, 3, 8],
         etablissements: [
-          { nom: "Lycée Château des Coudraies", ville: "Étiolles", transport: "Bus 7001 (env. 20 min)" }
+          { nom: "Lycée Château des Coudraies", ville: "Étiolles", transport: "Bus 7001" }
         ]
       },
       {
@@ -751,7 +751,7 @@ const DOMAINS = {
         niveau: "CAP",
         coeffs: [4, 6, 3, 3, 3, 3, 8],
         etablissements: [
-          { nom: "Lycée Château des Coudraies", ville: "Étiolles", transport: "Bus 7001 (env. 20 min)" }
+          { nom: "Lycée Château des Coudraies", ville: "Étiolles", transport: "Bus 7001" }
         ]
       },
       {
@@ -759,7 +759,7 @@ const DOMAINS = {
         niveau: "CAP",
         coeffs: [4, 6, 3, 3, 3, 3, 8],
         etablissements: [
-          { nom: "Lycée Château des Coudraies", ville: "Étiolles", transport: "Bus 7001 (env. 20 min)" }
+          { nom: "Lycée Château des Coudraies", ville: "Étiolles", transport: "Bus 7001" }
         ]
       },
       {
@@ -767,7 +767,7 @@ const DOMAINS = {
         niveau: "CAP",
         coeffs: [5, 4, 3, 3, 4, 4, 7],
         etablissements: [
-          { nom: "Lycée Château des Coudraies", ville: "Étiolles", transport: "Bus 7001 (env. 20 min)" }
+          { nom: "Lycée Château des Coudraies", ville: "Étiolles", transport: "Bus 7001" }
         ]
       },
       {
@@ -775,10 +775,10 @@ const DOMAINS = {
         niveau: "CAP",
         coeffs: [4, 6, 3, 3, 3, 3, 8],
         etablissements: [
-          { nom: "Lycée Nelson Mandela", ville: "Étampes", transport: "RER D puis RER C (env. 1h15)" },
-          { nom: "Lycée L'Essouriau", ville: "Les Ulis", transport: "RER D puis Bus (env. 1h15)" },
-          { nom: "EREA Jean Isoard", ville: "Montgeron", transport: "RER D (env. 35 min)" },
-          { nom: "Lycée Léonard de Vinci", ville: "Saint-Michel-sur-Orge", transport: "RER D puis RER C (env. 45 min)" }
+          { nom: "Lycée Nelson Mandela", ville: "Étampes", transport: "RER D puis RER C" },
+          { nom: "Lycée L'Essouriau", ville: "Les Ulis", transport: "RER D puis Bus" },
+          { nom: "EREA Jean Isoard", ville: "Montgeron", transport: "RER D" },
+          { nom: "Lycée Léonard de Vinci", ville: "Saint-Michel-sur-Orge", transport: "RER D puis RER C" }
         ]
       }
     ]
@@ -794,8 +794,8 @@ const DOMAINS = {
         niveau: "Bac Pro",
         coeffs: [5, 3, 4, 3, 5, 2, 8],
         etablissements: [
-          { nom: "Lycée Nadar", ville: "Draveil", transport: "RER D puis Bus (env. 45 min)" },
-          { nom: "Lycée Paul Belmondo", ville: "Arpajon", transport: "Bus 91-04 (env. 60 min)" }
+          { nom: "Lycée Nadar", ville: "Draveil", transport: "RER D puis Bus" },
+          { nom: "Lycée Paul Belmondo", ville: "Arpajon", transport: "Bus 91-04" }
         ]
       },
       {
@@ -803,8 +803,8 @@ const DOMAINS = {
         niveau: "CAP",
         coeffs: [5, 3, 4, 3, 5, 2, 8],
         etablissements: [
-          { nom: "Lycée Paul Belmondo", ville: "Arpajon", transport: "Bus 91-04 (env. 60 min)" },
-          { nom: "Lycée Nadar", ville: "Draveil", transport: "RER D puis Bus (env. 45 min)" }
+          { nom: "Lycée Paul Belmondo", ville: "Arpajon", transport: "Bus 91-04" },
+          { nom: "Lycée Nadar", ville: "Draveil", transport: "RER D puis Bus" }
         ]
       }
     ]
@@ -820,8 +820,8 @@ const DOMAINS = {
         niveau: "Bac Pro",
         coeffs: [4, 5, 3, 3, 3, 6, 6],
         etablissements: [
-          { nom: "Lycée Jean Monnet", ville: "Juvisy-sur-Orge", transport: "RER D (env. 30 min)" },
-          { nom: "Lycée Gustave Eiffel", ville: "Massy", transport: "RER D puis Tram 12 (env. 1h)" }
+          { nom: "Lycée Jean Monnet", ville: "Juvisy-sur-Orge", transport: "RER D" },
+          { nom: "Lycée Gustave Eiffel", ville: "Massy", transport: "RER D puis Tram 12" }
         ]
       },
       {
@@ -829,7 +829,7 @@ const DOMAINS = {
         niveau: "Bac Pro",
         coeffs: [4, 5, 3, 3, 3, 6, 6],
         etablissements: [
-          { nom: "Lycée Jean Monnet", ville: "Juvisy-sur-Orge", transport: "RER D (env. 30 min)" }
+          { nom: "Lycée Jean Monnet", ville: "Juvisy-sur-Orge", transport: "RER D" }
         ]
       },
       {
@@ -837,7 +837,7 @@ const DOMAINS = {
         niveau: "Bac Pro",
         coeffs: [4, 6, 4, 2, 4, 3, 7],
         etablissements: [
-          { nom: "Lycée Gustave Eiffel", ville: "Massy", transport: "RER D puis Tram 12 (env. 1h)" }
+          { nom: "Lycée Gustave Eiffel", ville: "Massy", transport: "RER D puis Tram 12" }
         ]
       },
       {
@@ -845,7 +845,7 @@ const DOMAINS = {
         niveau: "CAP",
         coeffs: [4, 5, 3, 3, 3, 6, 6],
         etablissements: [
-          { nom: "Lycée Jean Monnet", ville: "Juvisy-sur-Orge", transport: "RER D (env. 30 min)" }
+          { nom: "Lycée Jean Monnet", ville: "Juvisy-sur-Orge", transport: "RER D" }
         ]
       },
       {
@@ -853,7 +853,7 @@ const DOMAINS = {
         niveau: "CAP",
         coeffs: [4, 5, 3, 3, 3, 6, 6],
         etablissements: [
-          { nom: "Lycée Gustave Eiffel", ville: "Massy", transport: "RER D puis Tram 12 (env. 1h)" }
+          { nom: "Lycée Gustave Eiffel", ville: "Massy", transport: "RER D puis Tram 12" }
         ]
       },
       {
@@ -861,7 +861,7 @@ const DOMAINS = {
         niveau: "CAP",
         coeffs: [4, 5, 3, 3, 3, 6, 6],
         etablissements: [
-          { nom: "Lycée Charles Baudelaire", ville: "Évry-Courcouronnes", transport: "Bus 401 (env. 30 min)" }
+          { nom: "Lycée Charles Baudelaire", ville: "Évry-Courcouronnes", transport: "Bus 401" }
         ]
       }
     ]
@@ -877,7 +877,7 @@ const DOMAINS = {
         niveau: "CAP",
         coeffs: [4, 5, 3, 3, 4, 3, 8],
         etablissements: [
-          { nom: "EREA Le Château du Lac", ville: "Ollainville", transport: "RER D puis Bus (env. 1h15)" }
+          { nom: "EREA Le Château du Lac", ville: "Ollainville", transport: "RER D puis Bus" }
         ]
       }
     ]
