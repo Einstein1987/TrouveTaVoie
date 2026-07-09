@@ -1,11 +1,10 @@
 // =============================================================================
-// OrienTeen — Base de données des formations professionnelles publiques
-// Secteur : bassin de Corbeil-Essonnes / Essonne (91)
-// Source  : CIO d'Évry — "Formations professionnelles post-3e en Essonne",
-//           "Bacs professionnels en Essonne", "Fiche technique n°21 (coefficients)"
-//           et "Fichier formations pro / vœux bassin" — Rentrée 2026.
+// OrienTeen — Base des formations professionnelles publiques (Essonne, 91)
+// Secteur de référence : bassin de Corbeil-Essonnes.
+// Sources : CIO d'Évry — "Formations pro post-3e", "Bacs pro en Essonne",
+//           "Les CAP en Essonne", "Fiche technique n°21 (coefficients)" — Rentrée 2026.
 // NB : établissements PUBLICS uniquement. Données indicatives, à revérifier
-//      chaque année sur ONISEP / AFFELNET (offre et coefficients susceptibles d'évoluer).
+//      chaque année sur ONISEP / AFFELNET (offre et coefficients évoluent).
 // =============================================================================
 
 const DOMAINS = {
@@ -70,7 +69,7 @@ const DOMAINS = {
 
   gestion_logistique: {
     label: "Métiers de la Gestion, du Transport et de la Logistique",
-    keywords: ["gestion", "administration", "administratif", "agora", "secretariat", "bureau", "logistique", "transport", "entrepot", "magasinier", "stock", "conducteur", "routier", "camion"],
+    keywords: ["gestion", "administration", "administratif", "agora", "secretariat", "bureau", "logistique", "transport", "entrepot", "magasinier", "stock", "conducteur", "routier", "camion", "autobus", "autocar", "chauffeur"],
     coeffs: [6, 5, 4, 5, 3, 3, 4],
     formations: [
       {
@@ -116,13 +115,30 @@ const DOMAINS = {
         etablissements: [
           { nom: "Lycée Alexandre Denis", ville: "Cerny", transport: "RER D jusqu'à Mennecy puis Bus (env. 45 min)" }
         ]
+      },
+      {
+        nom: "CAP Conducteur Agent d'accueil en Autobus et Autocar",
+        niveau: "CAP",
+        coeffs: [6, 5, 4, 5, 3, 3, 4],
+        etablissements: [
+          { nom: "Lycée Alexandre Denis", ville: "Cerny", transport: "RER D jusqu'à Mennecy puis Bus (env. 45 min)" }
+        ]
+      },
+      {
+        nom: "CAP Opérateur/opératrice logistique",
+        niveau: "CAP",
+        coeffs: [6, 5, 4, 5, 3, 3, 4],
+        etablissements: [
+          { nom: "Lycée Alexandre Denis", ville: "Cerny", transport: "RER D jusqu'à Mennecy puis Bus (env. 45 min)" },
+          { nom: "Lycée Gaspard Monge", ville: "Savigny-sur-Orge", transport: "RER D puis RER C (env. 45 min)" }
+        ]
       }
     ]
   },
 
   sante_social: {
     label: "Santé, Social, Soin et Animation",
-    keywords: ["sante", "social", "soin", "enfant", "petite enfance", "personnes agees", "hopital", "medical", "infirmier", "aide", "assp", "animation", "aepa", "hygiene", "proprete", "sterilisation"],
+    keywords: ["sante", "social", "soin", "enfant", "petite enfance", "personnes agees", "grand age", "hopital", "medical", "infirmier", "aide", "assp", "animation", "aepa", "hygiene", "proprete", "sterilisation"],
     coeffs: [5, 4, 3, 3, 4, 4, 7],
     formations: [
       {
@@ -165,6 +181,18 @@ const DOMAINS = {
           { nom: "Lycée Charles Baudelaire", ville: "Évry-Courcouronnes", transport: "Bus 401 (env. 30 min)" },
           { nom: "Lycée Jean Perrin", ville: "Longjumeau", transport: "RER D puis Bus (env. 50 min)" }
         ]
+      },
+      {
+        nom: "CAP Agent accompagnant au grand âge",
+        niveau: "CAP",
+        coeffs: [5, 4, 3, 3, 4, 4, 7],
+        etablissements: [
+          { nom: "Lycée Paul Belmondo", ville: "Arpajon", transport: "Bus 91-04 (env. 60 min)" },
+          { nom: "Lycée Nelson Mandela", ville: "Étampes", transport: "RER D puis RER C (env. 1h15)" },
+          { nom: "Lycée Charles Baudelaire", ville: "Évry-Courcouronnes", transport: "Bus 401 (env. 30 min)" },
+          { nom: "EREA Jean Isoard", ville: "Montgeron", transport: "RER D (env. 35 min)" },
+          { nom: "Lycée Léonard de Vinci", ville: "Saint-Michel-sur-Orge", transport: "RER D puis RER C (env. 45 min)" }
+        ]
       }
     ]
   },
@@ -189,13 +217,21 @@ const DOMAINS = {
         etablissements: [
           { nom: "Lycée Charles Baudelaire", ville: "Évry-Courcouronnes", transport: "Bus 401 (env. 30 min)" }
         ]
+      },
+      {
+        nom: "CAP Esthétique, cosmétique, parfumerie",
+        niveau: "CAP",
+        coeffs: [5, 4, 3, 3, 4, 4, 7],
+        etablissements: [
+          { nom: "Lycée Charles Baudelaire", ville: "Évry-Courcouronnes", transport: "Bus 401 (env. 30 min)" }
+        ]
       }
     ]
   },
 
   numerique_energie: {
     label: "Transitions Numérique et Énergétique",
-    keywords: ["informatique", "ordinateur", "numerique", "reseau", "cybersecurite", "electricite", "electricien", "ciel", "melec", "energie", "code", "electronique", "climatisation", "chauffage", "froid", "photonique", "optique"],
+    keywords: ["informatique", "ordinateur", "numerique", "reseau", "cybersecurite", "electricite", "electricien", "ciel", "melec", "energie", "code", "electronique", "climatisation", "chauffage", "chauffagiste", "thermique", "froid", "photonique", "optique"],
     coeffs: [5, 6, 3, 4, 3, 2, 7],
     formations: [
       {
@@ -277,13 +313,29 @@ const DOMAINS = {
           { nom: "Lycée Les Frères Moreau", ville: "Quincy-sous-Sénart", transport: "RER D (env. 40 min)" },
           { nom: "Lycée Pierre Mendès France", ville: "Ris-Orangis", transport: "RER D (env. 25 min)" }
         ]
+      },
+      {
+        nom: "CAP Installateur en froid et conditionnement d'air",
+        niveau: "CAP",
+        coeffs: [4, 6, 3, 3, 3, 3, 8],
+        etablissements: [
+          { nom: "Lycée Pierre Mendès France", ville: "Ris-Orangis", transport: "RER D (env. 25 min)" }
+        ]
+      },
+      {
+        nom: "CAP Monteur en installations thermiques",
+        niveau: "CAP",
+        coeffs: [4, 6, 3, 3, 3, 3, 8],
+        etablissements: [
+          { nom: "Lycée Auguste Perret", ville: "Évry-Courcouronnes", transport: "Bus 401 (env. 25 min)" }
+        ]
       }
     ]
   },
 
   batiment: {
     label: "Construction, Bâtiment et Travaux Publics",
-    keywords: ["batiment", "construire", "construction", "maçon", "macon", "maçonnerie", "gros oeuvre", "metallerie", "travaux", "chantier", "peintre", "finition", "menuiserie aluminium", "travaux publics"],
+    keywords: ["batiment", "construire", "construction", "maçon", "macon", "maçonnerie", "gros oeuvre", "metallerie", "metallier", "travaux", "chantier", "peintre", "peinture", "carrelage", "finition", "plomberie", "sanitaire", "charpente", "charpentier", "menuiserie aluminium", "travaux publics"],
     coeffs: [5, 6, 3, 4, 3, 2, 7],
     formations: [
       {
@@ -333,7 +385,65 @@ const DOMAINS = {
         coeffs: [4, 6, 4, 2, 4, 3, 7],
         etablissements: [
           { nom: "Lycée Auguste Perret", ville: "Évry-Courcouronnes", transport: "Bus 401 (env. 25 min)" },
+          { nom: "Lycée Jean-Pierre Timbaud", ville: "Brétigny-sur-Orge", transport: "RER D puis RER C (env. 60 min)" },
+          { nom: "EREA Le Château du Lac", ville: "Ollainville", transport: "RER D puis Bus (env. 1h15)" }
+        ]
+      },
+      {
+        nom: "CAP Carreleur mosaïste",
+        niveau: "CAP",
+        coeffs: [4, 6, 4, 2, 4, 3, 7],
+        etablissements: [
+          { nom: "Lycée Gustave Eiffel", ville: "Massy", transport: "RER D puis Tram 12 (env. 1h)" }
+        ]
+      },
+      {
+        nom: "CAP Peintre applicateur de revêtements",
+        niveau: "CAP",
+        coeffs: [4, 6, 4, 2, 4, 3, 7],
+        etablissements: [
+          { nom: "Lycée Gustave Eiffel", ville: "Massy", transport: "RER D puis Tram 12 (env. 1h)" }
+        ]
+      },
+      {
+        nom: "CAP Charpentier bois",
+        niveau: "CAP",
+        coeffs: [4, 6, 4, 2, 4, 3, 7],
+        etablissements: [
+          { nom: "Lycée Gustave Eiffel", ville: "Massy", transport: "RER D puis Tram 12 (env. 1h)" }
+        ]
+      },
+      {
+        nom: "CAP Menuisier aluminium-verre",
+        niveau: "CAP",
+        coeffs: [4, 6, 4, 2, 4, 3, 7],
+        etablissements: [
           { nom: "Lycée Jean-Pierre Timbaud", ville: "Brétigny-sur-Orge", transport: "RER D puis RER C (env. 60 min)" }
+        ]
+      },
+      {
+        nom: "CAP Métallier",
+        niveau: "CAP",
+        coeffs: [4, 6, 4, 2, 4, 3, 7],
+        etablissements: [
+          { nom: "EREA Le Château du Lac", ville: "Ollainville", transport: "RER D puis Bus (env. 1h15)" }
+        ]
+      },
+      {
+        nom: "CAP Monteur en installations sanitaires",
+        niveau: "CAP",
+        coeffs: [4, 6, 4, 2, 4, 3, 7],
+        etablissements: [
+          { nom: "Lycée Auguste Perret", ville: "Évry-Courcouronnes", transport: "Bus 401 (env. 25 min)" },
+          { nom: "Lycée Gustave Eiffel", ville: "Massy", transport: "RER D puis Tram 12 (env. 1h)" }
+        ]
+      },
+      {
+        nom: "CAP Interventions en maintenance technique des bâtiments",
+        niveau: "CAP",
+        coeffs: [4, 6, 4, 2, 4, 3, 7],
+        etablissements: [
+          { nom: "Lycée Auguste Perret", ville: "Évry-Courcouronnes", transport: "Bus 401 (env. 25 min)" }
         ]
       }
     ]
@@ -376,7 +486,7 @@ const DOMAINS = {
 
   agencement_bois: {
     label: "Agencement, Menuiserie et Ameublement",
-    keywords: ["menuiserie", "menuisier", "bois", "agencement", "ameublement", "meuble", "agenceur", "fabrication bois"],
+    keywords: ["menuiserie", "menuisier", "bois", "agencement", "ameublement", "meuble", "agenceur", "fabrication bois", "ebeniste"],
     coeffs: [4, 6, 4, 2, 4, 3, 7],
     formations: [
       {
@@ -402,6 +512,15 @@ const DOMAINS = {
         coeffs: [4, 6, 4, 2, 4, 3, 7],
         etablissements: [
           { nom: "Lycée Gustave Eiffel", ville: "Massy", transport: "RER D puis Tram 12 (env. 1h)" }
+        ]
+      },
+      {
+        nom: "CAP Menuisier fabricant",
+        niveau: "CAP",
+        coeffs: [4, 6, 4, 2, 4, 3, 7],
+        etablissements: [
+          { nom: "Lycée Auguste Perret", ville: "Évry-Courcouronnes", transport: "Bus 401 (env. 25 min)" },
+          { nom: "EREA Le Château du Lac", ville: "Ollainville", transport: "RER D puis Bus (env. 1h15)" }
         ]
       }
     ]
@@ -447,6 +566,14 @@ const DOMAINS = {
         etablissements: [
           { nom: "Lycée Jean Perrin", ville: "Longjumeau", transport: "RER D puis Bus (env. 50 min)" }
         ]
+      },
+      {
+        nom: "CAP Réalisations industrielles en chaudronnerie ou soudage - Option A : chaudronnerie",
+        niveau: "CAP",
+        coeffs: [4, 6, 3, 4, 3, 2, 8],
+        etablissements: [
+          { nom: "Lycée Jean-Pierre Timbaud", ville: "Brétigny-sur-Orge", transport: "RER D puis RER C (env. 60 min)" }
+        ]
       }
     ]
   },
@@ -468,13 +595,21 @@ const DOMAINS = {
           { nom: "Lycée L'Essouriau", ville: "Les Ulis", transport: "RER D puis Bus (env. 1h15)" },
           { nom: "Lycée Jean Perrin", ville: "Longjumeau", transport: "RER D puis Bus (env. 50 min)" }
         ]
+      },
+      {
+        nom: "CAP Conducteur d'installations de production",
+        niveau: "CAP",
+        coeffs: [5, 6, 3, 4, 3, 2, 7],
+        etablissements: [
+          { nom: "Lycée L'Essouriau", ville: "Les Ulis", transport: "RER D puis Bus (env. 1h15)" }
+        ]
       }
     ]
   },
 
   mecanique_auto: {
     label: "Maintenance des Matériels, Véhicules et Aéronautique",
-    keywords: ["voiture", "mecanique", "mecanicien", "auto", "automobile", "garage", "carrosserie", "moteur", "maintenance", "avion", "aeronautique", "materiels", "engins", "agricole"],
+    keywords: ["voiture", "mecanique", "mecanicien", "auto", "automobile", "garage", "carrosserie", "carrossier", "moteur", "maintenance", "avion", "aeronautique", "avionique", "materiels", "engins", "agricole"],
     coeffs: [4, 6, 3, 4, 3, 2, 8],
     formations: [
       {
@@ -543,13 +678,48 @@ const DOMAINS = {
         etablissements: [
           { nom: "Lycée Alexandre Denis", ville: "Cerny", transport: "RER D jusqu'à Mennecy puis Bus (env. 45 min)" }
         ]
+      },
+      {
+        nom: "CAP Aéronautique - Option avionique",
+        niveau: "CAP",
+        coeffs: [4, 6, 3, 4, 3, 2, 8],
+        etablissements: [
+          { nom: "Lycée Alexandre Denis", ville: "Cerny", transport: "RER D jusqu'à Mennecy puis Bus (env. 45 min)" }
+        ]
+      },
+      {
+        nom: "CAP Maintenance des véhicules - Option véhicules légers",
+        niveau: "CAP",
+        coeffs: [4, 6, 3, 4, 3, 2, 8],
+        etablissements: [
+          { nom: "Lycée Alexandre Denis", ville: "Cerny", transport: "RER D jusqu'à Mennecy puis Bus (env. 45 min)" },
+          { nom: "Lycée Les Frères Moreau", ville: "Quincy-sous-Sénart", transport: "RER D (env. 40 min)" },
+          { nom: "Lycée Gaspard Monge", ville: "Savigny-sur-Orge", transport: "RER D puis RER C (env. 45 min)" }
+        ]
+      },
+      {
+        nom: "CAP Carrossier automobile",
+        niveau: "CAP",
+        coeffs: [4, 6, 3, 4, 3, 2, 8],
+        etablissements: [
+          { nom: "Lycée Alexandre Denis", ville: "Cerny", transport: "RER D jusqu'à Mennecy puis Bus (env. 45 min)" },
+          { nom: "Lycée Gaspard Monge", ville: "Savigny-sur-Orge", transport: "RER D puis RER C (env. 45 min)" }
+        ]
+      },
+      {
+        nom: "CAP Maintenance des matériels - Option C : matériels d'espaces verts",
+        niveau: "CAP",
+        coeffs: [4, 6, 3, 4, 3, 2, 8],
+        etablissements: [
+          { nom: "EREA Le Château du Lac", ville: "Ollainville", transport: "RER D puis Bus (env. 1h15)" }
+        ]
       }
     ]
   },
 
   restauration: {
     label: "Hôtellerie, Restauration et Alimentation",
-    keywords: ["cuisine", "cuisinier", "restaurant", "restauration", "chef", "patissier", "patisserie", "boulanger", "boulangerie", "hotellerie", "serveur", "service", "alimentation"],
+    keywords: ["cuisine", "cuisinier", "restaurant", "restauration", "chef", "patissier", "patisserie", "boulanger", "boulangerie", "hotellerie", "serveur", "service", "alimentation", "cafeteria"],
     coeffs: [5, 4, 3, 3, 4, 4, 7],
     formations: [
       {
@@ -591,6 +761,25 @@ const DOMAINS = {
         etablissements: [
           { nom: "Lycée Château des Coudraies", ville: "Étiolles", transport: "Bus 7001 (env. 20 min)" }
         ]
+      },
+      {
+        nom: "CAP Commercialisation et services en hôtel-café-restaurant",
+        niveau: "CAP",
+        coeffs: [5, 4, 3, 3, 4, 4, 7],
+        etablissements: [
+          { nom: "Lycée Château des Coudraies", ville: "Étiolles", transport: "Bus 7001 (env. 20 min)" }
+        ]
+      },
+      {
+        nom: "CAP Production et service en restaurations (rapide, collective, cafétéria)",
+        niveau: "CAP",
+        coeffs: [4, 6, 3, 3, 3, 3, 8],
+        etablissements: [
+          { nom: "Lycée Nelson Mandela", ville: "Étampes", transport: "RER D puis RER C (env. 1h15)" },
+          { nom: "Lycée L'Essouriau", ville: "Les Ulis", transport: "RER D puis Bus (env. 1h15)" },
+          { nom: "EREA Jean Isoard", ville: "Montgeron", transport: "RER D (env. 35 min)" },
+          { nom: "Lycée Léonard de Vinci", ville: "Saint-Michel-sur-Orge", transport: "RER D puis RER C (env. 45 min)" }
+        ]
       }
     ]
   },
@@ -608,13 +797,22 @@ const DOMAINS = {
           { nom: "Lycée Nadar", ville: "Draveil", transport: "RER D puis Bus (env. 45 min)" },
           { nom: "Lycée Paul Belmondo", ville: "Arpajon", transport: "Bus 91-04 (env. 60 min)" }
         ]
+      },
+      {
+        nom: "CAP Agent de sécurité",
+        niveau: "CAP",
+        coeffs: [5, 3, 4, 3, 5, 2, 8],
+        etablissements: [
+          { nom: "Lycée Paul Belmondo", ville: "Arpajon", transport: "Bus 91-04 (env. 60 min)" },
+          { nom: "Lycée Nadar", ville: "Draveil", transport: "RER D puis Bus (env. 45 min)" }
+        ]
       }
     ]
   },
 
   mode_art: {
     label: "Métiers de la Mode, du Cuir et de l'Artisanat d'Art",
-    keywords: ["couture", "confection", "mode", "vetement", "cuir", "maroquinerie", "artisanat", "art", "metiers d'art", "marchandisage", "vitrine", "stylisme", "textile"],
+    keywords: ["couture", "confection", "mode", "vetement", "cuir", "maroquinerie", "artisanat", "art", "metiers d'art", "marchandisage", "vitrine", "stylisme", "textile", "pressing", "blanchisserie"],
     coeffs: [4, 5, 3, 3, 3, 6, 6],
     formations: [
       {
@@ -641,109 +839,110 @@ const DOMAINS = {
         etablissements: [
           { nom: "Lycée Gustave Eiffel", ville: "Massy", transport: "RER D puis Tram 12 (env. 1h)" }
         ]
+      },
+      {
+        nom: "CAP Maroquinerie",
+        niveau: "CAP",
+        coeffs: [4, 5, 3, 3, 3, 6, 6],
+        etablissements: [
+          { nom: "Lycée Jean Monnet", ville: "Juvisy-sur-Orge", transport: "RER D (env. 30 min)" }
+        ]
+      },
+      {
+        nom: "CAP Métiers de la mode - vêtement flou",
+        niveau: "CAP",
+        coeffs: [4, 5, 3, 3, 3, 6, 6],
+        etablissements: [
+          { nom: "Lycée Gustave Eiffel", ville: "Massy", transport: "RER D puis Tram 12 (env. 1h)" }
+        ]
+      },
+      {
+        nom: "CAP Métiers de l'entretien des textiles - Option B : pressing",
+        niveau: "CAP",
+        coeffs: [4, 5, 3, 3, 3, 6, 6],
+        etablissements: [
+          { nom: "Lycée Charles Baudelaire", ville: "Évry-Courcouronnes", transport: "Bus 401 (env. 30 min)" }
+        ]
+      }
+    ]
+  },
+
+  nature_paysage: {
+    label: "Nature, Jardin et Paysage",
+    keywords: ["paysage", "paysagiste", "jardin", "jardinier", "espaces verts", "horticulture", "nature", "plantes", "fleurs", "agricole"],
+    coeffs: [4, 5, 3, 3, 4, 3, 8],
+    formations: [
+      {
+        nom: "CAP Jardinier paysagiste",
+        niveau: "CAP",
+        coeffs: [4, 5, 3, 3, 4, 3, 8],
+        etablissements: [
+          { nom: "EREA Le Château du Lac", ville: "Ollainville", transport: "RER D puis Bus (env. 1h15)" }
+        ]
       }
     ]
   }
 };
 
-// -----------------------------------------------------------------------------
-// Distances approximatives depuis Corbeil-Essonnes
-// Objectif : trier automatiquement les établissements du plus proche au plus loin.
-// Les distances sont indicatives et servent uniquement à ordonner les listes.
-// -----------------------------------------------------------------------------
-
 const DISTANCES_CORBEIL_ESSONNES = {
   "Lycée Robert Doisneau|Corbeil-Essonnes": 0,
-
   "Lycée Château des Coudraies|Étiolles": 5,
-
   "Lycée Auguste Perret|Évry-Courcouronnes": 6,
   "Lycée Charles Baudelaire|Évry-Courcouronnes": 6,
   "Lycée Georges Brassens|Évry-Courcouronnes": 6,
-
   "Lycée Pierre Mendès France|Ris-Orangis": 8,
   "Lycée Marie Laurencin|Mennecy": 9,
-
   "Lycée Les Frères Moreau|Quincy-sous-Sénart": 10,
   "Lycée Nadar|Draveil": 12,
   "EREA Jean Isoard|Montgeron": 13,
-
   "Lycée André-Marie Ampère|Morsang-sur-Orge": 15,
   "Lycée Paul Langevin|Sainte-Geneviève-des-Bois": 17,
-
   "Lycée Jean Monnet|Juvisy-sur-Orge": 18,
   "Lycée Gaspard Monge|Savigny-sur-Orge": 18,
   "Lycée Louis Armand|Yerres": 18,
-
   "Lycée Clément Ader|Athis-Mons": 19,
   "Lycée Léonard de Vinci|Saint-Michel-sur-Orge": 20,
-
   "Lycée Jean-Pierre Timbaud|Brétigny-sur-Orge": 21,
   "Lycée Marguerite Yourcenar|Morangis": 22,
-
   "Lycée Jean Perrin|Longjumeau": 23,
   "Lycée Alexandre Denis|Cerny": 23,
-
   "Lycée Paul Belmondo|Arpajon": 25,
+  "EREA Le Château du Lac|Ollainville": 26,
   "Lycée Gustave Eiffel|Massy": 26,
   "Lycée Parc de Vilgénis|Massy": 27,
-
   "Lycée Henri Poincaré|Palaiseau": 29,
   "Lycée International Paris-Saclay|Palaiseau": 30,
   "Lycée L'Essouriau|Les Ulis": 32,
-
   "Lycée Nelson Mandela|Étampes": 37,
   "Lycée Geoffroy Saint-Hilaire|Étampes": 37,
-
   "Lycée Nikola Tesla|Dourdan": 43
 };
 
 function normalizeDistanceKey(value) {
   return value
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/[’']/g, " ")
-    .toLowerCase()
-    .replace(/[^a-z0-9|]+/g, " ")
-    .replace(/\s+/g, " ")
-    .trim();
+    .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    .replace(/[’']/g, " ").toLowerCase()
+    .replace(/[^a-z0-9|]+/g, " ").replace(/\s+/g, " ").trim();
 }
-
 const NORMALIZED_DISTANCES_CORBEIL = Object.fromEntries(
-  Object.entries(DISTANCES_CORBEIL_ESSONNES).map(([key, distance]) => [
-    normalizeDistanceKey(key),
-    distance
-  ])
+  Object.entries(DISTANCES_CORBEIL_ESSONNES).map(([key, distance]) => [normalizeDistanceKey(key), distance])
 );
-
 function getDistanceFromCorbeil(etablissement) {
   const fullKey = normalizeDistanceKey(`${etablissement.nom}|${etablissement.ville}`);
   return NORMALIZED_DISTANCES_CORBEIL[fullKey] ?? 999;
 }
-
 function sortEtablissementsByDistance(domains) {
   Object.values(domains).forEach(domain => {
     domain.formations.forEach(formation => {
-      formation.etablissements.forEach(etablissement => {
-        etablissement.distanceKm = getDistanceFromCorbeil(etablissement);
-      });
-
+      formation.etablissements.forEach(e => { e.distanceKm = getDistanceFromCorbeil(e); });
       formation.etablissements.sort((a, b) => {
-        const distanceDifference = a.distanceKm - b.distanceKm;
-
-        if (distanceDifference !== 0) {
-          return distanceDifference;
-        }
-
-        const cityComparison = a.ville.localeCompare(b.ville, "fr");
-        if (cityComparison !== 0) {
-          return cityComparison;
-        }
-
+        const d = a.distanceKm - b.distanceKm;
+        if (d !== 0) return d;
+        const c = a.ville.localeCompare(b.ville, "fr");
+        if (c !== 0) return c;
         return a.nom.localeCompare(b.nom, "fr");
       });
     });
   });
 }
-
 sortEtablissementsByDistance(DOMAINS);
