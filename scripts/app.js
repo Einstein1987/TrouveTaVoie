@@ -305,8 +305,8 @@ function startMenu(){
   state = 'start';
   pendingSelection = null;
   addBotMessage("Bonjour ! Je suis là pour t'aider. Où en es-tu ?", [
-    {label: "Je connais la famille de métiers ou le domaine qui m'intéresse", action: "set_state", payload: "search_domaine"},
     {label: "Je cherche les lycées qui propose la formation que je souhaite", action: "set_state", payload: "search_formation"},
+    {label: "Je connais la famille de métiers ou le domaine qui m'intéresse", action: "set_state", payload: "search_domaine"},
     {label: "Je souhaite trouver toutes les formations proposé par le lycée souhaité", action: "set_state", payload: "search_etab"},
     {label: "Je suis perdu (Faire le Quiz)", action: "start_quiz", payload: null}
   ]);
