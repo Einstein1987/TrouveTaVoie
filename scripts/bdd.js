@@ -885,7 +885,6 @@ const DOMAINS = {
 };
 
 const DUREES_TRANSPORT_CORBEIL = {
-  {
   "Lycée Robert Doisneau|Corbeil-Essonnes": {
     "dureeMin": 26,
     "trajet": "Bus 4245"
