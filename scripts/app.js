@@ -190,6 +190,10 @@ function fillCardCustom(selection) {
     if (cardActions) {
         cardActions.style.display = "flex";
     }
+    const psyNote = document.getElementById("psyNote");
+    if (psyNote) {
+      psyNote.style.display = "block";
+    }
     if (typeof pingStats === "function" && selection.statKey) {
         pingStats(selection.statKey);
     }
