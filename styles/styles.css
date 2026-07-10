@@ -164,9 +164,10 @@ h1 {
 /* Boutons d'options */
 .optrow{
      display:flex;
-     flex-wrap:wrap;
-     gap:6px;
-     margin:2px 0 0 34px;
+     flex-direction:column;
+     align-items: stretch;
+     gap:8px;
+     margin:12px 42px 0;
 }
 .optbtn{
      background:#fff;
@@ -178,6 +179,9 @@ h1 {
      font-weight: 600;
      cursor:pointer;
      transition: all 0.2s;
+     width: 100%;
+     text-align: left;
+     justify-content: flex-start;
 }
 .optbtn:hover{
      background:var(--brass);
