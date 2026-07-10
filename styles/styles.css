@@ -30,7 +30,36 @@ body{
      padding:28px 20px 40px;
      flex: 1;
 } 
-h1 {
+.header-title {
+  display: flex;
+  align-items: center; /* Aligne verticalement au centre */
+  gap: 12px; /* Espace entre le texte et le tampon */
+  margin-bottom: 4px;
+}
+.title {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: 28px;
+  margin: 0; 
+}
+.stamp-3e {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2.5px solid var(--brass);
+  color: var(--brass);
+  background: var(--paper2); /* Fond blanc pour bien détacher le tampon */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Space Mono', monospace;
+  font-size: 18px;
+  font-weight: 700;
+  transform: rotate(12deg); /* Inclinaison dynamique */
+  box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.05); /* Légère ombre portée */
+  user-select: none; /* Empêche la sélection du texte au double-clic */
+}
+/*h1 {
     margin: 0 0 10px;
     text-align: center;
     font-family: 'Outfit', sans-serif;
@@ -38,7 +67,7 @@ h1 {
     font-weight: 800;
     letter-spacing: -0.05em;
     color: var(--ink);
-}
+}*/
 .subtitle {
     text-align: center;
     font-size: 16px;
