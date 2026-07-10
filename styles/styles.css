@@ -30,12 +30,12 @@ body{
      padding:28px 20px 40px;
      flex: 1;
 } 
-/*.header-title {
+.header-title {
   display: flex;
   align-items: center; /* Aligne verticalement au centre */
   gap: 12px; /* Espace entre le texte et le tampon */
   margin-bottom: 4px;
-}*/
+}
 .stamp-3e {
   width: 44px;
   height: 44px;
