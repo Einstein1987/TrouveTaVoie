@@ -37,6 +37,22 @@ body{
      gap: 6px; /* Espace entre le texte et le tampon */
      margin-bottom: 10px;
 }
+.app-logo {
+     width: clamp(40px, 6vw, 65px); / S'adapte proportionnellement avec le h1 /
+     height: auto;
+     object-fit: contain;
+     filter: drop-shadow(0 4px 6px rgba(0,0,0,0.05));
+}
+h1 {
+     margin: 0;
+     text-align: center;
+     font-family: 'Outfit', sans-serif;
+     font-size: clamp(42px, 6vw, 72px);
+     font-weight: 800;
+     letter-spacing: -0.05em;
+     color: var(--ink);
+     line-height: 1; /* Permet au tampon de bien se caler en haut du texte */
+}
 .stamp-3e {
      width: 36px;
      height: 36px;
@@ -53,16 +69,6 @@ body{
      transform: translateY(-18px) rotate(15deg);
      box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.05); /* Légère ombre portée */
      user-select: none; /* Empêche la sélection du texte au double-clic */
-}
-h1 {
-     margin: 0;
-     text-align: center;
-     font-family: 'Outfit', sans-serif;
-     font-size: clamp(42px, 6vw, 72px);
-     font-weight: 800;
-     letter-spacing: -0.05em;
-     color: var(--ink);
-     line-height: 1; /* Permet au tampon de bien se caler en haut du texte */
 }
 .subtitle {
      text-align: center;
