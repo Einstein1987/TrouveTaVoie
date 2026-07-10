@@ -126,6 +126,9 @@ function addBotMessage(text, options){
     options.forEach(opt => {
       const b = document.createElement('button');
       b.className = 'optbtn';
+      if (opt.style === "help") {
+        b.classList.add('opt-help');
+      }
       b.textContent = opt.label;
       b.addEventListener('click', () => handleUserChoice(opt.label, opt.action, opt.payload));
       optRow.appendChild(b);
@@ -314,7 +317,7 @@ function startMenu(){
     {label: "Je connais déjà la formation que je veux faire", action: "set_state", payload: "search_formation"},
     {label: "Je connais la famille de métiers ou le domaine qui m'intéresse", action: "set_state", payload: "search_domaine"},
     {label: "Je connais un lycée et je veux voir ses formations", action: "set_state", payload: "search_etab"},
-    {label: "Je suis perdu, j'ai besoin d'aide, je veux faire le quiz", action: "start_quiz", payload: null}
+    {label: "Je suis perdu, j'ai besoin d'aide, je veux faire le quiz", action: "start_quiz", payload: null, style: "help"}
   ]);
 }
 
