@@ -59,7 +59,7 @@ body{
   box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.05); /* Légère ombre portée */
   user-select: none; /* Empêche la sélection du texte au double-clic */
 }
-/*h1 {
+h1 {
     margin: 0 0 10px;
     text-align: center;
     font-family: 'Outfit', sans-serif;
@@ -67,7 +67,7 @@ body{
     font-weight: 800;
     letter-spacing: -0.05em;
     color: var(--ink);
-}*/
+}
 .subtitle {
     text-align: center;
     font-size: 16px;
