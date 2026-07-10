@@ -34,8 +34,8 @@ body{
      display: flex;
      justify-content: center;
      align-items: center; /* Aligne verticalement au centre */
-     gap: 6px; /* Espace entre le texte et le tampon */
-     margin-bottom: 10px;
+     gap: 25px; /* Espace entre le texte et le tampon */
+     margin-bottom: 20px;
 }
 .app-logo {
      width: clamp(40px, 6vw, 65px); / S'adapte proportionnellement avec le h1 /
