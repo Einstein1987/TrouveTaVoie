@@ -165,6 +165,17 @@ function pingStats(domainKey) {
     .catch(err => console.error("Erreur stats :", err));
 }
 
+function pingStatsForSelection(selection) {
+    if (typeof pingStats !== "function" || !selection) return;
+    if (selection.type === 'formation') {
+        pingStats('formation', selection.formations[0]?.nom || selection.label);
+    } else if (selection.type === 'etab') {
+        pingStats('etablissement', selection.establishment || selection.label);
+    } else {
+        pingStats('domaine', selection.statKey || selection.label);
+    }
+}
+
 function fillCardCustom(selection) {
     if (!selection || !selection.formations || !selection.formations.length) return;
 
@@ -199,9 +210,7 @@ function fillCardCustom(selection) {
       psyNote.style.display = "block";
     }
   
-    if (typeof pingStats === "function" && selection.statKey) {
-        pingStats(selection.statKey);
-    }
+    pingStatsForSelection(selection);
 }
 
 function createFormationBlock(formation) {
@@ -342,6 +351,7 @@ function askConfirm(selection){
 }
 
 function startQuiz() {
+  if (typeof pingStats === "function") pingStats('quiz_lance', '');
   state = 'quiz_q1';
   quizScores = { relation_client: 0, sante_social: 0, numerique_energie: 0, batiment: 0, restauration: 0, mecanique_auto: 0 };
   addBotMessage("D'accord, procédons par élimination. Préfères-tu :", [
