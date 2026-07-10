@@ -31,42 +31,44 @@ body{
      flex: 1;
 } 
 .header-title {
-  display: flex;
-  align-items: center; /* Aligne verticalement au centre */
-  gap: 12px; /* Espace entre le texte et le tampon */
-  margin-bottom: 4px;
+     display: flex;
+     justify-content: center;
+     align-items: center; /* Aligne verticalement au centre */
+     gap: 6px; /* Espace entre le texte et le tampon */
+     margin-bottom: 10px;
 }
 .stamp-3e {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  border: 2.5px solid var(--brass);
-  color: var(--brass);
-  background: var(--paper2); /* Fond blanc pour bien détacher le tampon */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: 'Space Mono', monospace;
-  font-size: 18px;
-  font-weight: 700;
-  transform: rotate(12deg); /* Inclinaison dynamique */
-  box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.05); /* Légère ombre portée */
-  user-select: none; /* Empêche la sélection du texte au double-clic */
+     width: 36px;
+     height: 36px;
+     border-radius: 50%;
+     border: 2px solid var(--brass);
+     color: var(--brass);
+     background: var(--paper2); /* Fond blanc pour bien détacher le tampon */
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     font-family: 'Space Mono', monospace;
+     font-size: 14px;
+     font-weight: 700;
+     transform: translateY(-18px) rotate(15deg);
+     box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.05); /* Légère ombre portée */
+     user-select: none; /* Empêche la sélection du texte au double-clic */
 }
 h1 {
-    margin: 0 0 10px;
-    text-align: center;
-    font-family: 'Outfit', sans-serif;
-    font-size: clamp(42px, 6vw, 72px);
-    font-weight: 800;
-    letter-spacing: -0.05em;
-    color: var(--ink);
+     margin: 0;
+     text-align: center;
+     font-family: 'Outfit', sans-serif;
+     font-size: clamp(42px, 6vw, 72px);
+     font-weight: 800;
+     letter-spacing: -0.05em;
+     color: var(--ink);
+     line-height: 1; /* Permet au tampon de bien se caler en haut du texte */
 }
 .subtitle {
-    text-align: center;
-    font-size: 16px;
-    color: var(--muted);
-    margin: 0 0 28px;
+     text-align: center;
+     font-size: 16px;
+     color: var(--muted);
+     margin: 0 0 28px;
 }
 .panel h2,.card-top .k1 {
     font-family: 'Outfit', sans-serif;
