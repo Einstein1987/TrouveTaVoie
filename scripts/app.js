@@ -166,8 +166,10 @@ function pingStats(domainKey) {
 }
 
 function pingStatsForSelection(selection) {
-    if (typeof pingStats !== "function" || !selection) return;
-    if (selection.type === 'formation') {
+     if (typeof pingStats !== "function" || !selection) return;
+    if (selection.fromQuiz) {
+        pingStats('quiz_resultat', selection.statKey || selection.label);
+    } else if (selection.type === 'formation') {
         pingStats('formation', selection.formations[0]?.nom || selection.label);
     } else if (selection.type === 'etab') {
         pingStats('etablissement', selection.establishment || selection.label);
@@ -175,7 +177,6 @@ function pingStatsForSelection(selection) {
         pingStats('domaine', selection.statKey || selection.label);
     }
 }
-
 function fillCardCustom(selection) {
     if (!selection || !selection.formations || !selection.formations.length) return;
 
@@ -371,7 +372,9 @@ function nextQuizStep(answerPayload) {
     ]);
   } else if (state === 'quiz_q2') {
     let bestDomain = Object.keys(quizScores).reduce((a, b) => quizScores[a] > quizScores[b] ? a : b);
-    askConfirm(domainSelection(bestDomain));
+    const selection = domainSelection(bestDomain);
+    selection.fromQuiz = true;
+    askConfirm(selection);
   }
 }
 
