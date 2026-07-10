@@ -41,7 +41,6 @@ body{
      width: clamp(40px, 6vw, 65px); / S'adapte proportionnellement avec le h1 /
      height: auto;
      object-fit: contain;
-     filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.15));
 }
 h1 {
      margin: 0;
