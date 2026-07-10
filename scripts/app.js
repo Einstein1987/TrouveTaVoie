@@ -149,10 +149,10 @@ function addUserMessage(text){
   chatlog.scrollTop = chatlog.scrollHeight;
 }
 
-function pingStats(domainKey) {
+function pingStats(type, valeur) {
     const FORM_ID = "1FAIpQLSfG2xzc8VM2r52ae0MVS--AuzaHgFO6Mth6csdnuetRXi0cYw"; 
     const ENTRY_TYPE   = "entry.1851976194";
-    const ENTRY_ID = "entry.721362482"; 
+    const ENTRY_VALEUR = "entry.721362482"; 
     const url = `https://docs.google.com/forms/d/e/${FORM_ID}/formResponse`;
     const formData = new FormData();
     formData.append(ENTRY_TYPE, type);
