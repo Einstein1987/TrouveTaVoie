@@ -311,10 +311,10 @@ function startMenu(){
     psyNote.style.display = "none";
   }
   addBotMessage("Bonjour ! Je suis là pour t'aider. Où en es-tu ?", [
-    {label: "Je cherche les lycées qui propose la formation que je souhaite", action: "set_state", payload: "search_formation"},
+    {label: "Je connais déjà la formation que je veux faire", action: "set_state", payload: "search_formation"},
     {label: "Je connais la famille de métiers ou le domaine qui m'intéresse", action: "set_state", payload: "search_domaine"},
-    {label: "Je souhaite trouver toutes les formations proposé par le lycée souhaité", action: "set_state", payload: "search_etab"},
-    {label: "Je suis perdu (Faire le Quiz)", action: "start_quiz", payload: null}
+    {label: "Je connais un lycée et je veux voir ses formations", action: "set_state", payload: "search_etab"},
+    {label: "Je suis perdu, j'ai besoin d'aide, je veux faire le quiz", action: "start_quiz", payload: null}
   ]);
 }
 
