@@ -61,7 +61,7 @@ h1 {
     font-size: 17px;
     color: #FFFFFF;
 }
-.card-top .k2,.stamp {
+.card-top .k2 {
     font-family: 'Space Mono', monospace;
 }
 .grid{
@@ -224,34 +224,12 @@ h1 {
      border-radius: 18px;
      box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08);
 }
-.card-top .k2, .stamp {
-     font-family: 'Space Mono', monospace;
-}
 .perf{
      border-top:2px dashed var(--line);
      margin:0;
 }
 .card-body{
      padding:18px;
-}
-.stamp{
-     width:64px;
-     height:64px;
-     border-radius:50%;
-     border:2px solid var(--brass);
-     color:var(--brass-dark);
-     display:flex;
-     align-items:center;
-     justify-content:center;
-     text-align:center;
-     font-family:'IBM Plex Mono',monospace;
-     font-size:10px;
-     font-weight:600;
-     text-transform:uppercase;
-     line-height:1.2;
-     float:right;
-     margin-left:12px;
-     transform:rotate(6deg);
 }
 .field-label{
      font-size:11px;
@@ -496,8 +474,6 @@ h1 {
          break-inside: avoid;
          page-break-inside: avoid;
     }
-    .stamp {
-         border-color: var(--brass) !important;
          color: var(--brass-dark) !important;
     }
 }
