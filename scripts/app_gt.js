@@ -16,8 +16,8 @@
   const ORDRE_LYCEES = ["doisneau", "parc_des_loges", "brassens", "truffaut", "laurencin"];
   const selection = new Set();   // critères "vœu Affelnet" cochés
   const selPlace  = new Set();   // critères "sur place" cochés (aucun vœu)
-  let strategie = "lycee";       // "lycee" = je tiens au lycée | "option" = je tiens à l'option
-  let valide    = false;         // la liste a-t-elle été validée par l'élève ?
+  let strategie   = null;        // null = l'élève n'a pas encore choisi : on n'affiche pas la liste
+  let statEnvoyee = false;       // compteur : une seule statistique par chargement de page
 
   /* ---------------------------------------------------------------------- */
   /* Utilitaires                                                            */
@@ -318,156 +318,168 @@
   }
 
   function renderCarte(root) {
-    const liste = construireVoeux();
     const date = new Date().toLocaleDateString("fr-FR");
+    const aDesCriteres = selection.size > 0 || selPlace.size > 0;
 
     let body;
-    if (liste.length === 0) {
+
+    if (!aDesCriteres) {
       body = '<p class="gt-empty">Coche au moins une option ci-dessus pour voir apparaître ' +
              'une proposition de vœux à recopier sur ta fiche Affelnet.</p>';
-    } else {
-      let separateurPose = false;
-      let rang = 0;
-      const items = liste.map(function (o) {
-        rang++;                                    // les vœux réels sont numérotés
-        const v = o.voeu;
-        let avant = "";
-
-        // La ligne rouge : au-delà du 10e vœu, Affelnet n'accepte plus rien.
-        if (rang === LIMITE_VOEUX + 1) {
-          avant += '<li class="gt-limite-li"><div>' +
-            '<strong>⛔ Limite Affelnet : 10 vœux maximum</strong>' +
-            '<span>Tout ce qui suit cette ligne ne pourra pas être saisi. Si tu tiens à un vœu ' +
-            'placé en dessous, il faut <b>en retirer un au-dessus</b> — c\'est à toi de choisir ' +
-            'lequel compte le moins pour toi.</span>' +
-            '</div></li>';
-        }
-
-        if (o.complement && !separateurPose) {
-          separateurPose = true;
-          avant = '<li class="gt-sep-li"><div>' +
-            '<strong>Pour couvrir tous tes lycées de secteur</strong>' +
-            '<span>Tu seras forcément affecté dans l\'un de ces 5 lycées. Si tu n\'en classes ' +
-            'que quelques-uns et qu\'ils sont pleins, c\'est l\'administration qui choisira pour toi. ' +
-            'En ajoutant les vœux ci-dessous, du plus proche au plus lointain, <b>c\'est toi qui gardes ' +
-            'la main jusqu\'au bout</b>. Tu restes libre de les retirer ou de les réordonner.</span>' +
-            '</div></li>';
-        }
-
-        let notes = "";
-        if (o.complement) {
-          notes = '<span class="gt-v-note">Vœu de couverture : tu n\'as coché aucune option ici, ' +
-                  'mais ce lycée fait partie de ton secteur. Le classer, c\'est éviter qu\'on décide ' +
-                  'à ta place si tes premiers vœux sont pleins.</span>';
-        } else if (o.filet && o.seul) {
-          notes = '<span class="gt-v-note">Tu n\'as coché aucune option demandable sur Affelnet ' +
-                  'dans ce lycée : c\'est donc le vœu « simple » qui te correspond ici.</span>';
-        } else if (o.filet) {
-          notes = '<span class="gt-v-note">Filet de sécurité : ce vœu « sans option » a ses ' +
-                  'propres places. Le garder sous ton vœu avec option protège ton affectation ' +
-                  'dans ce lycée.</span>';
-        } else if (v.procedure) {
-          notes = '<span class="gt-v-note is-warn">⚠ Recrutement spécifique (' + v.procedure +
-                  ') : un entretien de présélection est nécessaire. L\'avis de la commission ' +
-                  'donne des points bonus ou malus. Parles-en vite à ton professeur principal, ' +
-                  'les dossiers se déposent tôt dans l\'année.</span>';
-        } else if (v.note) {
-          notes = '<span class="gt-v-note">' + v.note + '</span>';
-        }
-        const loin = trajetLong(o.lyc);
-        const traj = '<span class="gt-v-trajet' + (loin ? ' is-loin' : '') + '">🚌 ' + trajetTexte(o.lyc) +
-                     (trajetLigne(o.lyc) ? ' — ' + trajetLigne(o.lyc) : '') +
-                     (loin ? ' <b>· trajet long : environ ' + (o.lyc.trajet.minutes * 2) +
-                             ' min par jour, aller-retour</b>' : '') + '</span>';
-        // Les atouts cochés apparaissent une seule fois par lycée : sur son vœu simple
-        if (o.filet && o.atouts && o.atouts.length) {
-          notes += '<span class="gt-v-atouts">★ Ce lycée propose aussi ce que tu as coché : <b>' +
-                   o.atouts.map(function (a) { return a.label; }).join(", ") + '</b>' +
-                   ' — à choisir à l\'inscription, ce n\'est pas un vœu.</span>';
-        }
-        let classe = o.complement ? "is-complement"
-                   : (o.filet ? (o.seul ? "is-simple" : "is-filet") : "");
-        if (rang > LIMITE_VOEUX) classe += " is-hors-limite";
-        return avant + '<li class="' + classe + '">' +
-               '<div><span class="gt-v-main">' + v.libelle + '</span> ' +
-               '<span class="gt-v-lyc">— ' + o.lyc.nom + ', ' + o.lyc.ville + '</span>' +
-               '<span class="gt-v-code">' + v.code + '</span>' +
-               (o.filet && !o.seul ? '<span class="gt-tag-filet">filet de sécurité</span>' : '') +
-               (o.complement ? '<span class="gt-tag-couv">couverture secteur</span>' : '') +
-               traj + notes + '</div></li>';
-      }).join("");
-
-      // Ce qui ne passe PAS par Affelnet, mais qui concerne les lycées retenus
-      const idsRetenus = Array.from(new Set(liste.map(function (o) { return o.lyc.id; })));
-      const hors = [];
-      const surPlace = [];
-      const vusHors = new Set();
-      idsRetenus.forEach(function (id) {
-        const l = LYCEES_2GT[id];
-        (l.horsAffelnet || []).forEach(function (h) {
-          const cle = l.id + "|" + h.libelle;
-          if (vusHors.has(cle)) return;
-          vusHors.add(cle);
-          hors.push('<li><strong>' + h.libelle + '</strong> (' + l.nom + ') — ' + h.note + '</li>');
-        });
-        if (l.optionsSurPlace && l.optionsSurPlace.length) {
-          surPlace.push('<li><strong>' + l.nom + '</strong> : ' + l.optionsSurPlace.join(", ") + '</li>');
-        }
-      });
-
-      const bLyc = strategie === "lycee" ? " is-on" : "";
-      const bOpt = strategie === "option" ? " is-on" : "";
-      body =
-        '<div class="gt-strategie">' +
-          '<p class="gt-unseul"><strong>Tu ne seras affecté que sur UN SEUL de ces vœux</strong> : ' +
-          'le premier de ta liste où il reste de la place. L\'ordre compte donc énormément — ' +
-          'il doit refléter tes vraies préférences, pas tes chances.</p>' +
-          '<p class="gt-exclusif">' + REGLE_VOEUX_EXCLUSIFS + '</p>' +
-          (liste.some(function (x) { return x.voeu.categorie === "section_euro"; })
-            ? '<p class="gt-euro-tip"><strong>Pourquoi la section européenne est placée en premier ?</strong> ' +
-              'Parce qu\'elle ne se rattrape pas : si tu es affecté sur un autre vœu, tu ne pourras plus ' +
-              'la demander. Une option, au contraire, peut encore se choisir à l\'inscription. ' +
-              'Mettre l\'euro devant te laisse donc une chance d\'avoir les deux.</p>'
-            : "") +
-          '<p class="gt-compteur' + (liste.length > LIMITE_VOEUX ? ' is-trop' : '') + '">' +
-            'Ta liste compte <b>' + liste.length + ' vœu' + (liste.length > 1 ? 'x' : '') + '</b> ' +
-            'sur les <b>' + LIMITE_VOEUX + '</b> autorisés par Affelnet.' +
-            (liste.length > LIMITE_VOEUX
-              ? ' <b>Il va falloir en retirer ' + (liste.length - LIMITE_VOEUX) + '.</b>'
-              : '') +
-          '</p>' +
-          '<span class="gt-strat-label">Ce qui compte le plus pour toi ?</span>' +
-          '<div class="gt-strat-btns">' +
-            '<button type="button" class="gt-strat' + bLyc + '" data-strat="lycee">Le lycée</button>' +
-            '<button type="button" class="gt-strat' + bOpt + '" data-strat="option">L\'option</button>' +
-          '</div>' +
-          '<p class="gt-strat-hint">' +
-            (strategie === "lycee"
-              ? "Les vœux sont groupés par lycée : ton lycée préféré d'abord, avec son option, puis son filet de sécurité juste en dessous."
-              : "Les vœux sont groupés par option : tous les lycées qui proposent ce que tu veux d'abord, et les vœux sans option à la fin.") +
-          '</p>' +
-        '</div>' +
-        '<ol class="gt-voeux">' + items + '</ol>' +
-        (hors.length
-          ? '<div class="gt-aside"><h4>À faire en dehors d\'Affelnet</h4><ul>' +
-            hors.join("") + '</ul></div>'
-          : "") +
-        (surPlace.length
-          ? '<div class="gt-aside"><h4>Options facultatives que tu pourras choisir à l\'inscription</h4>' +
-            '<p class="gt-aside-hint">Rien d\'obligatoire ici : ce sont des possibilités offertes par ' +
-            'chaque lycée, à demander une fois que tu y seras affecté.</p><ul>' +
-            Array.from(new Set(surPlace)).join("") + '</ul></div>'
-          : "") +
-        '<div class="gt-valider">' +
-          (valide
-            ? '<span class="gt-valide-ok">✓ Liste validée. Tu peux la recopier sur ta fiche Affelnet.</span>'
-            : '<button type="button" class="gt-btn" data-action="valider">Valider ma liste de vœux</button>' +
-              '<span class="gt-valide-hint">Quand ta liste te convient, valide-la : ' +
-              'tu pourras ensuite l\'imprimer ou l\'envoyer.</span>') +
-        '</div>' +
-        '<p class="gt-source">Sources : ' + SOURCE_2GT.affelnet + ' ; ' + SOURCE_2GT.fiche16 +
-        ' ; ' + SOURCE_2GT.cio + '.<br>' + SOURCE_2GT.avertissement + '</p>';
+      root.innerHTML =
+        '<div class="gt-card-head"><h3>Mes vœux 2GT</h3><span class="gt-date">' + date + '</span></div>' +
+        '<div class="gt-card-body">' + body + '</div>';
+      return;
     }
+
+    // Le choix de classement, toujours affiché
+    const bLyc = strategie === "lycee"  ? " is-on" : "";
+    const bOpt = strategie === "option" ? " is-on" : "";
+    const choix =
+      '<div class="gt-strategie">' +
+        '<span class="gt-strat-label">Comment veux-tu classer tes vœux ? ' +
+        'Qu\'est-ce qui compte le plus pour toi ?</span>' +
+        '<div class="gt-strat-btns">' +
+          '<button type="button" class="gt-strat' + bLyc + '" data-strat="lycee">Le lycée</button>' +
+          '<button type="button" class="gt-strat' + bOpt + '" data-strat="option">L\'option</button>' +
+        '</div>' +
+        (strategie
+          ? '<p class="gt-strat-hint">' +
+              (strategie === "lycee"
+                ? "Tes vœux sont groupés par lycée : ton lycée préféré d'abord, avec ses options, puis son filet de sécurité juste en dessous."
+                : "Tes vœux sont groupés par option : tous les lycées qui proposent ce que tu veux d'abord, et les vœux sans option à la fin.") +
+              ' Tu peux basculer entre les deux pour comparer.</p>'
+          : '<p class="gt-strat-hint">Choisis l\'un des deux pour voir ta liste de vœux.</p>') +
+      '</div>';
+
+    if (!strategie) {
+      root.innerHTML =
+        '<div class="gt-card-head"><h3>Mes vœux 2GT</h3><span class="gt-date">' + date + '</span></div>' +
+        '<div class="gt-card-body">' + choix + '</div>';
+      return;
+    }
+
+    const liste = construireVoeux();
+
+    let separateurPose = false;
+    let rang = 0;
+    const items = liste.map(function (o) {
+      rang++;
+      const v = o.voeu;
+      let avant = "";
+
+      if (rang === LIMITE_VOEUX + 1) {
+        avant += '<li class="gt-limite-li"><div>' +
+          '<strong>⛔ Limite Affelnet : 10 vœux maximum</strong>' +
+          '<span>Tout ce qui suit cette ligne ne pourra pas être saisi. Si tu tiens à un vœu ' +
+          'placé en dessous, il faut <b>en retirer un au-dessus</b> — c\'est à toi de choisir ' +
+          'lequel compte le moins pour toi.</span>' +
+          '</div></li>';
+      }
+
+      if (o.complement && !separateurPose) {
+        separateurPose = true;
+        avant += '<li class="gt-sep-li"><div>' +
+          '<strong>Pour couvrir tous tes lycées de secteur</strong>' +
+          '<span>Tu seras forcément affecté dans l\'un de ces 5 lycées. Si tu n\'en classes ' +
+          'que quelques-uns et qu\'ils sont pleins, c\'est l\'administration qui choisira pour toi. ' +
+          'En ajoutant les vœux ci-dessous, du plus proche au plus lointain, <b>c\'est toi qui gardes ' +
+          'la main jusqu\'au bout</b>. Tu restes libre de les retirer ou de les réordonner.</span>' +
+          '</div></li>';
+      }
+
+      let notes = "";
+      if (o.complement) {
+        notes = '<span class="gt-v-note">Vœu de couverture : tu n\'as coché aucune option ici, ' +
+                'mais ce lycée fait partie de ton secteur. Le classer, c\'est éviter qu\'on décide ' +
+                'à ta place si tes premiers vœux sont pleins.</span>';
+      } else if (o.filet && o.seul) {
+        notes = '<span class="gt-v-note">Tu n\'as coché aucune option demandable sur Affelnet ' +
+                'dans ce lycée : c\'est donc le vœu « simple » qui te correspond ici.</span>';
+      } else if (o.filet) {
+        notes = '<span class="gt-v-note">Filet de sécurité : ce vœu « sans option » a ses ' +
+                'propres places. Le garder sous ton vœu avec option protège ton affectation ' +
+                'dans ce lycée.</span>';
+      } else if (v.procedure) {
+        notes = '<span class="gt-v-note is-warn">⚠ Recrutement spécifique (' + v.procedure +
+                ') : un entretien de présélection est nécessaire. L\'avis de la commission ' +
+                'donne des points bonus ou malus. Parles-en vite à ton professeur principal, ' +
+                'les dossiers se déposent tôt dans l\'année.</span>';
+      } else if (v.note) {
+        notes = '<span class="gt-v-note">' + v.note + '</span>';
+      }
+
+      if (o.filet && o.atouts && o.atouts.length) {
+        notes += '<span class="gt-v-atouts">★ Ce lycée propose aussi ce que tu as coché : <b>' +
+                 o.atouts.map(function (a) { return a.label; }).join(", ") + '</b>' +
+                 ' — à choisir à l\'inscription, ce n\'est pas un vœu.</span>';
+      }
+
+      const loin = trajetLong(o.lyc);
+      const traj = '<span class="gt-v-trajet' + (loin ? ' is-loin' : '') + '">🚌 ' + trajetTexte(o.lyc) +
+                   (trajetLigne(o.lyc) ? ' — ' + trajetLigne(o.lyc) : '') +
+                   (loin ? ' <b>· trajet long : environ ' + (o.lyc.trajet.minutes * 2) +
+                           ' min par jour, aller-retour</b>' : '') + '</span>';
+
+      let classe = o.complement ? "is-complement"
+                 : (o.filet ? (o.seul ? "is-simple" : "is-filet") : "");
+      if (rang > LIMITE_VOEUX) classe += " is-hors-limite";
+
+      return avant + '<li class="' + classe + '">' +
+             '<div><span class="gt-v-main">' + v.libelle + '</span> ' +
+             '<span class="gt-v-lyc">— ' + o.lyc.nom + ', ' + o.lyc.ville + '</span>' +
+             '<span class="gt-v-code">' + v.code + '</span>' +
+             (o.filet && !o.seul ? '<span class="gt-tag-filet">filet de sécurité</span>' : '') +
+             (o.complement ? '<span class="gt-tag-couv">couverture secteur</span>' : '') +
+             traj + notes + '</div></li>';
+    }).join("");
+
+    // Ce qui ne passe pas par Affelnet
+    const idsRetenus = Array.from(new Set(liste.map(function (o) { return o.lyc.id; })));
+    const hors = [], surPlace = [], vusHors = new Set();
+    idsRetenus.forEach(function (id) {
+      const l = LYCEES_2GT[id];
+      (l.horsAffelnet || []).forEach(function (h) {
+        const cle = id + "|" + h.libelle;
+        if (vusHors.has(cle)) return;
+        vusHors.add(cle);
+        hors.push('<li><strong>' + h.libelle + '</strong> (' + l.nom + ') — ' + h.note + '</li>');
+      });
+      if (l.optionsSurPlace && l.optionsSurPlace.length) {
+        surPlace.push('<li><strong>' + l.nom + '</strong> : ' + l.optionsSurPlace.join(", ") + '</li>');
+      }
+    });
+
+    body =
+      '<p class="gt-unseul"><strong>Tu ne seras affecté que sur UN SEUL de ces vœux</strong> : ' +
+      'le premier de ta liste où il reste de la place. L\'ordre compte donc énormément — ' +
+      'il doit refléter tes vraies préférences, pas tes chances.</p>' +
+      '<p class="gt-exclusif">' + REGLE_VOEUX_EXCLUSIFS + '</p>' +
+      (liste.some(function (x) { return x.voeu.categorie === "section_euro"; })
+        ? '<p class="gt-euro-tip"><strong>Pourquoi la section européenne est placée en premier ?</strong> ' +
+          'Parce qu\'elle ne se rattrape pas : si tu es affecté sur un autre vœu, tu ne pourras plus ' +
+          'la demander. Une option, au contraire, peut encore se choisir à l\'inscription. ' +
+          'Mettre l\'euro devant te laisse donc une chance d\'avoir les deux.</p>'
+        : "") +
+      '<p class="gt-compteur' + (liste.length > LIMITE_VOEUX ? ' is-trop' : '') + '">' +
+        'Ta liste compte <b>' + liste.length + ' vœu' + (liste.length > 1 ? 'x' : '') + '</b> ' +
+        'sur les <b>' + LIMITE_VOEUX + '</b> autorisés par Affelnet.' +
+        (liste.length > LIMITE_VOEUX
+          ? ' <b>Il va falloir en retirer ' + (liste.length - LIMITE_VOEUX) + '.</b>' : '') +
+      '</p>' +
+      choix +
+      '<ol class="gt-voeux">' + items + '</ol>' +
+      (hors.length
+        ? '<div class="gt-aside"><h4>À faire en dehors d\'Affelnet</h4><ul>' + hors.join("") + '</ul></div>'
+        : "") +
+      (surPlace.length
+        ? '<div class="gt-aside"><h4>Options facultatives que tu pourras choisir à l\'inscription</h4>' +
+          '<p class="gt-aside-hint">Rien d\'obligatoire ici : ce sont des possibilités offertes par ' +
+          'chaque lycée, à demander une fois que tu y seras affecté.</p><ul>' +
+          Array.from(new Set(surPlace)).join("") + '</ul></div>'
+        : "") +
+      '<p class="gt-source">Sources : ' + SOURCE_2GT.affelnet + ' ; ' + SOURCE_2GT.fiche16 +
+      ' ; ' + SOURCE_2GT.cio + '.<br>' + SOURCE_2GT.avertissement + '</p>';
 
     root.innerHTML =
       '<div class="gt-card-head"><h3>Mes vœux 2GT</h3><span class="gt-date">' + date + '</span></div>' +
@@ -489,7 +501,6 @@
   function togglePlace(id) {
     const c = CRITERES_SUR_PLACE.find(function (x) { return x.id === id; });
     if (!c) return;
-    valide = false;
     if (selPlace.has(id)) { selPlace.delete(id); }
     else { selPlace.add(id); }
     refresh();
@@ -498,27 +509,11 @@
   function toggle(id) {
     const c = CRITERES_2GT.find(function (x) { return x.id === id; });
     if (!c) return;
-    valide = false;
     if (selection.has(id)) {
       selection.delete(id);
     } else {
       selection.add(id);
     }
-    refresh();
-  }
-
-  // Statistiques : envoyées UNIQUEMENT quand l'élève valide sa liste — jamais au clic,
-  // jamais à l'ouverture de l'onglet. C'est l'équivalent du « Oui » de la voie pro.
-  function validerListe() {
-    if (valide) return;
-    const liste = construireVoeux();
-    if (!liste.length) return;
-    valide = true;
-
-    // UNE seule ligne par validation, comme une carte confirmée en voie pro :
-    // les deux voies restent ainsi directement comparables dans les statistiques.
-    const premier = liste[0];
-    ping("2gt_voeux", premier.lyc.nom + " — " + premier.voeu.libelle);
     refresh();
   }
 
@@ -551,12 +546,22 @@
     root.addEventListener("click", function (e) {
       const chip = e.target.closest("[data-critere]");
       const reset = e.target.closest('[data-action="reset"]');
-      if (reset) { selection.clear(); selPlace.clear(); valide = false; refresh(); return; }
-      if (e.target.closest('[data-action="valider"]')) { validerListe(); return; }
+      if (reset) { selection.clear(); selPlace.clear(); strategie = null; refresh(); return; }
       const chipP = e.target.closest("[data-place]");
       if (chipP && chipP.tagName === "BUTTON") { togglePlace(chipP.dataset.place); return; }
       const strat = e.target.closest("[data-strat]");
-      if (strat) { strategie = strat.dataset.strat; valide = false; refresh(); return; }
+      if (strat) {
+        const nouvelle = strat.dataset.strat;
+        // La statistique part au PREMIER choix de classement — c'est la seule vraie
+        // décision de l'élève. Changer d'avis ensuite n'envoie rien de plus.
+        if (!statEnvoyee) {
+          statEnvoyee = true;
+          ping("2gt_voeux", nouvelle === "lycee" ? "Classement par lycée" : "Classement par option");
+        }
+        strategie = nouvelle;
+        refresh();
+        return;
+      }
       if (chip && chip.tagName === "BUTTON") { toggle(chip.dataset.critere); }
     });
     root.addEventListener("change", function (e) {
