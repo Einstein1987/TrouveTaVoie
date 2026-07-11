@@ -434,6 +434,11 @@ function processSearch(text, type) {
 
 function handleUserChoice(displayText, action, payload){
   addUserMessage(displayText);
+  applyChoice(action, payload);
+}
+
+// Toute la logique de traitement d'un choix, SANS afficher le message de l'élève.
+function applyChoice(action, payload){
   
   if (action === "set_state") {
     state = payload;
@@ -467,8 +472,10 @@ function handleFreeText(text){
 
   if (state === 'confirm') {
     const yn = matchYesNo(text);
-    if (yn === 'yes') handleUserChoice("Oui", "confirm", "yes");
-    else if (yn === 'no') handleUserChoice("Non", "confirm", "no");
+    // Le message de l'élève est déjà affiché ci-dessus : on ne repasse PAS par
+    // handleUserChoice(), qui le réafficherait ("oui" puis "Oui" en double).
+    if (yn === 'yes') applyChoice("confirm", "yes");
+    else if (yn === 'no') applyChoice("confirm", "no");
     else addBotMessage("Je n'ai pas bien compris, réponds par Oui ou par Non.", [
       {label:"Oui", action:"confirm", payload:"yes"},
       {label:"Non", action:"confirm", payload:"no"}
