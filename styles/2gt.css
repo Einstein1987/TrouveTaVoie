@@ -273,12 +273,3 @@ li.gt-limite-li span  { display: block; font-size: .83rem; color: #991B1B; line-
 ol.gt-voeux > li.is-hors-limite { opacity: .5; }
 ol.gt-voeux > li.is-hors-limite::before { background: #FCA5A5 !important;
                                           color: #7F1D1D !important; border: none !important; }
-
-/* ---------- Validation de la liste ---------- */
-.gt-valider { margin-top: 18px; padding-top: 16px; border-top: 1px dashed var(--line, #E2E8F0);
-              display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
-.gt-valide-hint { font-size: .82rem; color: var(--muted, #64748B); }
-.gt-valide-ok { display: inline-flex; align-items: center; gap: 6px;
-                font-size: .88rem; font-weight: 700; color: #065F46;
-                background: var(--success-soft, #ECFDF5); border: 1px solid var(--teal, #10B981);
-                border-radius: 999px; padding: 8px 16px; }
