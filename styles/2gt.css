@@ -214,3 +214,28 @@ ol.gt-voeux > li.is-simple::before { background: var(--muted, #64748B); }
 .gt-v-trajet.is-loin { color: #92400E; background: #FFFBEB; border: 1px solid #FDE68A;
                        border-radius: 6px; padding: 3px 8px; display: inline-block; }
 table.gt-table .gt-lyc-meta.is-loin { color: #FCD34D; opacity: 1; }
+
+/* ---------- Onglets : voie pro / voie générale et technologique ---------- */
+.tabs { display: flex; gap: 8px; margin: 0 auto 22px; flex-wrap: wrap; justify-content: center; }
+.tab {
+  border: 2px solid var(--line, #E2E8F0);
+  background: var(--paper2, #FFFFFF);
+  color: var(--muted-strong, #475569);
+  border-radius: 999px; padding: 10px 20px;
+  font: inherit; font-size: .92rem; font-weight: 700; cursor: pointer;
+  transition: background .15s, color .15s, border-color .15s;
+}
+.tab sup { font-size: .65em; }
+.tab:hover { border-color: var(--brass, #6366F1); color: var(--brass, #6366F1); }
+.tab.is-active {
+  background: var(--brass, #6366F1);
+  border-color: var(--brass, #6366F1);
+  color: #fff;
+}
+.vue { display: none; }
+.vue.is-active { display: block; }
+
+@media (max-width: 640px) {
+  .tabs { flex-direction: column; }
+  .tab { width: 100%; }
+}
