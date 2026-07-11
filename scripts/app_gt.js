@@ -17,6 +17,7 @@
   const selection = new Set();   // critères "vœu Affelnet" cochés
   const selPlace  = new Set();   // critères "sur place" cochés (aucun vœu)
   let strategie = "lycee";       // "lycee" = je tiens au lycée | "option" = je tiens à l'option
+  let valide    = false;         // la liste a-t-elle été validée par l'élève ?
 
   /* ---------------------------------------------------------------------- */
   /* Utilitaires                                                            */
@@ -428,7 +429,6 @@
               'la demander. Une option, au contraire, peut encore se choisir à l\'inscription. ' +
               'Mettre l\'euro devant te laisse donc une chance d\'avoir les deux.</p>'
             : "") +
-          '<p class="gt-rappel-deux">' + REGLE_MAX_DEUX_OPTIONS + '</p>' +
           '<p class="gt-compteur' + (liste.length > LIMITE_VOEUX ? ' is-trop' : '') + '">' +
             'Ta liste compte <b>' + liste.length + ' vœu' + (liste.length > 1 ? 'x' : '') + '</b> ' +
             'sur les <b>' + LIMITE_VOEUX + '</b> autorisés par Affelnet.' +
@@ -458,6 +458,13 @@
             'chaque lycée, à demander une fois que tu y seras affecté.</p><ul>' +
             Array.from(new Set(surPlace)).join("") + '</ul></div>'
           : "") +
+        '<div class="gt-valider">' +
+          (valide
+            ? '<span class="gt-valide-ok">✓ Liste validée. Tu peux la recopier sur ta fiche Affelnet.</span>'
+            : '<button type="button" class="gt-btn" data-action="valider">Valider ma liste de vœux</button>' +
+              '<span class="gt-valide-hint">Quand ta liste te convient, valide-la : ' +
+              'tu pourras ensuite l\'imprimer ou l\'envoyer.</span>') +
+        '</div>' +
         '<p class="gt-source">Sources : ' + SOURCE_2GT.affelnet + ' ; ' + SOURCE_2GT.fiche16 +
         ' ; ' + SOURCE_2GT.cio + '.<br>' + SOURCE_2GT.avertissement + '</p>';
     }
@@ -482,20 +489,36 @@
   function togglePlace(id) {
     const c = CRITERES_SUR_PLACE.find(function (x) { return x.id === id; });
     if (!c) return;
+    valide = false;
     if (selPlace.has(id)) { selPlace.delete(id); }
-    else { selPlace.add(id); ping("2gt_atout", c.label); }
+    else { selPlace.add(id); }
     refresh();
   }
 
   function toggle(id) {
     const c = CRITERES_2GT.find(function (x) { return x.id === id; });
     if (!c) return;
+    valide = false;
     if (selection.has(id)) {
       selection.delete(id);
     } else {
       selection.add(id);
-      ping("2gt_critere", c.label);
     }
+    refresh();
+  }
+
+  // Statistiques : envoyées UNIQUEMENT quand l'élève valide sa liste — jamais au clic,
+  // jamais à l'ouverture de l'onglet. C'est l'équivalent du « Oui » de la voie pro.
+  function validerListe() {
+    if (valide) return;
+    const liste = construireVoeux();
+    if (!liste.length) return;
+    valide = true;
+
+    // UNE seule ligne par validation, comme une carte confirmée en voie pro :
+    // les deux voies restent ainsi directement comparables dans les statistiques.
+    const premier = liste[0];
+    ping("2gt_voeux", premier.lyc.nom + " — " + premier.voeu.libelle);
     refresh();
   }
 
@@ -528,11 +551,12 @@
     root.addEventListener("click", function (e) {
       const chip = e.target.closest("[data-critere]");
       const reset = e.target.closest('[data-action="reset"]');
-      if (reset) { selection.clear(); selPlace.clear(); refresh(); return; }
+      if (reset) { selection.clear(); selPlace.clear(); valide = false; refresh(); return; }
+      if (e.target.closest('[data-action="valider"]')) { validerListe(); return; }
       const chipP = e.target.closest("[data-place]");
       if (chipP && chipP.tagName === "BUTTON") { togglePlace(chipP.dataset.place); return; }
       const strat = e.target.closest("[data-strat]");
-      if (strat) { strategie = strat.dataset.strat; ping("2gt_strategie", strategie); refresh(); return; }
+      if (strat) { strategie = strat.dataset.strat; valide = false; refresh(); return; }
       if (chip && chip.tagName === "BUTTON") { toggle(chip.dataset.critere); }
     });
     root.addEventListener("change", function (e) {

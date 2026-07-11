@@ -12,8 +12,6 @@
     const vues    = Array.prototype.slice.call(document.querySelectorAll(".vue"));
     if (!onglets.length) return;
 
-    const dejaVu = {};   // pour ne compter l'ouverture d'un onglet qu'une fois par session
-
     function activer(cible) {
       onglets.forEach(function (t) {
         const on = t.dataset.vue === cible;
@@ -24,11 +22,8 @@
         v.classList.toggle("is-active", v.id === cible);
       });
 
-      // Statistiques : une seule fois par onglet et par session
-      if (!dejaVu[cible] && typeof pingStats === "function") {
-        dejaVu[cible] = true;
-        pingStats("onglet_ouvert", cible === "vue-2gt" ? "2GT" : "Professionnelle");
-      }
+      // Pas de statistique ici : un simple clic d'onglet n'est pas un usage.
+      // La voie 2GT compte au moment où l'élève valide sa liste de vœux.
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
