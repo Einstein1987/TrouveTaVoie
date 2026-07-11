@@ -31,10 +31,10 @@ const SOURCE_2GT = {
 const REGLE_FILET_SECURITE =
   "Un vœu avec option (ex. « Doisneau Théâtre ») et le vœu simple (« Doisneau ») " +
   "sont DEUX vœux différents, avec chacun leur nombre de places. " +
-  "L'académie recommande de faire figurer parmi tes vœux un lycée de secteur : " +
-  "pense donc à ajouter aussi un vœu simple de secteur, en dessous de ton vœu avec option. " +
-  "Ton professeur principal ou la PsyEN te confirmeront quels lycées relèvent de ton secteur, " +
-  "car cela dépend de ton adresse.";
+  "Ces 5 lycées sont tes lycées de secteur : tu es assuré d'être affecté dans l'un d'eux — " +
+  "mais pas forcément dans celui que tu préfères, ni sur l'option que tu demandes. " +
+  "Pense donc à ajouter des vœux « sans option » sous tes vœux avec option : " +
+  "c'est ce qui te permet de rester dans le lycée que tu vises.";
 
 /* -----------------------------------------------------------------------------
  * RÈGLES À AFFICHER DANS L'APPLICATION
