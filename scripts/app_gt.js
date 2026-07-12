@@ -478,6 +478,10 @@
           'chaque lycée, à demander une fois que tu y seras affecté.</p><ul>' +
           Array.from(new Set(surPlace)).join("") + '</ul></div>'
         : "") +
+      '<div class="gt-card-actions">' +
+        '<button type="button" class="card-action-btn" data-export="print">🖨️ Imprimer mes vœux</button>' +
+        '<button type="button" class="card-action-btn secondary" data-export="email">✉️ Envoyer par mail</button>' +
+      '</div>' +
       '<p class="gt-source">Sources : ' + SOURCE_2GT.affelnet + ' ; ' + SOURCE_2GT.fiche16 +
       ' ; ' + SOURCE_2GT.cio + '.<br>' + SOURCE_2GT.avertissement + '</p>';
 
@@ -515,6 +519,50 @@
       selection.add(id);
     }
     refresh();
+  }
+
+  // Version texte de la liste, pour l'envoi par mail.
+  function buildText() {
+    const liste = construireVoeux();
+    if (!liste.length) return "";
+    const L = [];
+    L.push("MES VŒUX — 2NDE GÉNÉRALE ET TECHNOLOGIQUE");
+    L.push("Date : " + new Date().toLocaleDateString("fr-FR"));
+    L.push("");
+    L.push("ATTENTION : tu ne seras affecté que sur UN SEUL de ces vœux,");
+    L.push("le premier de ta liste où il reste de la place.");
+    L.push("Affelnet accepte " + LIMITE_VOEUX + " vœux au maximum.");
+    L.push("");
+    L.push("--------------------------------------------------");
+
+    liste.forEach(function (o, i) {
+      const r = i + 1;
+      if (r === LIMITE_VOEUX + 1) {
+        L.push("");
+        L.push("===== LIMITE AFFELNET : " + LIMITE_VOEUX + " VŒUX MAXIMUM =====");
+        L.push("Les vœux ci-dessous ne pourront pas être saisis.");
+        L.push("Pour en garder un, il faut en retirer un au-dessus.");
+        L.push("");
+      }
+      let ligne = r + ". " + o.voeu.libelle + " — " + o.lyc.nom + " (" + o.lyc.ville + ")";
+      if (o.filet && !o.seul) ligne += "  [filet de sécurité]";
+      if (o.complement)       ligne += "  [couverture secteur]";
+      L.push(ligne);
+      L.push("   Code vœu Affelnet : " + o.voeu.code);
+      L.push("   Trajet depuis le collège : " + trajetTexte(o.lyc) +
+             (trajetLigne(o.lyc) ? " (" + trajetLigne(o.lyc) + ")" : ""));
+      if (o.voeu.procedure) {
+        L.push("   /!\\ Recrutement spécifique (" + o.voeu.procedure + ") : entretien de " +
+               "présélection obligatoire. À signaler très tôt à ton professeur principal.");
+      }
+      L.push("");
+    });
+
+    L.push("--------------------------------------------------");
+    L.push("Sources : " + SOURCE_2GT.affelnet + " ; " + SOURCE_2GT.fiche16 + ".");
+    L.push(SOURCE_2GT.avertissement);
+    L.push("Parles-en à ton professeur principal et/ou à la PsyEN.");
+    return L.join("\n");
   }
 
   function init(rootId) {
@@ -575,7 +623,7 @@
     refresh();
   }
 
-  window.TrouveTaVoie2GT = { init: init };
+  window.TrouveTaVoie2GT = { init: init, buildText: buildText };
   if (document.readyState !== "loading") { init(); }
   else { document.addEventListener("DOMContentLoaded", function () { init(); }); }
 })();
