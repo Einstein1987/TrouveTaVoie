@@ -184,7 +184,8 @@ function pingStats(type, valeur) {
 }
 
 function pingStatsForSelection(selection) {
-     if (typeof pingStats !== "function" || !selection) return;
+    if (typeof pingStats !== "function" || !selection) return;
+    if (selection.sansStat) return;   // piste de quiz déjà comptée : on n'envoie rien
     if (selection.fromQuiz) {
         pingStats('quiz_resultat', selection.statKey || selection.label);
     } else if (selection.type === 'formation') {
@@ -378,13 +379,15 @@ function askConfirm(selection){
  * ne décide pas d'une orientation.
  * ========================================================================== */
 
-let quizIndex     = 0;    // question en cours
-let quizReponses  = [];   // réponses choisies, dans l'ordre
+let quizIndex        = 0;      // question en cours
+let quizReponses     = [];     // réponses choisies, dans l'ordre
+let quizStatEnvoyee  = false;  // le quiz n'est compté qu'UNE fois, à la première piste consultée
 
 function startQuiz() {
   if (typeof pingStats === "function") pingStats('quiz_lance', '');
-  quizIndex    = 0;
-  quizReponses = [];
+  quizIndex       = 0;
+  quizReponses    = [];
+  quizStatEnvoyee = false;
   state = 'quiz';
   addBotMessage(
     "Pas de souci, c'est fait pour ça. Je vais te poser " + QUIZ_PRO.length +
@@ -447,10 +450,26 @@ function afficherResultatQuiz() {
 }
 
 // L'élève a choisi l'une des trois pistes.
+// Pas de confirmation : il vient de cliquer, lui redemander « c'est bien ça ? »
+// serait un tour de parole inutile. La fiche s'affiche directement.
 function choisirPisteQuiz(domainKey) {
   const selection = domainSelection(domainKey);
-  selection.fromQuiz = true;      // pour distinguer quiz_resultat et domaine dans les stats
-  askConfirm(selection);
+  selection.fromQuiz = true;      // distingue quiz_resultat de domaine dans les statistiques
+
+  // L'élève peut consulter les trois pistes l'une après l'autre : on ne compte
+  // que la première, sinon le taux de complétion du quiz dépasserait 100 %.
+  selection.sansStat = quizStatEnvoyee;
+  quizStatEnvoyee    = true;
+  addBotMessage(
+    "Très bien ! Voici ce que propose cette famille de métiers, dans le panneau de droite. " +
+    "Tu peux la télécharger en PDF, ou revenir en arrière pour explorer une autre piste.",
+    [
+      { label: "Revoir mes trois pistes",  action: "quiz_resultat", payload: null },
+      { label: "Retour au menu",           action: "set_state",     payload: "start" }
+    ]
+  );
+  fillCardCustom(selection);      // envoie aussi la statistique quiz_resultat
+  state = 'quiz_resultat';
 }
 
 function searchNotFound(){
@@ -533,6 +552,9 @@ function applyChoice(action, payload){
   }
   else if (action === "quiz_choix") {
     choisirPisteQuiz(payload);
+  }
+  else if (action === "quiz_resultat") {
+    afficherResultatQuiz();       // les réponses sont conservées : pas besoin de tout refaire
   }
   else if (action === "confirm_selection") {
     askConfirm(payload);
