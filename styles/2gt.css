@@ -241,7 +241,7 @@ table.gt-table .gt-lyc-meta.is-loin { color: #FCD34D; opacity: 1; }
 }
 
 /* ---------- Vœux de couverture du secteur ---------- */
-li.gt-sep-li { list-style: none; counter-increment: !important; padding: 14px 0 12px; }
+li.gt-sep-li { list-style: none; counter-increment: none; padding: 14px 0 12px; }
 li.gt-sep-li::before { content: none !important; }
 li.gt-sep-li > div { background: var(--soft, #F8FAFC); border: 1px dashed var(--line, #E2E8F0);
                      border-radius: 10px; padding: 11px 14px; }
@@ -262,7 +262,7 @@ ol.gt-voeux > li.is-complement .gt-v-main { color: var(--muted-strong, #475569);
 .gt-compteur.is-trop { color: #991B1B; background: #FEF2F2; border: 1px solid #FCA5A5;
                        border-radius: 10px; padding: 10px 13px; line-height: 1.5; }
 
-li.gt-limite-li { list-style: none; counter-increment: none !important; padding: 16px 0 12px;
+li.gt-limite-li { list-style: none; counter-increment: none; padding: 16px 0 12px;
                   position: relative; }
 li.gt-limite-li::before { content: none !important; }
 li.gt-limite-li > div { background: #FEF2F2; border: 2px solid #DC2626;
@@ -273,3 +273,56 @@ li.gt-limite-li span  { display: block; font-size: .83rem; color: #991B1B; line-
 ol.gt-voeux > li.is-hors-limite { opacity: .5; }
 ol.gt-voeux > li.is-hors-limite::before { background: #FCA5A5 !important;
                                           color: #7F1D1D !important; border: none !important; }
+
+/* ---------- Boutons imprimer / mail de la carte 2GT ---------- */
+.gt-card-actions { margin-top: 18px; padding-top: 16px;
+                   border-top: 1px dashed var(--line, #E2E8F0);
+                   display: flex; gap: 10px; flex-wrap: wrap; }
+
+/* =============================================================================
+ * IMPRESSION de l'onglet 2GT
+ * L'onglet inactif est déjà en display:none : il ne s'imprime jamais.
+ * Ici on ne garde que la carte de vœux — pas les cases à cocher, pas le tableau.
+ * ========================================================================== */
+@media print {
+  .tabs { display: none !important; }
+
+  /* Outils d'exploration : inutiles sur papier */
+  .gt-intro,
+  .gt-filet,
+  .gt-criteres,
+  .gt-table-scroll,
+  .gt-strategie,
+  .gt-card-actions { display: none !important; }
+
+  .gt-wrap { display: block !important; }
+
+  .gt-card {
+    border: 1px solid var(--line, #E2E8F0) !important;
+    border-radius: 10px !important;
+    box-shadow: none !important;
+    break-inside: auto;
+  }
+  .gt-card-head {
+    background: #ffffff !important;
+    color: var(--ink, #0F172A) !important;
+    border-bottom: 2px solid var(--ink, #0F172A) !important;
+  }
+  .gt-card-body { padding: 14px 0 !important; }
+
+  /* Un vœu ne doit jamais être coupé en deux entre deux pages */
+  ol.gt-voeux > li,
+  li.gt-sep-li,
+  li.gt-limite-li { break-inside: avoid; page-break-inside: avoid; }
+
+  /* Les vœux hors limite restent lisibles à l'impression */
+  ol.gt-voeux > li.is-hors-limite { opacity: 1 !important; color: var(--muted, #64748B) !important; }
+
+  .gt-unseul, .gt-euro-tip, .gt-compteur, .gt-limite-li > div, .gt-sep-li > div {
+    break-inside: avoid;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .gt-source { font-size: .68rem !important; }
+}
