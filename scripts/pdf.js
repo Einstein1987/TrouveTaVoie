@@ -91,55 +91,76 @@
 
     doc.setTextColor.apply(doc, MUTED);
     doc.setFontSize(8);
+    doc.setFont(undefined, "bold");
     doc.text("FAMILLE DE MÉTIERS / DOMAINE", M, y);
     doc.setTextColor.apply(doc, BRASS);
     doc.setFontSize(13);
-    doc.setFont(undefined, "bold");
     doc.text(doc.splitTextToSize(domain.trim(), UTILE), M, y + 6);
     y += 16;
 
+    const PAD  = 5;                    // marge intérieure du cadre
+    const BAS  = HAUT - M - 12;        // dernière ligne utilisable
+
     blocs.forEach(function (bloc) {
-      const titre = (bloc.querySelector(".formation-title") || {}).textContent || "";
+      const titre  = ((bloc.querySelector(".formation-title") || {}).textContent || "").trim();
       const coeffs = Array.prototype.slice
         .call(bloc.querySelectorAll(".coeffs-table tbody td"))
         .map(function (td) { return td.textContent.trim(); });
       const ecoles = Array.prototype.slice.call(bloc.querySelectorAll(".estab"))
         .map(function (e) {
-          return e.innerText.split("\n").map(function (l) { return l.trim(); })
-                  .filter(Boolean);
+          return e.innerText.split("\n").map(function (l) { return l.trim(); }).filter(Boolean);
         });
 
-      y = saut(doc, y, 30);
+      // Une formation ne commence jamais en bas de page : au moins le titre,
+      // les coefficients et un établissement doivent tenir ensemble.
+      if (y + 55 > BAS) { doc.addPage(); y = M + 5; }
 
-      // Titre de la formation
+      // Segments du cadre : un par page traversée.
+      const segments = [];
+      let page  = doc.internal.getNumberOfPages();
+      let hautCadre = y;
+
+      // Saut de page qui referme le cadre et le rouvre sur la page suivante
+      function place(besoin) {
+        if (y + besoin > BAS) {
+          segments.push({ page: page, y0: hautCadre, y1: y + 2, ferme: false });
+          doc.addPage();
+          page = doc.internal.getNumberOfPages();
+          y = M + 8;
+          hautCadre = M + 4;
+        }
+      }
+
+      /* ---- En-tête de la formation ---- */
+      const lignesTitre = doc.splitTextToSize(titre, UTILE - 2 * PAD - 4);
+      const hEntete = 5 + lignesTitre.length * 5.2;
       doc.setFillColor.apply(doc, SOFT);
-      doc.setDrawColor.apply(doc, LIGNE);
-      const lignesTitre = doc.splitTextToSize(titre.trim(), UTILE - 8);
-      const hTitre = 6 + lignesTitre.length * 5;
-      doc.roundedRect(M, y, UTILE, hTitre, 2, 2, "FD");
+      doc.rect(M + 0.4, y + 0.4, UTILE - 0.8, hEntete, "F");
       doc.setTextColor.apply(doc, INK);
       doc.setFontSize(11);
       doc.setFont(undefined, "bold");
-      doc.text(lignesTitre, M + 4, y + 6);
-      y += hTitre + 5;
+      doc.text(lignesTitre, M + PAD, y + 6);
+      y += hEntete + 5;
 
-      // Coefficients Affelnet
+      /* ---- Coefficients ---- */
       if (coeffs.length === 7) {
         const mat = ["Français", "Maths", "Hist.-Géo", "Langues", "EPS", "Arts", "Sc.-Techno"];
-        y = saut(doc, y, 18);
+        place(22);
         doc.setTextColor.apply(doc, MUTED);
-        doc.setFontSize(8);
+        doc.setFontSize(7.5);
         doc.setFont(undefined, "bold");
-        doc.text("COEFFICIENTS AFFELNET", M, y);
+        doc.text("COEFFICIENTS AFFELNET", M + PAD, y);
         y += 3;
-        const lc = UTILE / 7;
+        const larg = UTILE - 2 * PAD;
+        const lc = larg / 7;
+        const x0 = M + PAD;
         doc.setDrawColor.apply(doc, LIGNE);
-        doc.setFillColor.apply(doc, SOFT);
-        doc.rect(M, y, UTILE, 6, "FD");
-        doc.rect(M, y + 6, UTILE, 7, "D");
+        doc.setFillColor(255, 255, 255);
+        doc.rect(x0, y, larg, 6, "FD");
+        doc.rect(x0, y + 6, larg, 7, "FD");
         mat.forEach(function (m, i) {
-          const cx = M + lc * i + lc / 2;
-          doc.setFontSize(6.5);
+          const cx = x0 + lc * i + lc / 2;
+          doc.setFontSize(6.2);
           doc.setTextColor.apply(doc, MUTED);
           doc.setFont(undefined, "normal");
           doc.text(m, cx, y + 4, { align: "center" });
@@ -147,36 +168,60 @@
           doc.setTextColor.apply(doc, BRASS);
           doc.setFont(undefined, "bold");
           doc.text(coeffs[i], cx, y + 11, { align: "center" });
-          if (i > 0) doc.line(M + lc * i, y, M + lc * i, y + 13);
+          if (i > 0) doc.line(x0 + lc * i, y, x0 + lc * i, y + 13);
         });
-        y += 19;
+        y += 18;
       }
 
-      // Établissements
-      y = saut(doc, y, 14);
+      /* ---- Établissements ---- */
+      place(12);
       doc.setTextColor.apply(doc, MUTED);
-      doc.setFontSize(8);
+      doc.setFontSize(7.5);
       doc.setFont(undefined, "bold");
-      doc.text("ÉTABLISSEMENTS PUBLICS EN ESSONNE", M, y);
+      doc.text("ÉTABLISSEMENTS PUBLICS EN ESSONNE", M + PAD, y);
       y += 5;
 
       ecoles.forEach(function (lignes) {
-        y = saut(doc, y, 6 + lignes.length * 4);
+        const h = 4.5 + (lignes.length - 1) * 4 + 2.5;
+        place(h);
         doc.setTextColor.apply(doc, INK);
         doc.setFontSize(9.5);
         doc.setFont(undefined, "bold");
-        doc.text(lignes[0] || "", M + 2, y);
+        doc.text(lignes[0] || "", M + PAD + 2, y);
         y += 4.5;
         doc.setTextColor.apply(doc, MUTED);
         doc.setFontSize(8);
         doc.setFont(undefined, "normal");
         lignes.slice(1).forEach(function (l) {
-          doc.text(l, M + 2, y);
+          doc.text(l, M + PAD + 2, y);
           y += 4;
         });
-        y += 2;
+        y += 2.5;
       });
-      y += 4;
+
+      // Dernier segment
+      segments.push({ page: page, y0: hautCadre, y1: y + PAD - 2, ferme: true });
+
+      // On trace les cadres APRÈS le contenu : uniquement le contour, il ne
+      // recouvre donc pas le texte déjà écrit.
+      const pageFinale = page;
+      segments.forEach(function (sg) {
+        doc.setPage(sg.page);
+        doc.setDrawColor.apply(doc, LIGNE);
+        doc.setLineWidth(0.4);
+        doc.roundedRect(M, sg.y0, UTILE, sg.y1 - sg.y0, 2.5, 2.5, "D");
+        if (!sg.ferme) {   // le cadre continue page suivante : on le signale
+          doc.setFontSize(6.5);
+          doc.setTextColor.apply(doc, MUTED);
+          doc.setFont(undefined, "italic");
+          doc.text("suite page suivante…", LARG - M - 2, sg.y1 - 2, { align: "right" });
+          doc.setFont(undefined, "normal");
+        }
+      });
+      doc.setLineWidth(0.2);
+      doc.setPage(pageFinale);
+
+      y += PAD + 5;
     });
 
     noteFinale(doc, y,
