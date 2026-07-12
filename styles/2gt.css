@@ -241,7 +241,7 @@ table.gt-table .gt-lyc-meta.is-loin { color: #FCD34D; opacity: 1; }
 }
 
 /* ---------- Vœux de couverture du secteur ---------- */
-li.gt-sep-li { list-style: none; counter-increment: none; padding: 14px 0 12px; }
+li.gt-sep-li { list-style: none; counter-increment: !important; padding: 14px 0 12px; }
 li.gt-sep-li::before { content: none !important; }
 li.gt-sep-li > div { background: var(--soft, #F8FAFC); border: 1px dashed var(--line, #E2E8F0);
                      border-radius: 10px; padding: 11px 14px; }
@@ -262,7 +262,7 @@ ol.gt-voeux > li.is-complement .gt-v-main { color: var(--muted-strong, #475569);
 .gt-compteur.is-trop { color: #991B1B; background: #FEF2F2; border: 1px solid #FCA5A5;
                        border-radius: 10px; padding: 10px 13px; line-height: 1.5; }
 
-li.gt-limite-li { list-style: none; counter-increment: none; padding: 16px 0 12px;
+li.gt-limite-li { list-style: none; counter-increment: none !important; padding: 16px 0 12px;
                   position: relative; }
 li.gt-limite-li::before { content: none !important; }
 li.gt-limite-li > div { background: #FEF2F2; border: 2px solid #DC2626;
