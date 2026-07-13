@@ -80,8 +80,16 @@ document public et daté, cité dans l'application.
 **Rendre les coûts visibles.** Un trajet de plus de 45 minutes est signalé en ambre,
 avec le total aller-retour quotidien. L'élève reste libre — mais il sait.
  
-**Aucune donnée personnelle.** Pas de compte, pas de cookie, pas de stockage local.
-Les statistiques d'usage sont **strictement anonymes** (voir plus bas).
+**Aucune donnée personnelle collectée par l'application.** Pas de compte, pas de
+mot de passe, pas de cookie, pas de stockage local, pas d'adresse e-mail. Les
+statistiques d'usage sont **anonymes** : deux champs, un type d'action et une
+valeur, sans identifiant ni moyen de remonter à un élève (voir plus bas).
+
+*Précision honnête :* comme tout site web, les serveurs sollicités (Netlify pour
+l'hébergement, Google pour le formulaire de statistiques et — pour l'instant — les
+polices) reçoivent techniquement l'adresse IP du visiteur. L'application ne
+l'exploite pas et n'y a pas accès. L'internalisation des polices, prévue, supprimera
+la dernière requête non indispensable vers un tiers.
  
 ---
  
@@ -106,9 +114,14 @@ index.html                 Page unique, deux onglets
 └── img/                   Logo, favicon
 ```
  
-**Dépendance externe unique :** [jsPDF](https://github.com/parallax/jsPDF) (licence
-MIT), chargé depuis un CDN. Si le CDN est indisponible, l'application propose
-gracieusement l'impression navigateur en repli.
+**Dépendances**
+
+| Dépendance | Rôle | Hébergement |
+|---|---|---|
+| [jsPDF](https://github.com/parallax/jsPDF) 2.5.1 (MIT) | Génération des PDF | **Local** (`scripts/vendor/`) — aucun CDN |
+| Google Fonts (Outfit, Space Mono) | Typographie | Externe ⚠️ *(à internaliser)* |
+| Google Forms | Statistiques anonymes | Externe, à la demande |
+| Web Speech API | Lecture vocale et dictée | Navigateur |
  
 ### Structure des données 2GT — trois niveaux à ne jamais confondre
  
@@ -186,15 +199,29 @@ Puis ouvrir <http://localhost:8000>.
 ---
  
 ## Licence
- 
-Le **code** est publié sous licence [MIT](LICENSE).
- 
-Les **données** (codes vœux, coefficients, listes d'établissements) proviennent de
-sources publiques de l'Éducation nationale et ne sont pas couvertes par cette
-licence : elles restent soumises aux conditions de leurs producteurs respectifs.
- 
+
+Le **code** est publié sous licence [GNU AGPL-3.0](LICENSE).
+
+Vous êtes libre de l'utiliser, de l'étudier, de le modifier et de le redistribuer.
+En contrepartie, **toute version modifiée doit rester libre** — y compris si elle
+est simplement *hébergée* et proposée en ligne, sans être distribuée. C'est la
+particularité de l'AGPL par rapport à la GPL classique, et c'est ce qui garantit
+que les adaptations de TrouveTaVoie (pour un autre collège, un autre bassin, une
+autre académie) reviennent à la communauté éducative plutôt que de se refermer.
+
+Concrètement : si vous adaptez cette application et la mettez en ligne pour vos
+élèves, vous devez publier votre code source.
+
+Les **données** (codes vœux Affelnet, coefficients, listes d'établissements)
+proviennent de sources publiques de l'Éducation nationale. Elles ne sont pas
+couvertes par cette licence et restent soumises aux conditions de leurs
+producteurs respectifs.
+
+**Dépendance :** [jsPDF](https://github.com/parallax/jsPDF), sous licence MIT —
+compatible avec l'AGPL. Sa licence est conservée dans `scripts/vendor/`.
+
 ---
- 
+
 ## Auteur
  
 **Jérémy Violette** — professeur de physique-chimie, référent numérique,
