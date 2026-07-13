@@ -17,8 +17,14 @@
  *
  * Code source : https://github.com/Einstein1987/TrouveTaVoie
  */
-const YES_WORDS = ["oui", "ouais", "exact", "voila", "c'est ca", "cest ca", "tout a fait", "carrement"];
-const NO_WORDS = ["non", "pas vraiment", "pas trop", "pas exactement"];
+// L'ordre compte : les négations sont testées EN PREMIER.
+// « pas exactement » contient « exact » : sans cette précaution, la réponse
+// serait interprétée comme un oui. Même piège avec « pas vraiment » / « vraiment ».
+const NO_WORDS  = ["non", "nan", "pas vraiment", "pas trop", "pas exactement",
+                   "pas du tout", "pas ca", "plutot pas", "negatif"];
+const YES_WORDS = ["oui", "ouais", "ouaip", "yes", "exact", "exactement", "voila",
+                   "c'est ca", "cest ca", "tout a fait", "carrement", "ok", "d'accord",
+                   "daccord", "affirmatif", "parfait"];
 
 function normalize(str){
   return str.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim();
@@ -107,10 +113,19 @@ function etablissementSelection(group){
   };
 }
 
+// Cherche une expression en respectant les frontières de mot : « non » ne doit
+// pas se déclencher dans « nonobstant », ni « ok » dans « okapi ».
+function contientExpression(phrase, expr){
+  const e = expr.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  return new RegExp("(^|[^a-z0-9])" + e + "([^a-z0-9]|$)").test(phrase);
+}
+
 function matchYesNo(text){
   const n = normalize(text);
-  if(YES_WORDS.some(w => n.includes(w))) return 'yes';
-  if(NO_WORDS.some(w => n.includes(w))) return 'no';
+  // 1) Les négations d'abord, sinon « pas exactement » passerait pour un oui.
+  if(NO_WORDS.some(w => contientExpression(n, w))) return 'no';
+  // 2) Puis les affirmations.
+  if(YES_WORDS.some(w => contientExpression(n, w))) return 'yes';
   return null;
 }
 
@@ -157,7 +172,19 @@ function addBotMessage(text, options){
         b.classList.add('opt-help');
       }
       b.textContent = opt.label;
-      b.addEventListener('click', () => handleUserChoice(opt.label, opt.action, opt.payload));
+      b.addEventListener('click', () => {
+        // Un groupe de boutons ne sert qu'UNE fois. Sans cela, un élève pourrait
+        // recliquer sur une réponse de la question 3 alors que la question 7 est
+        // affichée : le clic serait compté comme une réponse à la question 7.
+        if (optRow.dataset.repondu === "1") return;
+        optRow.dataset.repondu = "1";
+        optRow.classList.add('optrow-done');
+        Array.prototype.forEach.call(optRow.children, function (btn) {
+          btn.disabled = true;
+          btn.classList.toggle('optbtn-choisi', btn === b);
+        });
+        handleUserChoice(opt.label, opt.action, opt.payload);
+      });
       optRow.appendChild(b);
     });
     chatlog.appendChild(optRow);
@@ -660,6 +687,20 @@ function handleFreeText(text){
       {label:"Oui", action:"confirm", payload:"yes"},
       {label:"Non", action:"confirm", payload:"no"}
     ]);
+    return;
+  }
+
+  // Pendant le quiz, le champ de saisie ne doit pas lancer une recherche : cela
+  // laisserait la conversation dans un état incohérent, au milieu du questionnaire.
+  if (state === 'quiz') {
+    addBotMessage("Pour cette question, choisis l'une des réponses proposées ci-dessus. " +
+                  "Tu pourras écrire librement après le quiz.");
+    return;
+  }
+  if (state === 'quiz_resultat') {
+    addBotMessage("Choisis l'une des trois pistes ci-dessus, ou reviens au menu pour " +
+                  "faire une autre recherche.",
+      [{ label: "Retour au menu", action: "menu", payload: null }]);
     return;
   }
 

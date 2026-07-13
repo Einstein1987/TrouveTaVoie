@@ -17,18 +17,44 @@
         const on = t.dataset.vue === cible;
         t.classList.toggle("is-active", on);
         t.setAttribute("aria-selected", on ? "true" : "false");
+        // Un seul onglet est atteignable par Tab : les autres se rejoignent
+        // avec les flèches, comme le veut le motif ARIA « tabs ».
+        t.setAttribute("tabindex", on ? "0" : "-1");
       });
       vues.forEach(function (v) {
-        v.classList.toggle("is-active", v.id === cible);
+        const on = v.id === cible;
+        v.classList.toggle("is-active", on);
+        // `hidden` retire vraiment le panneau de l'arbre d'accessibilité :
+        // une classe CSS seule laisserait le lecteur d'écran le parcourir.
+        if (on) { v.removeAttribute("hidden"); }
+        else    { v.setAttribute("hidden", ""); }
       });
 
       // Pas de statistique ici : un simple clic d'onglet n'est pas un usage.
-      // La voie 2GT compte au moment où l'élève valide sa liste de vœux.
+      // La voie 2GT compte au moment où l'élève choisit son classement de vœux.
       window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    // Navigation au clavier : flèches gauche/droite, Début et Fin.
+    function deplacer(depuis, pas) {
+      const i = onglets.indexOf(depuis);
+      if (i === -1) return;
+      let j;
+      if (pas === "debut")     j = 0;
+      else if (pas === "fin")  j = onglets.length - 1;
+      else                     j = (i + pas + onglets.length) % onglets.length;
+      onglets[j].focus();
+      activer(onglets[j].dataset.vue);
     }
 
     onglets.forEach(function (t) {
       t.addEventListener("click", function () { activer(t.dataset.vue); });
+      t.addEventListener("keydown", function (e) {
+        if (e.key === "ArrowRight") { e.preventDefault(); deplacer(t, 1); }
+        else if (e.key === "ArrowLeft")  { e.preventDefault(); deplacer(t, -1); }
+        else if (e.key === "Home")       { e.preventDefault(); deplacer(t, "debut"); }
+        else if (e.key === "End")        { e.preventDefault(); deplacer(t, "fin"); }
+      });
     });
 
     // Le logo remet l'application à son état de départ : c'est le geste attendu

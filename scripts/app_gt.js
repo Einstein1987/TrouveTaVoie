@@ -47,25 +47,17 @@
     return t.ligne ? t.ligne : "";
   }
 
-  // Les vœux d'un lycée qui répondent à un critère donné
+  // Les vœux d'un lycée qui répondent à un critère donné.
+  //
+  // La correspondance repose sur l'identifiant `criteres` porté par chaque vœu
+  // dans bdd_gt.js — JAMAIS sur son libellé. Une correction d'accent ou de
+  // formulation dans le catalogue Affelnet romprait sinon le lien en silence,
+  // sans la moindre erreur visible.
   function voeuxPourCritere(lycId, critere) {
     const lyc = LYCEES_2GT[lycId];
     if (!lyc || !critere.lycees.includes(lycId)) return [];
-    const cle = critere.id;
     return lyc.voeux.filter(function (v) {
-      const lib = v.libelle.toLowerCase();
-      if (cle === "arts_plastiques") return lib.includes("arts plastiques");
-      if (cle === "histoire_arts")   return lib.includes("histoire des arts");
-      if (cle === "musique")         return lib.includes("musique");
-      if (cle === "cinema")          return lib.includes("cinéma");
-      if (cle === "theatre")         return lib.includes("théâtre");
-      if (cle === "design")          return lib.includes("design");
-      if (cle === "biotech")         return lib.includes("biotechnologies");
-      if (cle === "chinois")         return lib.includes("chinois");
-      if (cle === "portugais")       return lib.includes("portugais");
-      if (cle === "euro_espagnol")   return lib.includes("européenne espagnol");
-      if (cle === "euro_anglais")    return lib.includes("européenne anglais");
-      return false;
+      return v.criteres && v.criteres.indexOf(critere.id) !== -1;
     });
   }
 

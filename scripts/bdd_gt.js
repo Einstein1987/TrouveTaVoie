@@ -62,17 +62,17 @@ const LYCEES_2GT = {
     trajet: { km: 2, minutes: 26, ligne: "Bus 4245" },
     voeux: [
       { code: "09121767", libelle: "2GT (sans option)",        categorie: "base",     procedure: null },
-      { code: "09121861", libelle: "2GT Arts plastiques",      categorie: "artistique", procedure: null,
+      { code: "09121861", libelle: "2GT Arts plastiques",      categorie: "artistique", criteres: ["arts_plastiques"], procedure: null,
         note: "À poursuivre en spécialité Arts plastiques en 1ère générale." },
-      { code: "09121862", libelle: "2GT Cinéma-audiovisuel",   categorie: "artistique", procedure: null },
-      { code: "09121863", libelle: "2GT Histoire des arts",    categorie: "artistique", procedure: null,
+      { code: "09121862", libelle: "2GT Cinéma-audiovisuel",   categorie: "artistique", criteres: ["cinema"], procedure: null },
+      { code: "09121863", libelle: "2GT Histoire des arts",    categorie: "artistique", criteres: ["histoire_arts"], procedure: null,
         note: "À poursuivre en spécialité Histoire des arts en 1ère générale." },
-      { code: "09121864", libelle: "2GT Musique",              categorie: "artistique", procedure: null,
+      { code: "09121864", libelle: "2GT Musique",              categorie: "artistique", criteres: ["musique"], procedure: null,
         note: "À poursuivre en spécialité Musique en 1ère générale." },
-      { code: "09121865", libelle: "2GT Théâtre",              categorie: "artistique", procedure: null },
-      { code: "09122003", libelle: "Langue vivante C rare — Portugais", categorie: "langue", procedure: null },
-      { code: "09112477", libelle: "Section européenne Anglais",       categorie: "section_euro", procedure: null },
-      { code: "09122034", libelle: "Section européenne Portugais",     categorie: "section_euro", procedure: null }
+      { code: "09121865", libelle: "2GT Théâtre",              categorie: "artistique", criteres: ["theatre"], procedure: null },
+      { code: "09122003", libelle: "Langue vivante C rare — Portugais", categorie: "langue", criteres: ["portugais"], procedure: null },
+      { code: "09112477", libelle: "Section européenne Anglais",       categorie: "section_euro", criteres: ["euro_anglais"], procedure: null },
+      { code: "09122034", libelle: "Section européenne Portugais",     categorie: "section_euro", criteres: ["portugais"], procedure: null }
     ],
     horsAffelnet: [],
     optionsSurPlace: [
@@ -93,12 +93,12 @@ const LYCEES_2GT = {
     trajet: { km: 6, minutes: 30, ligne: "Bus 4245 puis Bus 4241" },
     voeux: [
       { code: "09121769", libelle: "2GT (sans option)",   categorie: "base",       procedure: null },
-      { code: "09121992", libelle: "2GT Biotechnologies", categorie: "scientifique",
+      { code: "09121992", libelle: "2GT Biotechnologies", categorie: "scientifique", criteres: ["biotech"],
         procedure: "PassSTL",
         note: "Recrutement spécifique : entretien de présélection. L'avis de la commission " +
               "donne des points bonus/malus sur Affelnet." },
-      { code: "09122033", libelle: "2GT Théâtre",         categorie: "artistique", procedure: null },
-      { code: "09121841", libelle: "Section européenne Anglais", categorie: "section_euro", procedure: null }
+      { code: "09122033", libelle: "2GT Théâtre",         categorie: "artistique", criteres: ["theatre"], procedure: null },
+      { code: "09121841", libelle: "Section européenne Anglais", categorie: "section_euro", criteres: ["euro_anglais"], procedure: null }
     ],
     horsAffelnet: [
       { libelle: "Section sportive Athlétisme",
@@ -125,13 +125,13 @@ const LYCEES_2GT = {
     trajet: { km: 6, minutes: 35, ligne: "Bus 4245" },
     voeux: [
       { code: "09121768", libelle: "2GT (sans option)",      categorie: "base",       procedure: null },
-      { code: "09121924", libelle: "2GT Cinéma-audiovisuel", categorie: "artistique", procedure: null },
-      { code: "09121790", libelle: "2GT Création et Culture Design", categorie: "design",
+      { code: "09121924", libelle: "2GT Cinéma-audiovisuel", categorie: "artistique", criteres: ["cinema"], procedure: null },
+      { code: "09121790", libelle: "2GT Création et Culture Design", categorie: "design", criteres: ["design"],
         procedure: "PassCCD",
         note: "Recrutement spécifique : entretien de présélection. L'avis de la commission " +
               "donne des points bonus/malus sur Affelnet. C'est la porte d'entrée vers le bac STD2A." },
-      { code: "09112469", libelle: "Langue vivante C rare — Chinois", categorie: "langue", procedure: null },
-      { code: "09112472", libelle: "Section européenne Anglais",      categorie: "section_euro", procedure: null }
+      { code: "09112469", libelle: "Langue vivante C rare — Chinois", categorie: "langue", criteres: ["chinois"], procedure: null },
+      { code: "09112472", libelle: "Section européenne Anglais",      categorie: "section_euro", criteres: ["euro_anglais"], procedure: null }
     ],
     horsAffelnet: [],
     optionsSurPlace: [
@@ -155,7 +155,7 @@ const LYCEES_2GT = {
     trajet: { km: 8, minutes: 58, ligne: "Bus 4245 puis Bus 4214" },
     voeux: [
       { code: "09121783", libelle: "2GT (sans option)",           categorie: "base",         procedure: null },
-      { code: "09121600", libelle: "Section européenne Anglais",  categorie: "section_euro", procedure: null }
+      { code: "09121600", libelle: "Section européenne Anglais",  categorie: "section_euro", criteres: ["euro_anglais"], procedure: null }
     ],
     horsAffelnet: [],
     optionsSurPlace: [
@@ -174,8 +174,8 @@ const LYCEES_2GT = {
     trajet: { km: 5, minutes: 41, ligne: "Bus 4245 puis Bus 4307" },
     voeux: [
       { code: "09121786", libelle: "2GT (sans option)",            categorie: "base",         procedure: null },
-      { code: "09112533", libelle: "Section européenne Anglais",   categorie: "section_euro", procedure: null },
-      { code: "09121752", libelle: "Section européenne Espagnol",  categorie: "section_euro", procedure: null }
+      { code: "09112533", libelle: "Section européenne Anglais",   categorie: "section_euro", criteres: ["euro_anglais"], procedure: null },
+      { code: "09121752", libelle: "Section européenne Espagnol",  categorie: "section_euro", criteres: ["euro_espagnol"], procedure: null }
     ],
     horsAffelnet: [],
     optionsSurPlace: [
