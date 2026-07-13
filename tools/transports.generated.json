@@ -1,0 +1,134 @@
+{
+  "Lycée Robert Doisneau|Corbeil-Essonnes": {
+    "dureeMin": 26,
+    "trajet": "Bus 4245"
+  },
+  "Lycée Auguste Perret|Évry-Courcouronnes": {
+    "dureeMin": 42,
+    "trajet": "Bus 4245 puis Bus 4204"
+  },
+  "Lycée Charles Baudelaire|Évry-Courcouronnes": {
+    "dureeMin": 42,
+    "trajet": "Bus 4245 puis Bus 4204"
+  },
+  "Lycée Georges Brassens|Évry-Courcouronnes": {
+    "dureeMin": 35,
+    "trajet": "Bus 4245"
+  },
+  "Lycée Parc des Loges|Évry-Courcouronnes": {
+    "dureeMin": 30,
+    "trajet": "Bus 4245 puis Bus 4241"
+  },
+  "Lycée Pierre Mendès France|Ris-Orangis": {
+    "dureeMin": 35,
+    "trajet": "Bus 4245 puis RER D"
+  },
+  "Lycée Château des Coudraies|Étiolles": {
+    "dureeMin": 45,
+    "trajet": "Bus 4245 puis Bus Tzen1 puis Bus 3703"
+  },
+  "Lycée Marie Laurencin|Mennecy": {
+    "dureeMin": 41,
+    "trajet": "Bus 4245 puis Bus 4307"
+  },
+  "Lycée François Truffaut|Bondoufle": {
+    "dureeMin": 58,
+    "trajet": "Bus 4245 puis Bus 4214"
+  },
+  "Lycée Les Frères Moreau|Quincy-sous-Sénart": {
+    "dureeMin": 79,
+    "trajet": "RER D puis RER D"
+  },
+  "Lycée Nadar|Draveil": {
+    "dureeMin": 78,
+    "trajet": "Bus 4245 puis RER D puis Bus 4116"
+  },
+  "EREA Jean Isoard|Montgeron": {
+    "dureeMin": 76,
+    "trajet": "Bus 4245 puis RER D puis Bus 4113 puis Bus 4118"
+  },
+  "Lycée André-Marie Ampère|Morsang-sur-Orge": {
+    "dureeMin": 81,
+    "trajet": "Bus 4245 puis Tram T12 puis Bus 4521"
+  },
+  "Lycée Paul Langevin|Sainte-Geneviève-des-Bois": {
+    "dureeMin": 65,
+    "trajet": "Bus 4245 puis Bus 4504"
+  },
+  "Lycée Jean Monnet|Juvisy-sur-Orge": {
+    "dureeMin": 58,
+    "trajet": "Bus 4245 puis RER D"
+  },
+  "Lycée Gaspard Monge|Savigny-sur-Orge": {
+    "dureeMin": 68,
+    "trajet": "Bus 4245 puis RER D puis RER C"
+  },
+  "Lycée Louis Armand|Yerres": {
+    "dureeMin": 79,
+    "trajet": "Bus 4245 puis RER D puis RER D"
+  },
+  "Lycée Clément Ader|Athis-Mons": {
+    "dureeMin": 70,
+    "trajet": "Bus 4245 puis RER D puis RER C"
+  },
+  "Lycée Léonard de Vinci|Saint-Michel-sur-Orge": {
+    "dureeMin": 77,
+    "trajet": "Bus 4245 puis Bus 4504 puis Bus 4501"
+  },
+  "Lycée Jean-Pierre Timbaud|Brétigny-sur-Orge": {
+    "dureeMin": 64,
+    "trajet": "Bus 4245 puis Bus 4504"
+  },
+  "Lycée Marguerite Yourcenar|Morangis": {
+    "dureeMin": 83,
+    "trajet": "RER D puis RER D puis Bus 399"
+  },
+  "Lycée Jean Perrin|Longjumeau": {
+    "dureeMin": 90,
+    "trajet": "Bus 4245 puis RER D puis RER C puis Bus 4501"
+  },
+  "Lycée Alexandre Denis|Cerny": {
+    "dureeMin": 59,
+    "trajet": "Bus 4243 puis RER D puis Bus 4306 puis Bus 4306"
+  },
+  "Lycée Paul Belmondo|Arpajon": {
+    "dureeMin": 77,
+    "trajet": "Bus 4245 puis Bus 4504 puis Bus 9114"
+  },
+  "EREA Le Château du Lac|Ollainville": {
+    "dureeMin": 98,
+    "trajet": "Bus 4245 puis RER D puis RER C"
+  },
+  "Lycée Gustave Eiffel|Massy": {
+    "dureeMin": 110,
+    "trajet": "RER D puis RER D puis Bus 399 puis Bus 319"
+  },
+  "Lycée Parc de Vilgénis|Massy": {
+    "dureeMin": 93,
+    "trajet": "Bus 4245 puis Tram T12 puis Bus 119"
+  },
+  "Lycée Henri Poincaré|Palaiseau": {
+    "dureeMin": 110,
+    "trajet": "RER D puis RER D puis RER C puis RER B"
+  },
+  "Lycée International Paris-Saclay|Palaiseau": {
+    "dureeMin": 108,
+    "trajet": "RER D puis RER D puis Bus 9105"
+  },
+  "Lycée L'Essouriau|Les Ulis": {
+    "dureeMin": 98,
+    "trajet": "RER D puis RER D puis Bus 9105 puis Bus 4603"
+  },
+  "Lycée Nelson Mandela|Étampes": {
+    "dureeMin": 120,
+    "trajet": "RER D puis RER D puis RER C"
+  },
+  "Lycée Geoffroy Saint-Hilaire|Étampes": {
+    "dureeMin": 110,
+    "trajet": "RER D puis RER D puis RER C"
+  },
+  "Lycée Nikola Tesla|Dourdan": {
+    "dureeMin": 133,
+    "trajet": "Bus 4245 puis Tram T12 puis Bus 9103"
+  }
+}
