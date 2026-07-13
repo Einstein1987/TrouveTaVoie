@@ -364,6 +364,32 @@ function startMenu(message, garderCarte){
   ]);
 }
 
+/* -----------------------------------------------------------------------------
+ * Affiche directement la fiche d'orientation, SANS demander confirmation.
+ *
+ * À utiliser chaque fois que l'élève a CLIQUÉ sur un bouton : il a déjà choisi,
+ * lui redemander « c'est bien ça ? » est un tour de parole inutile.
+ * La confirmation (askConfirm) reste réservée aux cas où c'est le BOT qui a
+ * deviné à partir d'un texte libre — là, vérifier a du sens.
+ * -------------------------------------------------------------------------- */
+function afficherFiche(selection){
+  if(!selection || !selection.formations || !selection.formations.length){
+    startMenu("Je n'ai rien trouvé pour cette piste. Reprenons : que veux-tu faire ?");
+    return;
+  }
+  pendingSelection = null;
+  addBotMessage(
+    "Très bien ! Voici ta fiche d'orientation, dans le panneau de droite. " +
+    "Pense à la télécharger en PDF pour la garder ou la montrer chez toi.",
+    [
+      { label: "Faire une autre recherche", action: "menu",       payload: null },
+      { label: "Faire le quiz",             action: "start_quiz", payload: null }
+    ]
+  );
+  fillCardCustom(selection);
+  state = 'start';
+}
+
 function askConfirm(selection){
   if(!selection || !selection.formations || !selection.formations.length){
     startMenu("Je n'ai rien trouvé pour cette piste. Reprenons : que veux-tu faire ?");
@@ -608,7 +634,7 @@ function applyChoice(action, payload){
     startMenu("Pas de problème. Que veux-tu faire maintenant ?", true);
   }
   else if (action === "confirm_selection") {
-    askConfirm(payload);
+    afficherFiche(payload);      // l'élève a cliqué : pas de confirmation
   }
   else if (action === "confirm") {
     if (payload === 'yes') {
