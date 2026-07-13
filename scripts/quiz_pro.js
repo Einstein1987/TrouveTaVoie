@@ -50,7 +50,7 @@ const QUIZ_PRO = [
       { label: "M'occuper des autres, les aider",
         scores: { sante_social: 4, beaute: 2, securite: 1 } },
       { label: "Comprendre comment les choses marchent, et les réparer",
-        scores: { mecanique_auto: 3, numerique_energie: 3, pilotage_maintenance: 3 } },
+        scores: { maintenance_vehicules: 3, numerique_energie: 3, pilotage_maintenance: 3 } },
       { label: "Organiser, gérer, faire que tout soit carré",
         scores: { gestion_logistique: 4, relation_client: 2, etudes_batiment: 1 } }
     ]
@@ -63,9 +63,9 @@ const QUIZ_PRO = [
       { label: "Dehors, en plein air",
         scores: { nature_paysage: 4, batiment: 3, securite: 2 } },
       { label: "Dans un atelier, un garage, une usine",
-        scores: { mecanique_auto: 3, realisation_mecanique: 3, agencement_bois: 3, pilotage_maintenance: 2 } },
+        scores: { maintenance_vehicules: 3, realisation_mecanique: 3, agencement_bois: 3, pilotage_maintenance: 2 } },
       { label: "En contact avec du public toute la journée",
-        scores: { relation_client: 4, restauration: 3, beaute: 3, sante_social: 2 } },
+        scores: { relation_client: 4, hotellerie_restauration: 3, beaute: 3, sante_social: 2 } },
       { label: "Devant des écrans, des plans, des chiffres",
         scores: { etudes_batiment: 4, numerique_energie: 2, gestion_logistique: 3 } }
     ]
@@ -76,7 +76,8 @@ const QUIZ_PRO = [
     question: "Un appareil tombe en panne chez toi. Ton premier réflexe ?",
     reponses: [
       { label: "Je le démonte pour voir ce qu'il a",
-        scores: { mecanique_auto: 3, pilotage_maintenance: 3, realisation_mecanique: 2 } },
+        scores: { maintenance_vehicules: 3, pilotage_maintenance: 3, realisation_mecanique: 2,
+                  aeronautique: 3 } },
       { label: "Je cherche un tuto, un schéma, une notice",
         scores: { numerique_energie: 3, etudes_batiment: 2, pilotage_maintenance: 1 } },
       { label: "J'appelle quelqu'un qui saura faire",
@@ -95,7 +96,8 @@ const QUIZ_PRO = [
       { label: "Des plantes, la terre, les animaux",
         scores: { nature_paysage: 5 } },
       { label: "De l'électricité, de l'électronique, des machines",
-        scores: { numerique_energie: 4, pilotage_maintenance: 3, mecanique_auto: 2 } },
+        scores: { numerique_energie: 4, pilotage_maintenance: 3, maintenance_vehicules: 2,
+                  aeronautique: 3 } },
       { label: "Des gens, tout simplement",
         scores: { sante_social: 3, relation_client: 3, beaute: 2, securite: 2 } }
     ]
@@ -110,9 +112,9 @@ const QUIZ_PRO = [
       { label: "Avoir aidé quelqu'un à aller mieux",
         scores: { sante_social: 4, beaute: 3 } },
       { label: "Avoir remis en marche une machine à l'arrêt",
-        scores: { mecanique_auto: 4, pilotage_maintenance: 3, realisation_mecanique: 2 } },
+        scores: { maintenance_vehicules: 4, pilotage_maintenance: 3, realisation_mecanique: 2 } },
       { label: "Avoir fait plaisir : avoir régalé quelqu'un, ou l'avoir mis en beauté",
-        scores: { restauration: 4, mode_art: 3, beaute: 2, relation_client: 1 } }
+        scores: { hotellerie_restauration: 4, mode_art: 3, beaute: 2, relation_client: 1 } }
     ]
   },
 
@@ -121,11 +123,11 @@ const QUIZ_PRO = [
     question: "Dans un travail de groupe, ton rôle naturel, c'est plutôt…",
     reponses: [
       { label: "Mettre la main à la pâte",
-        scores: { batiment: 2, agencement_bois: 2, restauration: 2, realisation_mecanique: 2 } },
+        scores: { batiment: 2, agencement_bois: 2, hotellerie_restauration: 2, realisation_mecanique: 2 } },
       { label: "Organiser et répartir les tâches",
         scores: { gestion_logistique: 4, relation_client: 2, securite: 1 } },
       { label: "Trouver les idées, donner le style",
-        scores: { mode_art: 4, etudes_batiment: 2, restauration: 1 } },
+        scores: { mode_art: 4, etudes_batiment: 2, hotellerie_restauration: 1 } },
       { label: "Vérifier que rien n'est oublié",
         scores: { pilotage_maintenance: 3, securite: 3, gestion_logistique: 2 } }
     ]
@@ -136,11 +138,11 @@ const QUIZ_PRO = [
     question: "Es-tu plutôt à l'aise avec l'effort physique ?",
     reponses: [
       { label: "Oui, j'aime bouger, porter, me dépenser",
-        scores: { batiment: 3, nature_paysage: 3, securite: 3, restauration: 2 } },
+        scores: { batiment: 3, nature_paysage: 3, securite: 3, hotellerie_restauration: 2 } },
       { label: "Je préfère un travail minutieux, au calme",
         scores: { mode_art: 3, beaute: 3, etudes_batiment: 2, numerique_energie: 2 } },
       { label: "Un peu des deux, selon les moments",
-        scores: { mecanique_auto: 2, agencement_bois: 2, realisation_mecanique: 2, pilotage_maintenance: 2 } },
+        scores: { maintenance_vehicules: 2, agencement_bois: 2, realisation_mecanique: 2, pilotage_maintenance: 2 } },
       { label: "J'aime surtout être en mouvement et parler aux gens",
         scores: { relation_client: 3, gestion_logistique: 3, sante_social: 2 } }
     ]
@@ -151,11 +153,12 @@ const QUIZ_PRO = [
     question: "Qu'est-ce qui compte le plus pour toi dans un métier ?",
     reponses: [
       { label: "Que ce soit utile aux autres",
-        scores: { sante_social: 4, securite: 3, restauration: 1 } },
+        scores: { sante_social: 4, securite: 3, hotellerie_restauration: 1 } },
       { label: "Que ce soit technique, et qu'on apprenne sans arrêt",
-        scores: { numerique_energie: 3, pilotage_maintenance: 3, mecanique_auto: 2, etudes_batiment: 2 } },
+        scores: { numerique_energie: 3, pilotage_maintenance: 3, maintenance_vehicules: 2,
+                  etudes_batiment: 2, aeronautique: 4 } },
       { label: "Pouvoir créer, inventer des choses",
-        scores: { mode_art: 4, agencement_bois: 3, restauration: 2, beaute: 2 } },
+        scores: { mode_art: 4, agencement_bois: 3, hotellerie_restauration: 2, beaute: 2 } },
       { label: "Que ce soit concret, qu'on voie le résultat de son travail",
         scores: { batiment: 3, realisation_mecanique: 3, nature_paysage: 2 } }
     ]
@@ -166,13 +169,14 @@ const QUIZ_PRO = [
     question: "Face à une situation d'urgence ou de stress…",
     reponses: [
       { label: "Je garde mon sang-froid, j'aime l'action",
-        scores: { securite: 4, sante_social: 2, restauration: 2 } },
+        scores: { securite: 4, sante_social: 2, hotellerie_restauration: 2 } },
       { label: "Je préfère un cadre calme et des règles claires",
         scores: { gestion_logistique: 3, etudes_batiment: 3, pilotage_maintenance: 2 } },
       { label: "Je m'adapte, je trouve une solution sur le moment",
-        scores: { mecanique_auto: 3, numerique_energie: 2, relation_client: 2 } },
+        scores: { maintenance_vehicules: 3, numerique_energie: 2, relation_client: 2 } },
       { label: "Je prends mon temps, je soigne le détail",
-        scores: { mode_art: 3, beaute: 3, agencement_bois: 2 } }
+        scores: { mode_art: 3, beaute: 3, agencement_bois: 2, alimentation: 4,
+                  aeronautique: 2 } }
     ]
   },
 
@@ -181,9 +185,13 @@ const QUIZ_PRO = [
     question: "Dernière question. Parmi ces activités, laquelle t'attire le plus ?",
     reponses: [
       { label: "Conduire un engin, piloter une machine",
-        scores: { pilotage_maintenance: 4, batiment: 2, gestion_logistique: 2, mecanique_auto: 2 } },
+        scores: { pilotage_maintenance: 4, batiment: 2, gestion_logistique: 2, maintenance_vehicules: 2 } },
       { label: "Cuisiner, recevoir, servir",
-        scores: { restauration: 5, relation_client: 1 } },
+        scores: { hotellerie_restauration: 5, relation_client: 1 } },
+      { label: "Faire du pain, des gâteaux, des chocolats",
+        scores: { alimentation: 5, hotellerie_restauration: 1 } },
+      { label: "Travailler sur des avions",
+        scores: { aeronautique: 5, maintenance_vehicules: 1 } },
       { label: "Coiffer, maquiller, prendre soin de l'apparence",
         scores: { beaute: 5, mode_art: 1 } },
       { label: "Dessiner, coudre, créer des objets",

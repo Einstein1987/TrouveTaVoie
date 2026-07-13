@@ -115,8 +115,7 @@ const VOCABULAIRE = {
     "soudeur", "soudure", "souder", "chaudronnier", "chaudronnerie", "metal",
     "metallier", "serrurier", "usinage", "usiner", "tourneur", "fraiseur",
     "tour", "fraiseuse", "commande numerique", "cnc", "piece mecanique",
-    "pieces", "acier", "inox", "atelier", "industrie", "fabrication",
-    "aeronautique", "avion", "avions"
+    "pieces", "acier", "inox", "atelier", "industrie", "fabrication"
   ],
 
   pilotage_maintenance: [
@@ -126,7 +125,7 @@ const VOCABULAIRE = {
     "machine", "machines", "industriel", "conduite de machine", "mspc", "pilotage"
   ],
 
-  mecanique_auto: [
+  maintenance_vehicules: [
     "mecanicien", "mecanique", "mecano", "garage", "garagiste", "voiture",
     "voitures", "bagnole", "bagnoles", "auto", "automobile", "moteur", "moteurs",
     "reparer des voitures", "reparer les voitures", "carrosserie", "carrossier",
@@ -135,12 +134,10 @@ const VOCABULAIRE = {
     "pneu", "pneus", "vidange", "diagnostic", "tuning"
   ],
 
-  restauration: [
+  hotellerie_restauration: [
     "cuisinier", "cuisiniere", "cuisine", "cuisiner", "cuistot", "chef",
     "chef cuisinier", "restaurant", "restauration", "serveur", "serveuse",
-    "service en salle", "brasserie", "boulanger", "boulangerie", "patissier",
-    "patisserie", "gateau", "gateaux", "boucher", "boucherie", "charcutier",
-    "traiteur", "hotel", "hotellerie", "reception", "barman", "pizzaiolo",
+    "service en salle", "brasserie", "hotel", "hotellerie", "reception", "barman", "pizzaiolo",
     "faire a manger", "food"
   ],
 
@@ -159,6 +156,20 @@ const VOCABULAIRE = {
     "chaussure", "cordonnier", "bijou", "bijoux", "bijoutier", "joaillier",
     "artisanat", "artisan", "art", "artistique", "creation", "creer", "dessin",
     "dessiner", "tatouage", "tatoueur", "broderie", "fleuriste"
+  ],
+
+  aeronautique: [
+    "aeronautique", "aero", "avion", "avions", "avionique", "aviation",
+    "helicoptere", "aile", "reacteur", "turbine", "cockpit", "aeroport",
+    "mecanicien avion", "mecanicien aeronautique", "piste", "hangar",
+    "airbus", "boeing", "aerien", "aerienne", "drone", "drones"
+  ],
+
+  alimentation: [
+    "boulanger", "boulangere", "boulangerie", "pain", "baguette", "viennoiserie",
+    "patissier", "patissiere", "patisserie", "gateau", "gateaux", "dessert",
+    "desserts", "chocolat", "chocolatier", "boucher", "boucherie", "charcutier",
+    "charcuterie", "traiteur", "poissonnier", "fournil", "petrir", "four"
   ],
 
   nature_paysage: [
