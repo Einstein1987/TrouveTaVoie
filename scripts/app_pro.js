@@ -26,8 +26,25 @@ const YES_WORDS = ["oui", "ouais", "ouaip", "yes", "exact", "exactement", "voila
                    "c'est ca", "cest ca", "tout a fait", "carrement", "ok", "d'accord",
                    "daccord", "affirmatif", "parfait"];
 
+/* -----------------------------------------------------------------------------
+ * Normalisation du texte saisi.
+ *
+ * Les claviers de téléphone produisent l'apostrophe COURBE (’, U+2019), pas
+ * l'apostrophe droite ('). Sans cette conversion, « d’accord » et « c’est ça »
+ * ne sont pas reconnus — alors que la plupart des élèves écrivent sur mobile.
+ * Même problème avec les guillemets typographiques et les tirets longs, que les
+ * correcteurs automatiques insèrent tout seuls.
+ * -------------------------------------------------------------------------- */
 function normalize(str){
-  return str.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim();
+  return String(str)
+    .toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')   // accents
+    .replace(/[\u2018\u2019\u02BC\u2032`´]/g, "'")     // ’ ‘ ʼ ′ ` ´  →  '
+    .replace(/[\u201C\u201D\u00AB\u00BB]/g, '"')       // “ ” « »      →  "
+    .replace(/[\u2010-\u2015\u2212]/g, '-')             // – — ‒ −      →  -
+    .replace(/\u2026/g, '...')                           // …            →  ...
+    .replace(/\s+/g, ' ')                                // espaces multiples
+    .trim();
 }
 
 // La compréhension du texte libre est déléguée à dico_chatbot.js : vocabulaire
@@ -741,6 +758,13 @@ function handleFreeText(text){
     const yn = matchYesNo(text);
     // Le message de l'élève est déjà affiché ci-dessus : on ne repasse PAS par
     // handleUserChoice(), qui le réafficherait ("oui" puis "Oui" en double).
+    //
+    // En revanche il FAUT verrouiller les boutons Oui/Non affichés plus haut :
+    // sans cela, l'élève qui a confirmé au clavier peut encore cliquer sur
+    // « Non » et revenir au menu après avoir obtenu sa fiche — ou recliquer sur
+    // « Oui » et générer une seconde statistique pour la même recherche.
+    if (yn === 'yes' || yn === 'no') verrouillerAnciennesLignes();
+
     if (yn === 'yes') applyChoice("confirm", "yes");
     else if (yn === 'no') applyChoice("confirm", "no");
     else addBotMessage("Je n'ai pas bien compris, réponds par Oui ou par Non.", [
