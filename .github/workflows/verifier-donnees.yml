@@ -39,10 +39,14 @@ jobs:
 
       - name: Contrôler la syntaxe de tous les scripts
         run: |
-          for f in scripts/*.js; do
+          for f in scripts/*.js scripts/vendor/*.js; do
             node --check "$f" || exit 1
           done
-          echo "Tous les scripts compilent."
+          # Les outils sont des modules ES : --check les accepte via l'extension .mjs
+          for f in tools/*.mjs; do
+            node --check "$f" || exit 1
+          done
+          echo "Tous les scripts et outils compilent."
 
       - name: Vérifier la cohérence des données
         run: node tools/verifier-donnees.mjs
