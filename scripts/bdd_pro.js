@@ -888,37 +888,49 @@ const DUREES_TRANSPORT_CORBEIL = {
     "dureeMin": 26,
     "trajet": "Bus 4245"
   },
+  "Lycée Auguste Perret|Évry-Courcouronnes": {
+    "dureeMin": 42,
+    "trajet": "Bus 4245 puis Bus 4204"
+  },
   "Lycée Charles Baudelaire|Évry-Courcouronnes": {
     "dureeMin": 42,
     "trajet": "Bus 4245 puis Bus 4204"
   },
-  "Lycée Auguste Perret|Évry-Courcouronnes": {
-    "dureeMin": 42,
-    "trajet": "Bus 4245 puis Bus 4204"
+  "Lycée Georges Brassens|Évry-Courcouronnes": {
+    "dureeMin": 35,
+    "trajet": "Bus 4245"
+  },
+  "Lycée Parc des Loges|Évry-Courcouronnes": {
+    "dureeMin": 30,
+    "trajet": "Bus 4245 puis Bus 4241"
   },
   "Lycée Pierre Mendès France|Ris-Orangis": {
     "dureeMin": 35,
     "trajet": "Bus 4245 puis RER D"
   },
   "Lycée Château des Coudraies|Étiolles": {
-    "dureeMin": 34,
-    "trajet": "Bus 4245 puis RER D puis Bus 3703"
+    "dureeMin": 45,
+    "trajet": "Bus 4245 puis Bus Tzen1 puis Bus 3703"
   },
   "Lycée Marie Laurencin|Mennecy": {
     "dureeMin": 41,
     "trajet": "Bus 4245 puis Bus 4307"
   },
+  "Lycée François Truffaut|Bondoufle": {
+    "dureeMin": 58,
+    "trajet": "Bus 4245 puis Bus 4214"
+  },
   "Lycée Les Frères Moreau|Quincy-sous-Sénart": {
-    "dureeMin": 71,
-    "trajet": "Bus 4245 puis RER D puis RER D"
+    "dureeMin": 79,
+    "trajet": "RER D puis RER D"
   },
   "Lycée Nadar|Draveil": {
-    "dureeMin": 71,
+    "dureeMin": 73,
     "trajet": "Bus 4245 puis RER D puis Bus 4116"
   },
   "EREA Jean Isoard|Montgeron": {
-    "dureeMin": 74,
-    "trajet": "Bus 4245 puis RER D puis RER D"
+    "dureeMin": 81,
+    "trajet": "Bus 4245 puis Bus 4122"
   },
   "Lycée André-Marie Ampère|Morsang-sur-Orge": {
     "dureeMin": 81,
@@ -929,19 +941,19 @@ const DUREES_TRANSPORT_CORBEIL = {
     "trajet": "Bus 4245 puis Bus 4504"
   },
   "Lycée Jean Monnet|Juvisy-sur-Orge": {
-    "dureeMin": 46,
-    "trajet": "Bus 4245 puis RER D puis Bus 487"
+    "dureeMin": 53,
+    "trajet": "Bus 4245 puis RER D"
   },
   "Lycée Gaspard Monge|Savigny-sur-Orge": {
-    "dureeMin": 68,
+    "dureeMin": 69,
     "trajet": "Bus 4245 puis RER D puis RER C"
   },
   "Lycée Louis Armand|Yerres": {
-    "dureeMin": 64,
+    "dureeMin": 79,
     "trajet": "Bus 4245 puis RER D puis RER D"
   },
   "Lycée Clément Ader|Athis-Mons": {
-    "dureeMin": 70,
+    "dureeMin": 69,
     "trajet": "Bus 4245 puis RER D puis RER C"
   },
   "Lycée Léonard de Vinci|Saint-Michel-sur-Orge": {
@@ -982,15 +994,15 @@ const DUREES_TRANSPORT_CORBEIL = {
   },
   "Lycée Henri Poincaré|Palaiseau": {
     "dureeMin": 110,
-    "trajet": "RER D puis RER D puis RER C puis RER B"
+    "trajet": "RER D puis RER D puis RER D puis RER B"
   },
   "Lycée International Paris-Saclay|Palaiseau": {
     "dureeMin": 108,
     "trajet": "RER D puis RER D puis Bus 9105"
   },
   "Lycée L'Essouriau|Les Ulis": {
-    "dureeMin": 98,
-    "trajet": "RER D puis RER D puis Bus 9105 puis Bus 4603"
+    "dureeMin": 115,
+    "trajet": "RER D puis RER D puis Bus 9105 puis Bus 4609"
   },
   "Lycée Nelson Mandela|Étampes": {
     "dureeMin": 120,
@@ -1003,10 +1015,6 @@ const DUREES_TRANSPORT_CORBEIL = {
   "Lycée Nikola Tesla|Dourdan": {
     "dureeMin": 133,
     "trajet": "Bus 4245 puis Tram T12 puis Bus 9103"
-  },
-  "Lycée Georges Brassens|Évry-Courcouronnes": {
-    "dureeMin": 35,
-    "trajet": "Bus 4245"
   }
 }
 const NORMALIZED_DUREES_CORBEIL = Object.fromEntries(
@@ -1027,9 +1035,11 @@ const DISTANCES_CORBEIL_ESSONNES = {
   "Lycée Marie Laurencin|Mennecy": 5,
   "Lycée Château des Coudraies|Étiolles": 6,
   "Lycée Georges Brassens|Évry-Courcouronnes": 6,
+  "Lycée Parc des Loges|Évry-Courcouronnes": 6,
   "Lycée Auguste Perret|Évry-Courcouronnes": 7,
   "Lycée Charles Baudelaire|Évry-Courcouronnes": 7,
   "Lycée Pierre Mendès France|Ris-Orangis": 8,
+  "Lycée François Truffaut|Bondoufle": 8,
   "Lycée Nadar|Draveil": 13,
   "Lycée Paul Langevin|Sainte-Geneviève-des-Bois": 13,
   "Lycée Les Frères Moreau|Quincy-sous-Sénart": 14,
@@ -1054,7 +1064,7 @@ const DISTANCES_CORBEIL_ESSONNES = {
   "Lycée Geoffroy Saint-Hilaire|Étampes": 38,
   "Lycée Nelson Mandela|Étampes": 39,
   "Lycée Nikola Tesla|Dourdan": 46
-};
+}
 const NORMALIZED_DISTANCES_CORBEIL = Object.fromEntries(
   Object.entries(DISTANCES_CORBEIL_ESSONNES).map(([key, distance]) => [normalizeDistanceKey(key), distance])
 );
