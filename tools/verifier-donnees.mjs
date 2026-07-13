@@ -27,7 +27,17 @@ let erreurs = 0;
 let alertes = 0;
 const KO = (m) => { erreurs++; console.log("  ✗ " + m); };
 const WARN = (m) => { alertes++; console.log("  ! " + m); };
-const OK = (m) => console.log("  ✓ " + m);
+
+// Un « ✓ rassurant » juste après une croix rouge serait trompeur.
+// On mémorise le nombre d'erreurs au début d'un bloc, et OK() ne s'affiche que
+// si rien n'a échoué entre-temps.
+let jalon = 0;
+const debutBloc = () => { jalon = erreurs; };
+const OK = (m) => {
+  if (erreurs > jalon) console.log("  ✗ " + m + " → CONTRÔLE ÉCHOUÉ, voir ci-dessus");
+  else console.log("  ✓ " + m);
+  jalon = erreurs;
+};
 
 /* ====================================================================== */
 console.log("\n── VOIE PROFESSIONNELLE ──");
@@ -35,20 +45,31 @@ const { DOMAINS } = evaluer(lire("bdd_pro.js"), ["DOMAINS"]);
 const clesDom = Object.keys(DOMAINS);
 OK(clesDom.length + " domaines");
 
+// Les coefficients Affelnet existent à DEUX niveaux : sur le domaine (valeur par
+// défaut) et sur chaque formation. Les deux doivent être contrôlés : sept entiers.
+const verifierCoeffs = (coeffs, ou) => {
+  if (!Array.isArray(coeffs)) { KO(`${ou} : aucun tableau de coefficients (coeffs)`); return; }
+  if (coeffs.length !== 7)    { KO(`${ou} : ${coeffs.length} coefficients au lieu de 7`); return; }
+  coeffs.forEach((c, i) => {
+    if (!Number.isInteger(c) || c < 1 || c > 20) KO(`${ou} : coefficient n°${i + 1} invalide (${c})`);
+  });
+};
+
 let nbForm = 0;
 let nbEtab = 0;
+let nbCoeffs = 0;
 clesDom.forEach((k) => {
   const d = DOMAINS[k];
   if (!d.label) KO(`domaine "${k}" sans label`);
   if (!d.keywords || !d.keywords.length) WARN(`domaine "${k}" sans mots-clés`);
+  if (d.coeffs) { verifierCoeffs(d.coeffs, `domaine "${k}"`); nbCoeffs++; }
   if (!d.formations || !d.formations.length) { KO(`domaine "${k}" sans formation`); return; }
 
   d.formations.forEach((f) => {
     nbForm++;
     if (!f.nom) KO(`formation sans nom dans "${k}"`);
-    if (f.coefficients && Object.keys(f.coefficients).length !== 7) {
-      WARN(`"${f.nom}" : ${Object.keys(f.coefficients).length} coefficients au lieu de 7`);
-    }
+    verifierCoeffs(f.coeffs, `"${f.nom}"`);
+    nbCoeffs++;
     if (!f.etablissements || !f.etablissements.length) { WARN(`"${f.nom}" : aucun établissement`); return; }
     f.etablissements.forEach((e) => {
       nbEtab++;
@@ -57,6 +78,7 @@ clesDom.forEach((k) => {
   });
 });
 OK(nbForm + " formations, " + nbEtab + " offres d'établissement");
+OK(nbCoeffs + " jeux de coefficients Affelnet (7 entiers chacun)");
 
 /* ====================================================================== */
 console.log("\n── QUIZ ──");
@@ -147,7 +169,20 @@ CRITERES_2GT.forEach((c) => {
     if (n === 0) KO(`critère « ${c.id} » annoncé au ${LYCEES_2GT[id].nom}, mais AUCUN vœu ne le porte`);
   });
 });
-OK(CRITERES_2GT.length + " critères Affelnet vérifiés");
+// Contrôle inverse : un vœu portant un critère doit voir son lycée déclaré
+// dans ce critère. Sinon la donnée est incohérente sans que rien ne le signale.
+idsLyc.forEach((id) => {
+  LYCEES_2GT[id].voeux.forEach((v) => {
+    (v.criteres || []).forEach((c) => {
+      const critere = CRITERES_2GT.find((x) => x.id === c);
+      if (critere && !critere.lycees.includes(id)) {
+        KO(`vœu ${v.code} (${LYCEES_2GT[id].nom}) porte le critère « ${c} », `
+           + `mais ce lycée n'est pas déclaré dans CRITERES_2GT`);
+      }
+    });
+  });
+});
+OK(CRITERES_2GT.length + " critères Affelnet vérifiés dans les deux sens");
 
 CRITERES_SUR_PLACE.forEach((c) => {
   c.lycees.forEach((id) => { if (!LYCEES_2GT[id]) KO(`atout « ${c.id} » : lycée inconnu "${id}"`); });
