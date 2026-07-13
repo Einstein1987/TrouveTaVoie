@@ -15,6 +15,10 @@
 
 name: Vérification des données
 
+# Le workflow ne fait que lire le dépôt : aucune permission d'écriture.
+permissions:
+  contents: read
+
 on:
   push:
     branches: [main]
@@ -50,3 +54,12 @@ jobs:
 
       - name: Vérifier la cohérence des données
         run: node tools/verifier-donnees.mjs
+
+      # Le contrôle qui manquait le 13 juillet 2026 : une fonction supprimée mais
+      # encore appelée passait `node --check` sans erreur, et rendait pourtant
+      # toute la voie professionnelle inutilisable en production.
+      - name: Installer jsdom (simulation du navigateur)
+        run: npm install --no-save jsdom
+
+      - name: Tester les parcours utilisateur
+        run: node tools/test-parcours.mjs
