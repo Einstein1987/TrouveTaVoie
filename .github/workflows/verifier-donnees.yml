@@ -1,1 +1,48 @@
+# =============================================================================
+# Contrôle automatique des données de TrouveTaVoie.
+#
+# Se déclenche à chaque envoi de code (push) et à chaque proposition de
+# modification (pull request). Si le validateur trouve une erreur — un code vœu
+# en double, un critère qui ne pointe vers rien, un lycée sans trajet — GitHub
+# affiche une croix rouge sur le commit et envoie un e-mail.
+#
+# Le but n'est pas de tester le code, mais les DONNÉES : c'est là que les erreurs
+# sont silencieuses, et qu'elles ont des conséquences réelles pour un élève.
+#
+# Pour lancer le même contrôle sur sa machine :
+#     node tools/verifier-donnees.mjs
+# =============================================================================
 
+name: Vérification des données
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  # Permet aussi de le lancer à la main depuis l'onglet « Actions » de GitHub.
+  workflow_dispatch:
+
+jobs:
+  verifier:
+    name: Cohérence des bases de données
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Récupérer le dépôt
+        uses: actions/checkout@v4
+
+      - name: Installer Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Contrôler la syntaxe de tous les scripts
+        run: |
+          for f in scripts/*.js; do
+            node --check "$f" || exit 1
+          done
+          echo "Tous les scripts compilent."
+
+      - name: Vérifier la cohérence des données
+        run: node tools/verifier-donnees.mjs
