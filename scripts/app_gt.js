@@ -1,8 +1,8 @@
 /* =============================================================================
- * app-2gt.js — TrouveTaVoie / Onglet "Je vais en 2nde générale et technologique"
+ * app_gt.js — TrouveTaVoie / Onglet "Je vais en 2nde générale et technologique"
  *
- * Dépend de : scripts/bdd-2gt.js  (LYCEES_2GT, CRITERES_2GT, SERIES_TECHNO_2GT…)
- * Optionnel  : pingStats(type, valeur) défini dans scripts/app-pro.js
+ * Dépend de : scripts/bdd_gt.js  (LYCEES_2GT, CRITERES_2GT, SERIES_TECHNO_2GT…)
+ * Optionnel  : pingStats(type, valeur) défini dans scripts/app_pro.js
  *
  * Principe : l'élève coche ce qui l'intéresse, le tableau surligne les lycées
  * concernés (il ne les masque JAMAIS : on garde la vue d'ensemble pour classer),

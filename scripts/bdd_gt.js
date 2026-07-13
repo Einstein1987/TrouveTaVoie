@@ -1,5 +1,5 @@
 /* =============================================================================
- * bdd-2gt.js — TrouveTaVoie
+ * bdd_gt.js — TrouveTaVoie
  * Base de données 2nde Générale et Technologique — 5 lycées de secteur
  * Collège La Nacelle (Corbeil-Essonnes)
  *

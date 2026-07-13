@@ -30,12 +30,12 @@ function normalize(str){
   return str.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim();
 }
 
-// La compréhension du texte libre est déléguée à nlp_pro.js : vocabulaire
+// La compréhension du texte libre est déléguée à dico_chatbot.js : vocabulaire
 // d'élève, tolérance aux fautes, notation des domaines. Le bot reste
 // entièrement déterministe — rien n'est inventé, tout vient des dictionnaires.
 function matchDomains(text){
   if (typeof domainesSurs === "function") return domainesSurs(text);
-  // Repli si nlp_pro.js n'a pas été chargé
+  // Repli si dico_chatbot.js n'a pas été chargé
   const n = normalize(text);
   const matches = [];
   for(const key in DOMAINS) {
@@ -144,7 +144,48 @@ function speak(text){
   window.speechSynthesis.speak(u);
 }
 
-function addBotMessage(text, options){
+/* -----------------------------------------------------------------------------
+ * Verrouillage des lignes de boutons.
+ *
+ * Le fil de discussion défile : sans verrouillage, un élève peut recliquer sur
+ * une réponse de la question 3 alors que la question 7 est affichée — et le clic
+ * serait interprété comme une réponse à la question 7.
+ *
+ * Seules les lignes marquées `reutilisable` échappent au verrouillage
+ * automatique : les trois pistes du quiz, que l'élève doit pouvoir explorer
+ * l'une après l'autre.
+ * -------------------------------------------------------------------------- */
+function verrouillerLigne(row, choisi){
+  Array.prototype.forEach.call(row.children, function (btn) {
+    btn.disabled = true;
+    if (choisi) btn.classList.toggle('optbtn-choisi', btn === choisi);
+  });
+  row.classList.add('optrow-done');
+}
+
+// Verrouille toutes les lignes SAUF les réutilisables.
+function verrouillerAnciennesLignes(){
+  const lignes = chatlog.querySelectorAll('.optrow');
+  Array.prototype.forEach.call(lignes, function (row) {
+    if (row.dataset.reutilisable === "1") return;
+    if (row.dataset.repondu === "1") return;      // déjà traitée
+    row.dataset.repondu = "1";
+    verrouillerLigne(row, null);
+  });
+}
+
+// Verrouille TOUT, y compris les réutilisables. Appelé quand l'élève quitte
+// vraiment le contexte : retour au menu, ou nouveau quiz.
+function verrouillerToutesLesLignes(){
+  const lignes = chatlog.querySelectorAll('.optrow');
+  Array.prototype.forEach.call(lignes, function (row) {
+    row.dataset.repondu = "1";
+    row.removeAttribute('data-reutilisable');
+    verrouillerLigne(row, null);
+  });
+}
+
+function addBotMessage(text, options, config){
   const row = document.createElement('div');
   row.className = 'msg-row';
   const bubble = document.createElement('div');
@@ -163,42 +204,39 @@ function addBotMessage(text, options){
   chatlog.appendChild(row);
 
   if(options && options.length){
+    // Toute nouvelle question rend les anciennes obsolètes : on verrouille les
+    // lignes précédentes. Exception : les lignes marquées « réutilisables »
+    // (les trois pistes du quiz), que l'élève doit pouvoir reconsulter.
+    verrouillerAnciennesLignes();
+
     const optRow = document.createElement('div');
     optRow.className = 'optrow';
+    if (config && config.reutilisable) optRow.dataset.reutilisable = "1";
+
     options.forEach(opt => {
       const b = document.createElement('button');
       b.className = 'optbtn';
-      if (opt.style === "help") {
-        b.classList.add('opt-help');
-      }
+      if (opt.style === "help") b.classList.add('opt-help');
       b.textContent = opt.label;
+
       b.addEventListener('click', () => {
-        // Un groupe de boutons ne sert qu'UNE fois. Sans cela, un élève pourrait
-        // recliquer sur une réponse de la question 3 alors que la question 7 est
-        // affichée : le clic serait compté comme une réponse à la question 7.
-        if (optRow.dataset.repondu === "1") return;
-        optRow.dataset.repondu = "1";
-        optRow.classList.add('optrow-done');
-        Array.prototype.forEach.call(optRow.children, function (btn) {
-          btn.disabled = true;
-          btn.classList.toggle('optbtn-choisi', btn === b);
-        });
+        if (optRow.dataset.reutilisable === "1") {
+          // Ligne réutilisable : on met en évidence le choix, sans la verrouiller.
+          Array.prototype.forEach.call(optRow.children, function (btn) {
+            btn.classList.toggle('optbtn-choisi', btn === b);
+          });
+        } else {
+          if (optRow.dataset.repondu === "1") return;   // déjà répondu
+          optRow.dataset.repondu = "1";
+          verrouillerLigne(optRow, b);
+        }
         handleUserChoice(opt.label, opt.action, opt.payload);
       });
+
       optRow.appendChild(b);
     });
     chatlog.appendChild(optRow);
   }
-  chatlog.scrollTop = chatlog.scrollHeight;
-}
-
-function addUserMessage(text){
-  const row = document.createElement('div');
-  row.className = 'msg-row user';
-  const bubble = document.createElement('div');
-  bubble.className = 'msg user';
-  bubble.textContent = text;
-  row.appendChild(bubble);
   chatlog.appendChild(row);
   chatlog.scrollTop = chatlog.scrollHeight;
 }
@@ -375,6 +413,7 @@ function createSchoolElement(etablissement) {
 // « Bonjour ! » à un élève qui discute depuis dix questions.
 // `garderCarte` évite d'effacer la fiche que l'élève vient d'obtenir.
 function startMenu(message, garderCarte){
+  verrouillerToutesLesLignes();
   state = 'start';
   pendingSelection = null;
   if (!garderCarte) {
@@ -454,6 +493,7 @@ let quizReponses     = [];     // réponses choisies, dans l'ordre
 let quizStatEnvoyee  = false;  // le quiz n'est compté qu'UNE fois, à la première piste consultée
 
 function startQuiz() {
+  verrouillerToutesLesLignes();
   if (typeof pingStats === "function") pingStats('quiz_lance', '');
   quizIndex       = 0;
   quizReponses    = [];
@@ -515,7 +555,10 @@ function afficherResultatQuiz() {
       };
     }).concat([
       { label: "Aucune ne me parle, refaire le quiz", action: "start_quiz", payload: null }
-    ])
+    ]),
+    // Cette ligne reste CLIQUABLE : l'élève doit pouvoir consulter les trois
+    // pistes l'une après l'autre, comme le message le lui promet.
+    { reutilisable: true }
   );
 }
 
@@ -546,7 +589,7 @@ function choisirPisteQuiz(domainKey) {
 /* -----------------------------------------------------------------------------
  * Quand la recherche échoue, on ne répond plus « je n'ai pas compris ».
  * On propose les TROIS domaines les plus proches de ce que l'élève a écrit.
- * Ces pistes ne sont pas inventées : ce sont les mieux notés par nlp_pro.js.
+ * Ces pistes ne sont pas inventées : ce sont les mieux notés par dico_chatbot.js.
  * -------------------------------------------------------------------------- */
 function searchNotFound(text){
   const proches = (typeof pistesProches === "function" && text)

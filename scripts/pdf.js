@@ -10,7 +10,7 @@
  * Le PDF téléchargé ne collecte RIEN : la famille l'imprime, l'envoie ou le
  * dépose sur l'ENT comme elle le souhaite.
  *
- * Dépend de jsPDF (chargé depuis un CDN dans index.html).
+ * Dépend de jsPDF, hébergé localement dans scripts/vendor/ (aucun CDN).
  * ========================================================================== */
 
 (function () {
