@@ -19,12 +19,13 @@
   Permissions-Policy: camera=(), geolocation=(), payment=(), usb=(), microphone=(self)
 
   # Content Security Policy : liste blanche stricte des origines autorisées.
-  #   'self'                  -> les scripts et styles de l'application (jsPDF inclus, hébergé localement)
-  #   fonts.googleapis.com    -> feuille de style des polices  (À SUPPRIMER si tu héberges les polices)
-  #   fonts.gstatic.com       -> fichiers de polices           (À SUPPRIMER si tu héberges les polices)
-  #   docs.google.com         -> envoi des statistiques anonymes vers le formulaire
-  # 'unsafe-inline' pour les styles est nécessaire tant que le code pose des
-  # attributs style="" en JavaScript ; il n'est PAS autorisé pour les scripts.
+  #   'self'           -> scripts, styles et polices de l'application (jsPDF et
+  #                       les WOFF2 sont hébergés localement : aucun CDN)
+  #   docs.google.com  -> envoi des statistiques anonymes vers le formulaire
+  # 'unsafe-inline' est toléré pour les STYLES (le code pose des attributs
+  # style="" en JavaScript) mais JAMAIS pour les scripts.
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; form-action https://docs.google.com; connect-src 'self' https://docs.google.com; frame-ancestors 'none'; base-uri 'self'; object-src 'none'
+
 
 
 
