@@ -189,7 +189,7 @@ for (const cle in DOMAINS) {
 console.log("  " + (nb - echecs - absentes.length) + " formation(s) conforme(s) sur " + nb);
 if (absentes.length) console.log("  " + absentes.length + " absente(s) de la fiche, signal\u00e9e(s) \u00e0 l'\u00e9l\u00e8ve : " + absentes.join(", "));
 
-console.log("\n\u2500\u2500 FAMILLES DE M\u00c9TIERS \u2500\u2500");
+console.log("\n\u2500\u2500 COEFFICIENTS DES FAMILLES (2de commune) \u2500\u2500");
 for (const cle in FAMILLES) {
   if (!DOMAINS[cle]) { KO("Domaine \u00ab " + cle + " \u00bb introuvable dans bdd_pro.js."); continue; }
   if (!eq(DOMAINS[cle].coeffs, FAMILLES[cle])) {
@@ -200,6 +200,72 @@ for (const cle in FAMILLES) {
   }
 }
 console.log("  " + Object.keys(FAMILLES).length + " famille(s) v\u00e9rifi\u00e9e(s)");
+
+/* ==========================================================================
+ * FAMILLES DE MÉTIERS — les invariants
+ *
+ * Source : DGESCO, « L'organisation de la classe de seconde professionnelle
+ * par famille de métiers », mai 2024. 14 familles officielles.
+ * ======================================================================== */
+const FAMILLES_OFFICIELLES = [
+  "Métiers de la construction durable, du bâtiment et des travaux publics",
+  "Métiers de la gestion administrative, du transport et de la logistique",
+  "Métiers de la relation client",
+  "Métiers de l'aéronautique",
+  "Métiers des industries graphiques et de la communication",
+  "Métiers de l'hôtellerie-restauration",
+  "Métiers de l'alimentation",
+  "Métiers des études et de la modélisation numérique du bâtiment",
+  "Métiers de la beauté et du bien-être",
+  "Métiers de la réalisation d'ensembles mécaniques et industriels",
+  "Métiers des transitions numérique et énergétique",
+  "Métiers de la maintenance des matériels et des véhicules",
+  "Métiers du pilotage et de la maintenance d'installations automatisées",
+  "Métiers de l'agencement, de la menuiserie et de l'ameublement",
+];
+
+console.log("\n\u2500\u2500 RATTACHEMENT AUX FAMILLES (DGESCO) \u2500\u2500");
+{
+  let secteursAvecFamille = 0;
+  for (const cle in DOMAINS) {
+    const d = DOMAINS[cle];
+
+    // Le champ doit exister explicitement — un oubli ne doit pas passer pour un « null ».
+    if (!("famille" in d)) {
+      KO("Le secteur « " + cle + " » n'a pas de champ `famille`. Mets `famille: null` si ce n'en est pas une.");
+      continue;
+    }
+
+    // Une famille déclarée doit être l'une des 14 officielles, au caractère près.
+    if (d.famille !== null) {
+      secteursAvecFamille++;
+      if (!FAMILLES_OFFICIELLES.includes(d.famille)) {
+        KO("« " + d.famille + " » n'est pas une famille de m\u00e9tiers officielle (secteur " + cle + ").");
+      }
+    }
+
+    for (const f of d.formations) {
+      // INVARIANT 1 : un CAP n'est jamais dans une famille. C'est la confusion
+      // qui avait produit 13 coefficients faux.
+      if (f.niveau === "CAP" && f.horsFamille) {
+        KO(f.nom + " : `horsFamille` sur un CAP n'a pas de sens \u2014 aucun CAP n'est dans une famille.");
+      }
+
+      // INVARIANT 2 : un bac pro dans un secteur SANS famille est forcément
+      // hors famille. Sinon la carte l'afficherait sous une famille inexistante.
+      if (f.niveau !== "CAP" && d.famille === null && !f.horsFamille) {
+        KO(f.nom + " : le secteur « " + d.label + " » n'a pas de famille officielle, " +
+           "donc cette formation doit porter `horsFamille: true`.");
+      }
+    }
+  }
+  if (secteursAvecFamille !== 13) {
+    KO("On attendait 13 secteurs rattach\u00e9s \u00e0 une famille, il y en a " + secteursAvecFamille + ".");
+  } else {
+    OK("13 secteurs rattach\u00e9s \u00e0 une famille officielle, 5 sans famille");
+  }
+  console.log("  " + Object.keys(DOMAINS).length + " secteur(s) v\u00e9rifi\u00e9(s)");
+}
 
 console.log("\n" + "\u2500".repeat(52));
 if (echecs) {

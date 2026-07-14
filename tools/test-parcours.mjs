@@ -424,6 +424,69 @@ console.log("\n── FOCUS CLAVIER (2GT) ──");
   }
 }
 
+/* ==========================================================================
+ * STRUCTURE DE LA CARTE : familles / hors famille / CAP
+ *
+ * « Domaine » (nos 18 secteurs) et « famille de métiers » (les 14 officielles)
+ * ne sont PAS la même chose. Le menu les présentait comme synonymes. La carte
+ * doit maintenant montrer la vraie famille — celle qui dit à l'élève s'il entre
+ * en seconde commune ou directement en spécialité.
+ * ======================================================================== */
+console.log("\n── STRUCTURE DE LA CARTE ──");
+{
+  const a = monterApplication();
+  if (a) {
+    const menu = boutons(a.doc);
+    const secteur = menu.find((b) => /secteur/i.test(b.textContent));
+    if (!secteur) {
+      KO("Le bouton « secteur » est introuvable dans le menu");
+    } else {
+      cliquer(a, secteur);
+      ecrire(a, "electricite");
+      const oui = boutons(a.doc).filter((b) => /^Oui$/.test(b.textContent));
+      if (oui.length) cliquer(a, oui[0]);
+
+      const sections = Array.from(a.doc.querySelectorAll("#cardDetailsContainer .carte-section"));
+      if (!sections.length) {
+        KO("La carte n'affiche aucune section");
+      } else {
+        const titres = sections.map((s) => s.querySelector(".carte-section-titre").textContent);
+
+        // Une famille OFFICIELLE, pas le libellé de notre secteur.
+        if (!titres.some((t) => /Métiers des transitions numérique et énergétique/.test(t))) {
+          KO("La carte n'affiche pas la famille officielle (titres : " + titres.join(" | ") + ")");
+        } else {
+          OK("La famille officielle est affichée, pas le libellé du secteur");
+        }
+        if (!titres.some((t) => /hors famille/i.test(t))) KO("Section « bacs pro hors famille » absente");
+        else OK("Section « bacs pro hors famille » présente");
+        if (!titres.some((t) => /^CAP$/.test(t))) KO("Section « CAP » absente");
+        else OK("Section « CAP » présente");
+
+        // INVARIANT : aucun CAP ne doit se retrouver sous une famille de métiers.
+        let fautes = 0;
+        sections.filter((s) => s.classList.contains("carte-section-famille")).forEach((s) => {
+          s.querySelectorAll(".formation-title").forEach((t) => {
+            if (/^CAP /.test(t.textContent)) {
+              KO("« " + t.textContent.trim() + " » est rangé sous une famille de métiers — un CAP n'en a jamais.");
+              fautes++;
+            }
+          });
+        });
+        if (!fautes) OK("Aucun CAP n'est rangé sous une famille de métiers");
+
+        // Chaque section explique ce qu'elle implique : la couleur ne suffit pas.
+        const muettes = sections.filter((s) => {
+          const n = s.querySelector(".carte-section-note");
+          return !n || !n.textContent.trim();
+        });
+        if (muettes.length) KO(muettes.length + " section(s) sans phrase d'explication");
+        else OK("Chaque section explique ce qu'elle implique (l'info ne repose pas sur la couleur)");
+      }
+    }
+  }
+}
+
 /* ========================================================================== */
 console.log("\n" + "─".repeat(52));
 if (echecs) {

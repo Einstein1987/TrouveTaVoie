@@ -156,6 +156,22 @@ console.log("\n\u2500\u2500 PDF DE LA FICHE D'ORIENTATION \u2500\u2500");
         else OK("Le PDF a une taille plausible (contenu non vide)");
         if (!/\/Producer\s*\(jsPDF/.test(brut)) KO("Le PDF ne semble pas produit par jsPDF");
         else OK("Produit par jsPDF " + (brut.match(/\/Producer \(jsPDF ([\d.]+)\)/) || [])[1]);
+
+        // Les TROIS SECTIONS doivent survivre à l'export. Le PDF est ce que
+        // l'élève imprime et montre à ses parents : s'il n'y retrouve pas la
+        // distinction famille / hors famille / CAP, il perd exactement ce que
+        // la carte lui apprenait. (jsPDF n'encode pas les flux de texte : les
+        // chaînes sont lisibles telles quelles dans le fichier.)
+        const attendus = [
+          ["Métiers des transitions numérique et énergétique", "titre de la famille de métiers"],
+          ["seconde commune", "l'explication de la seconde commune"],
+          ["hors famille",    "la section « bacs pro hors famille »"],
+          ["CAP",             "la section « CAP »"],
+        ];
+        attendus.forEach(function (a) {
+          if (brut.indexOf(a[0]) === -1) KO("Le PDF ne contient pas " + a[1] + " (« " + a[0] + " »)");
+          else OK("Le PDF contient " + a[1]);
+        });
       }
     }
   }

@@ -147,6 +147,14 @@ const PAIRES = [
   [P.MUTED, V.muted, 1, 'ÉGALITÉ écran/PDF : texte secondaire'],
   [P.INK,   V.ink,   1, 'ÉGALITÉ écran/PDF : encre'],
 
+  // ---- Sections de la carte d'orientation ----------------------------------
+  [V['brass-dark'], V['brass-soft'],  AA_NORMAL, 'carte : titre de famille de métiers'],
+  [V['muted-strong'], V['brass-soft'], AA_NORMAL, 'carte : note de famille de métiers'],
+  ['#92400E', '#FFFBEB', AA_NORMAL, 'carte : titre « bacs pro hors famille »'],
+  ['#78350F', '#FFFBEB', AA_NORMAL, 'carte : note « bacs pro hors famille »'],
+  [V.teal,   V['success-soft'], AA_NORMAL, 'carte : titre « CAP »'],
+  ['#065F46', '#ECFDF5', AA_NORMAL, 'carte : note « CAP »'],
+
   // Bordures et éléments d'interface : seuil 3:1 (WCAG 1.4.11)
   [V.brass,        V.paper2,       AA_UI, 'bordure des boutons de choix'],
   [V.teal,         V['success-soft'], AA_UI, 'bordure du filet de sécurité'],
