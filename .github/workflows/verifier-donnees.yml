@@ -61,6 +61,12 @@ jobs:
       - name: Vérifier les contrastes (WCAG 2.1 AA)
         run: node tools/verifier-contrastes.mjs
 
+      # Le PDF n'était testé par RIEN : test-parcours.mjs remplace jsPDF par un
+      # bouchon. C'est ce trou qui a bloqué la mise à jour de la bibliothèque
+      # pendant des mois — impossible de savoir ce qu'une bascule casserait.
+      - name: Vérifier la génération du PDF (fiche pro + vœux 2GT)
+        run: node tools/test-pdf.mjs
+
       # Le contrôle qui manquait le 13 juillet 2026 : une fonction supprimée mais
       # encore appelée passait `node --check` sans erreur, et rendait pourtant
       # toute la voie professionnelle inutilisable en production.
