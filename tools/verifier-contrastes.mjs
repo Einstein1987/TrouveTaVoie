@@ -52,6 +52,18 @@ for (const [, nom, val] of bloc[1].matchAll(/--([\w-]+)\s*:\s*(#[0-9a-fA-F]{3,8}
 }
 const BLANC = '#FFFFFF';
 
+/* --- Lecture de la palette du PDF ----------------------------------------
+ * jsPDF ne lit pas le CSS : scripts/pdf.js recopie la palette à la main, en
+ * RVB. Les deux peuvent donc diverger en silence — et c'est arrivé : l'écran
+ * affichait les nouvelles couleurs pendant que le PDF téléchargé gardait les
+ * anciennes, dont le vert à 2,54:1. On les vérifie ici aussi.
+ * ------------------------------------------------------------------------- */
+const js = readFileSync(join(RACINE, 'scripts', 'pdf.js'), 'utf8');
+const P = {};
+for (const [, nom, r, g, b] of js.matchAll(/const\s+([A-Z_]+)\s*=\s*\[\s*(\d+),\s*(\d+),\s*(\d+)\s*\]/g)) {
+  P[nom] = '#' + [r, g, b].map(n => Number(n).toString(16).padStart(2, '0')).join('').toUpperCase();
+}
+
 /* --- Calcul du ratio (formule officielle WCAG) ---------------------------- */
 function luminance(hex) {
   const h = hex.replace('#', '');
@@ -114,6 +126,27 @@ const PAIRES = [
   ['#991B1B', '#FEF2F2', AA_NORMAL, 'dépassement des 10 vœux (.gt-compteur.is-trop)'],
   ['#065F46', '#ECFDF5', AA_NORMAL, 'étiquette « filet de sécurité » (.gt-tag-filet)'],
 
+  // ---- PDF (scripts/pdf.js) — fond blanc, souvent imprimé, parfois en N&B ----
+  [P.INK,   BLANC,     AA_NORMAL, 'PDF : texte courant'],
+  [P.MUTED, BLANC,     AA_NORMAL, 'PDF : texte secondaire'],
+  [P.MUTED, P.SOFT,    AA_NORMAL, 'PDF : texte secondaire sur bandeau clair'],
+  [P.BRASS, BLANC,     AA_NORMAL, 'PDF : accents indigo'],
+  [BLANC,   P.INK,     AA_NORMAL, 'PDF : titre en tête de page'],
+  [BLANC,   P.BRASS,   AA_NORMAL, 'PDF : chiffre sur pastille de vœu'],
+  [BLANC,   P.TEAL,    AA_NORMAL, 'PDF : chiffre sur pastille « filet de sécurité »'],
+  [BLANC,   P.MUTED,   AA_NORMAL, 'PDF : chiffre sur pastille « complément »'],
+  [P.ROUGE_SOMBRE, '#FCA5A5', AA_NORMAL, 'PDF : chiffre sur pastille « hors limite »'],
+  [P.ROUGE, '#FEF2F2', AA_NORMAL, 'PDF : encadré de dépassement des 10 vœux'],
+  [P.AMBRE, '#FEF3C7', AA_NORMAL, 'PDF : encadré d\'avertissement'],
+
+  // ---- Cohérence écran ↔ PDF ------------------------------------------------
+  // Pas un contraste : une égalité. Si elles divergent, l'élève voit une
+  // couleur à l'écran et en imprime une autre.
+  [P.BRASS, V.brass, 1, 'ÉGALITÉ écran/PDF : indigo primaire'],
+  [P.TEAL,  V.teal,  1, 'ÉGALITÉ écran/PDF : vert de succès'],
+  [P.MUTED, V.muted, 1, 'ÉGALITÉ écran/PDF : texte secondaire'],
+  [P.INK,   V.ink,   1, 'ÉGALITÉ écran/PDF : encre'],
+
   // Bordures et éléments d'interface : seuil 3:1 (WCAG 1.4.11)
   [V.brass,        V.paper2,       AA_UI, 'bordure des boutons de choix'],
   [V.teal,         V['success-soft'], AA_UI, 'bordure du filet de sécurité'],
@@ -128,8 +161,21 @@ for (const [avant, arriere, seuil, ou] of PAIRES) {
     echecs++;
     continue;
   }
+  // Seuil 1 : convention interne. On ne teste pas un contraste mais une ÉGALITÉ
+  // (la même couleur des deux côtés). Le ratio d'une couleur avec elle-même
+  // vaut exactement 1 ; s'il en diffère, c'est que les palettes ont divergé.
+  const egalite = seuil === 1;
   const r = ratio(avant, arriere);
-  const ok = r >= seuil;
+  const ok = egalite ? avant.toUpperCase() === arriere.toUpperCase() : r >= seuil;
+  if (egalite) {
+    if (!ok) {
+      console.error(`✗ DIVERGENCE  ${avant} (pdf.js) ≠ ${arriere} (styles.css)  — ${ou}`);
+      echecs++;
+    } else if (process.env.VERBEUX) {
+      console.log(`✓ identiques   ${avant}  — ${ou}`);
+    }
+    continue;
+  }
   if (!ok) echecs++;
   const ligne = `${ok ? '✓' : '✗'} ${r.toFixed(2).padStart(5)}:1 (min ${seuil})  ${avant} sur ${arriere}  — ${ou}`;
   if (ok) { if (process.env.VERBEUX) console.log(ligne); }
