@@ -67,6 +67,33 @@ function monterApplication() {
   return { window, doc: window.document, erreurs };
 }
 
+/* Le montage ci-dessus ne charge que la voie pro. Pour le 2GT il faut bdd_gt,
+ * app_gt et tabs — sinon l'onglet reste vide et le test passerait au vert sans
+ * rien tester. */
+function monterApplication2GT() {
+  const dom = new JSDOM(lire("index.html"), { runScripts: "outside-only", pretendToBeVisual: true });
+  const { window } = dom;
+  window.scrollTo = () => {};
+  window.fetch = () => Promise.resolve({ ok: true });
+  window.speechSynthesis = { speak: () => {}, cancel: () => {}, getVoices: () => [] };
+  window.SpeechSynthesisUtterance = function () {};
+  window.alert = () => {};
+  window.jspdf = { jsPDF: function () { throw new Error("PDF non testé ici"); } };
+  const scripts = ["bdd_pro.js", "dico_chatbot.js", "quiz_pro.js", "app_pro.js",
+                   "export.js", "bdd_gt.js", "app_gt.js", "tabs.js"];
+  try {
+    window.eval(scripts.map((f) => lire("scripts/" + f)).join("\n;\n"));
+    window.document.dispatchEvent(new window.Event("DOMContentLoaded", { bubbles: true }));
+  } catch (e) {
+    KO("Chargement du 2GT : " + e.message);
+    return null;
+  }
+  const onglet = window.document.getElementById("tab-2gt");
+  if (!onglet) { KO("Onglet 2GT introuvable"); return null; }
+  onglet.dispatchEvent(new window.Event("click", { bubbles: true }));
+  return { window, doc: window.document };
+}
+
 /* -------------------------------------------------------------------------- */
 /* Outils de simulation                                                        */
 /* -------------------------------------------------------------------------- */
@@ -341,6 +368,55 @@ console.log("\n── RECHERCHES GÉNÉRIQUES ──");
     });
     if (pire > PLAFOND) KO("Le pire cas dépasse le plafond : « " + pireMot + " » → " + pire + " boutons");
     else OK("Pire cas mesuré : " + pire + " boutons (« " + pireMot + " ») — plafond " + PLAFOND + " respecté");
+  }
+}
+
+/* ==========================================================================
+ * FOCUS CLAVIER DANS LE COMPARATEUR 2GT
+ *
+ * refresh() reconstruit tout en innerHTML : l'élément focalisé est détruit et
+ * le focus retombe sur <body>. Un élève au clavier était renvoyé au début de
+ * la page à CHAQUE critère coché.
+ * ======================================================================== */
+console.log("\n── FOCUS CLAVIER (2GT) ──");
+{
+  const a = monterApplication2GT();
+  if (!a) {
+    KO("Impossible de monter l'onglet 2GT");
+  } else {
+    const { doc } = a;
+    // Re-chercher les puces à chaque tour : refresh() reconstruit le DOM, et
+    // focus() sur un élément détaché ne fait rien. (Piège vécu.)
+    const puces = () => Array.from(doc.querySelectorAll("#vue-2gt [data-critere]"));
+    const clic = (el) => el.dispatchEvent(new a.window.Event("click", { bubbles: true }));
+
+    if (!puces().length) {
+      KO("Aucune puce de critère dans l'onglet 2GT");
+    } else {
+      let perdus = 0;
+      [0, 3, 7].forEach((i) => {
+        const c = puces()[i];
+        if (!c) return;
+        const id = c.getAttribute("data-critere");
+        c.focus();
+        clic(c);
+        const apres = doc.activeElement === doc.body
+          ? null : doc.activeElement.getAttribute("data-critere");
+        if (apres !== id) {
+          KO("Le focus est perdu après avoir coché « " + id + " » (retombé sur " +
+             (apres === null ? "<body>" : "« " + apres + " »") + ")");
+          perdus++;
+        }
+      });
+      if (!perdus) OK("Le focus est conservé sur la puce cochée, à chaque reconstruction");
+
+      // Après une remise à zéro l'élément disparaît : ne pas planter.
+      const reset = doc.querySelector('#vue-2gt [data-action="reset"]');
+      if (reset) {
+        try { reset.focus(); clic(reset); OK("Remise à zéro : aucune erreur, focus géré"); }
+        catch (e) { KO("La remise à zéro lève une erreur : " + e.message); }
+      }
+    }
   }
 }
 
