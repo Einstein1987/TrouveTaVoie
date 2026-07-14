@@ -18,14 +18,27 @@
 
   const M = 15, LARG = 210, HAUT = 297, UTILE = LARG - 2 * M;
 
-  const INK   = [15, 23, 42];
-  const BRASS = [99, 102, 241];
-  const TEAL  = [16, 185, 129];
-  const MUTED = [100, 116, 139];
-  const ROUGE = [220, 38, 38];
-  const AMBRE = [180, 83, 9];
-  const LIGNE = [226, 232, 240];
-  const SOFT  = [248, 250, 252];
+  /* ---------------------------------------------------------------------------
+   * Palette du PDF.
+   *
+   * ATTENTION : jsPDF ne lit PAS le CSS. Ces valeurs sont la copie manuelle de
+   * :root dans styles/styles.css. Si tu changes la palette là-bas, change-la
+   * ICI AUSSI — sinon le PDF téléchargé garde les anciennes couleurs pendant
+   * que l'écran affiche les nouvelles, et personne ne s'en aperçoit.
+   *
+   * Contrastes vérifiés (WCAG AA, seuil 4,5:1) — et ça compte double sur un
+   * PDF : il finit souvent imprimé, parfois en noir et blanc, sur l'imprimante
+   * fatiguée d'un CDI.
+   * ------------------------------------------------------------------------ */
+  const INK        = [15, 23, 42];    // #0F172A
+  const BRASS      = [79, 70, 229];   // #4F46E5 — était #6366F1 (4,47:1)
+  const TEAL       = [4, 120, 87];    // #047857 — était #10B981 (2,54:1 !)
+  const MUTED      = [92, 107, 128];  // #5C6B80 — était #64748B
+  const ROUGE      = [185, 28, 28];   // #B91C1C — était #DC2626 (4,41:1 sur son fond pâle)
+  const ROUGE_SOMBRE = [127, 29, 29]; // #7F1D1D — chiffre sur pastille hors limite
+  const AMBRE      = [180, 83, 9];    // #B45309
+  const LIGNE      = [226, 232, 240]; // #E2E8F0 (bordures, décoratif)
+  const SOFT       = [248, 250, 252]; // #F8FAFC
 
   /* ---- Utilitaires communs ---- */
 
@@ -291,7 +304,11 @@
                  : (v.complement ? MUTED : (v.filet ? TEAL : BRASS));
       doc.setFillColor.apply(doc, coul);
       doc.circle(M + 4, y + 3, 3.4, "F");
-      doc.setTextColor(255, 255, 255);
+      // Chiffre blanc sur les pastilles sombres ; rouge foncé sur la pastille
+      // rose pâle du « hors limite » — en blanc, il était à 1,90:1 : illisible,
+      // et c'est pourtant le vœu qui ne partira pas sur Affelnet.
+      if (hors) doc.setTextColor.apply(doc, ROUGE_SOMBRE);
+      else doc.setTextColor(255, 255, 255);
       doc.setFontSize(8);
       doc.setFont(undefined, "bold");
       doc.text(String(rang), M + 4, y + 4.2, { align: "center" });
