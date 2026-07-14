@@ -138,7 +138,8 @@ const QUIZ_PRO = [
     question: "Es-tu plutôt à l'aise avec l'effort physique ?",
     reponses: [
       { label: "Oui, j'aime bouger, porter, me dépenser",
-        scores: { batiment: 3, nature_paysage: 3, securite: 3, hotellerie_restauration: 2 } },
+        scores: { batiment: 3, nature_paysage: 3, securite: 3, hotellerie_restauration: 2,
+                  conduite: 3 } },
       { label: "Je préfère un travail minutieux, au calme",
         scores: { mode_art: 3, beaute: 3, etudes_batiment: 2, numerique_energie: 2 } },
       { label: "Un peu des deux, selon les moments",
@@ -185,7 +186,8 @@ const QUIZ_PRO = [
     question: "Dernière question. Parmi ces activités, laquelle t'attire le plus ?",
     reponses: [
       { label: "Conduire un engin, piloter une machine",
-        scores: { pilotage_maintenance: 4, batiment: 2, gestion_logistique: 2, maintenance_vehicules: 2 } },
+        scores: { pilotage_maintenance: 4, batiment: 2, gestion_logistique: 2,
+                  maintenance_vehicules: 2, conduite: 5 } },
       { label: "Cuisiner, recevoir, servir",
         scores: { hotellerie_restauration: 5, relation_client: 1 } },
       { label: "Faire du pain, des gâteaux, des chocolats",

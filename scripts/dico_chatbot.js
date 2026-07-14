@@ -58,9 +58,15 @@ const VOCABULAIRE = {
 
   gestion_logistique: [
     "logistique", "entrepot", "cariste", "magasinier", "stock", "stocks",
-    "livreur", "livraison", "colis", "camion", "poids lourd", "routier",
-    "chauffeur", "conducteur", "bus", "car", "secretaire", "secretariat",
+    "livreur", "livraison", "colis", "secretaire", "secretariat",
     "bureau", "administratif", "paperasse", "gestionnaire"
+  ],
+
+  conduite: [
+    "conducteur", "conductrice", "conduire", "chauffeur", "chauffeuse", "routier",
+    "poids lourd", "poids lourds", "camion", "camions", "semi remorque", "bus",
+    "autobus", "autocar", "car", "permis", "permis poids lourd", "route", "routes",
+    "livraison", "livreur", "transport de voyageurs", "volant"
   ],
 
   sante_social: [
@@ -129,8 +135,7 @@ const VOCABULAIRE = {
     "mecanicien", "mecanique", "mecano", "garage", "garagiste", "voiture",
     "voitures", "bagnole", "bagnoles", "auto", "automobile", "moteur", "moteurs",
     "reparer des voitures", "reparer les voitures", "carrosserie", "carrossier",
-    "peinture auto", "moto", "motos", "scooter", "deux roues", "camion",
-    "poids lourds", "engin", "engins", "tracteur", "vehicule", "vehicules",
+    "peinture auto", "moto", "motos", "scooter", "deux roues", "poids lourds", "engin", "engins", "tracteur", "vehicule", "vehicules",
     "pneu", "pneus", "vidange", "diagnostic", "tuning"
   ],
 

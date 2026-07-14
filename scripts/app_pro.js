@@ -354,6 +354,20 @@ function createFormationBlock(formation) {
         title.appendChild(level);
     }
     block.appendChild(title);
+
+    // Les bacs pro HORS FAMILLE de métiers se choisissent directement en seconde :
+    // l'élève ne passe PAS par une 2nde commune où il découvrirait plusieurs
+    // spécialités avant de trancher. C'est un engagement plus ferme, dès la 3e.
+    if (formation.horsFamille) {
+        const hf = document.createElement("p");
+        hf.className = "formation-horsfamille";
+        hf.textContent =
+            "⚠ Cette formation ne fait pas partie d'une famille de métiers : " +
+            "tu la choisis directement dès la seconde, et tu n'auras pas d'année " +
+            "commune pour découvrir d'autres spécialités avant de te décider.";
+        block.appendChild(hf);
+    }
+
     if (formation.aVerifier) {
         const warning = document.createElement("p");
         warning.className = "formation-warning";

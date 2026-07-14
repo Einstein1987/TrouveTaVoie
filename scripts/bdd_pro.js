@@ -67,64 +67,64 @@ const DOMAINS = {
             nom: "Lycée Charles Baudelaire",
             ville: "Évry-Courcouronnes",
             transport: "Bus 401",
-            "distanceKm": 7,
-            "dureeMin": 42,
+            distanceKm: 7,
+            dureeMin: 42,
             trajet: "Bus 4245 puis Bus 4204"
           },
           {
             nom: "Lycée Pierre Mendès France",
             ville: "Ris-Orangis",
             transport: "RER D",
-            "distanceKm": 8,
-            "dureeMin": 35,
+            distanceKm: 8,
+            dureeMin: 35,
             trajet: "Bus 4245 puis RER D"
           },
           {
             nom: "Lycée Paul Langevin",
             ville: "Sainte-Geneviève-des-Bois",
             transport: "RER D puis Bus",
-            "distanceKm": 13,
-            "dureeMin": 65,
+            distanceKm: 13,
+            dureeMin: 65,
             trajet: "Bus 4245 puis Bus 4504"
           },
           {
             nom: "Lycée Jean Monnet",
             ville: "Juvisy-sur-Orge",
             transport: "RER D",
-            "distanceKm": 16,
-            "dureeMin": 53,
+            distanceKm: 16,
+            dureeMin: 53,
             trajet: "Bus 4245 puis RER D"
           },
           {
             nom: "Lycée Louis Armand",
             ville: "Yerres",
             transport: "RER D",
-            "distanceKm": 17,
-            "dureeMin": 79,
+            distanceKm: 17,
+            dureeMin: 79,
             trajet: "Bus 4245 puis RER D puis RER D"
           },
           {
             nom: "Lycée Paul Belmondo",
             ville: "Arpajon",
             transport: "Bus 91-04",
-            "distanceKm": 21,
-            "dureeMin": 77,
+            distanceKm: 21,
+            dureeMin: 77,
             trajet: "Bus 4245 puis Bus 4504 puis Bus 9114"
           },
           {
             nom: "Lycée Jean Perrin",
             ville: "Longjumeau",
             transport: "RER D puis Bus",
-            "distanceKm": 21,
-            "dureeMin": 90,
+            distanceKm: 21,
+            dureeMin: 90,
             trajet: "Bus 4245 puis RER D puis RER C puis Bus 4501"
           },
           {
             nom: "Lycée Nikola Tesla",
             ville: "Dourdan",
             transport: "RER D puis RER C",
-            "distanceKm": 46,
-            "dureeMin": 133,
+            distanceKm: 46,
+            dureeMin: 133,
             trajet: "Bus 4245 puis Tram T12 puis Bus 9103"
           }
         ]
@@ -146,104 +146,104 @@ const DOMAINS = {
             nom: "Lycée Robert Doisneau",
             ville: "Corbeil-Essonnes",
             transport: "Bus 401 ou à pied",
-            "distanceKm": 2,
-            "dureeMin": 26,
+            distanceKm: 2,
+            dureeMin: 26,
             trajet: "Bus 4245"
           },
           {
             nom: "Lycée Charles Baudelaire",
             ville: "Évry-Courcouronnes",
             transport: "Bus 401",
-            "distanceKm": 7,
-            "dureeMin": 42,
+            distanceKm: 7,
+            dureeMin: 42,
             trajet: "Bus 4245 puis Bus 4204"
           },
           {
             nom: "Lycée Pierre Mendès France",
             ville: "Ris-Orangis",
             transport: "RER D",
-            "distanceKm": 8,
-            "dureeMin": 35,
+            distanceKm: 8,
+            dureeMin: 35,
             trajet: "Bus 4245 puis RER D"
           },
           {
             nom: "Lycée Nadar",
             ville: "Draveil",
             transport: "RER D puis Bus",
-            "distanceKm": 13,
-            "dureeMin": 73,
+            distanceKm: 13,
+            dureeMin: 73,
             trajet: "Bus 4245 puis RER D puis Bus 4116"
           },
           {
             nom: "Lycée Paul Langevin",
             ville: "Sainte-Geneviève-des-Bois",
             transport: "RER D puis Bus",
-            "distanceKm": 13,
-            "dureeMin": 65,
+            distanceKm: 13,
+            dureeMin: 65,
             trajet: "Bus 4245 puis Bus 4504"
           },
           {
             nom: "Lycée Jean Monnet",
             ville: "Juvisy-sur-Orge",
             transport: "RER D",
-            "distanceKm": 16,
-            "dureeMin": 53,
+            distanceKm: 16,
+            dureeMin: 53,
             trajet: "Bus 4245 puis RER D"
           },
           {
             nom: "Lycée Louis Armand",
             ville: "Yerres",
             transport: "RER D",
-            "distanceKm": 17,
-            "dureeMin": 79,
+            distanceKm: 17,
+            dureeMin: 79,
             trajet: "Bus 4245 puis RER D puis RER D"
           },
           {
             nom: "Lycée Paul Belmondo",
             ville: "Arpajon",
             transport: "Bus 91-04",
-            "distanceKm": 21,
-            "dureeMin": 77,
+            distanceKm: 21,
+            dureeMin: 77,
             trajet: "Bus 4245 puis Bus 4504 puis Bus 9114"
           },
           {
             nom: "Lycée Jean Perrin",
             ville: "Longjumeau",
             transport: "RER D puis Bus",
-            "distanceKm": 21,
-            "dureeMin": 90,
+            distanceKm: 21,
+            dureeMin: 90,
             trajet: "Bus 4245 puis RER D puis RER C puis Bus 4501"
           },
           {
             nom: "Lycée Marguerite Yourcenar",
             ville: "Morangis",
             transport: "RER D puis Bus",
-            "distanceKm": 21,
-            "dureeMin": 83,
+            distanceKm: 21,
+            dureeMin: 83,
             trajet: "RER D puis RER D puis Bus 399"
           },
           {
             nom: "Lycée Henri Poincaré",
             ville: "Palaiseau",
             transport: "RER D puis Bus",
-            "distanceKm": 26,
-            "dureeMin": 110,
+            distanceKm: 26,
+            dureeMin: 110,
             trajet: "RER D puis RER D puis RER D puis RER B"
           },
           {
             nom: "Lycée Nelson Mandela",
             ville: "Étampes",
             transport: "RER D puis RER C",
-            "distanceKm": 39,
-            "dureeMin": 120,
+            distanceKm: 39,
+            dureeMin: 120,
             trajet: "RER D puis RER D puis RER C"
           },
           {
             nom: "Lycée Nikola Tesla",
             ville: "Dourdan",
             transport: "RER D puis RER C",
-            "distanceKm": 46,
-            "dureeMin": 133,
+            distanceKm: 46,
+            dureeMin: 133,
             trajet: "Bus 4245 puis Tram T12 puis Bus 9103"
           }
         ]
@@ -265,72 +265,72 @@ const DOMAINS = {
             nom: "Lycée Charles Baudelaire",
             ville: "Évry-Courcouronnes",
             transport: "Bus 401",
-            "distanceKm": 7,
-            "dureeMin": 42,
+            distanceKm: 7,
+            dureeMin: 42,
             trajet: "Bus 4245 puis Bus 4204"
           },
           {
             nom: "Lycée Pierre Mendès France",
             ville: "Ris-Orangis",
             transport: "RER D",
-            "distanceKm": 8,
-            "dureeMin": 35,
+            distanceKm: 8,
+            dureeMin: 35,
             trajet: "Bus 4245 puis RER D"
           },
           {
             nom: "Lycée Nadar",
             ville: "Draveil",
             transport: "RER D puis Bus",
-            "distanceKm": 13,
-            "dureeMin": 73,
+            distanceKm: 13,
+            dureeMin: 73,
             trajet: "Bus 4245 puis RER D puis Bus 4116"
           },
           {
             nom: "Lycée Paul Langevin",
             ville: "Sainte-Geneviève-des-Bois",
             transport: "RER D puis Bus",
-            "distanceKm": 13,
-            "dureeMin": 65,
+            distanceKm: 13,
+            dureeMin: 65,
             trajet: "Bus 4245 puis Bus 4504"
           },
           {
             nom: "EREA Jean Isoard",
             ville: "Montgeron",
             transport: "RER D",
-            "distanceKm": 16,
-            "dureeMin": 81,
+            distanceKm: 16,
+            dureeMin: 81,
             trajet: "Bus 4245 puis Bus 4122"
           },
           {
             nom: "Lycée Louis Armand",
             ville: "Yerres",
             transport: "RER D",
-            "distanceKm": 17,
-            "dureeMin": 79,
+            distanceKm: 17,
+            dureeMin: 79,
             trajet: "Bus 4245 puis RER D puis RER D"
           },
           {
             nom: "Lycée Marguerite Yourcenar",
             ville: "Morangis",
             transport: "RER D puis Bus",
-            "distanceKm": 21,
-            "dureeMin": 83,
+            distanceKm: 21,
+            dureeMin: 83,
             trajet: "RER D puis RER D puis Bus 399"
           },
           {
             nom: "Lycée Henri Poincaré",
             ville: "Palaiseau",
             transport: "RER D puis Bus",
-            "distanceKm": 26,
-            "dureeMin": 110,
+            distanceKm: 26,
+            dureeMin: 110,
             trajet: "RER D puis RER D puis RER D puis RER B"
           },
           {
             nom: "Lycée Nelson Mandela",
             ville: "Étampes",
             transport: "RER D puis RER C",
-            "distanceKm": 39,
-            "dureeMin": 120,
+            distanceKm: 39,
+            dureeMin: 120,
             trajet: "RER D puis RER D puis RER C"
           }
         ]
@@ -385,96 +385,96 @@ const DOMAINS = {
             nom: "Lycée Robert Doisneau",
             ville: "Corbeil-Essonnes",
             transport: "Bus 401 ou à pied",
-            "distanceKm": 2,
-            "dureeMin": 26,
+            distanceKm: 2,
+            dureeMin: 26,
             trajet: "Bus 4245"
           },
           {
             nom: "Lycée Marie Laurencin",
             ville: "Mennecy",
             transport: "RER D",
-            "distanceKm": 5,
-            "dureeMin": 41,
+            distanceKm: 5,
+            dureeMin: 41,
             trajet: "Bus 4245 puis Bus 4307"
           },
           {
             nom: "Lycée Paul Langevin",
             ville: "Sainte-Geneviève-des-Bois",
             transport: "RER D puis Bus",
-            "distanceKm": 13,
-            "dureeMin": 65,
+            distanceKm: 13,
+            dureeMin: 65,
             trajet: "Bus 4245 puis Bus 4504"
           },
           {
             nom: "Lycée Jean Monnet",
             ville: "Juvisy-sur-Orge",
             transport: "RER D",
-            "distanceKm": 16,
-            "dureeMin": 53,
+            distanceKm: 16,
+            dureeMin: 53,
             trajet: "Bus 4245 puis RER D"
           },
           {
             nom: "Lycée Louis Armand",
             ville: "Yerres",
             transport: "RER D",
-            "distanceKm": 17,
-            "dureeMin": 79,
+            distanceKm: 17,
+            dureeMin: 79,
             trajet: "Bus 4245 puis RER D puis RER D"
           },
           {
             nom: "Lycée Paul Belmondo",
             ville: "Arpajon",
             transport: "Bus 91-04",
-            "distanceKm": 21,
-            "dureeMin": 77,
+            distanceKm: 21,
+            dureeMin: 77,
             trajet: "Bus 4245 puis Bus 4504 puis Bus 9114"
           },
           {
             nom: "Lycée Jean Perrin",
             ville: "Longjumeau",
             transport: "RER D puis Bus",
-            "distanceKm": 21,
-            "dureeMin": 90,
+            distanceKm: 21,
+            dureeMin: 90,
             trajet: "Bus 4245 puis RER D puis RER C puis Bus 4501"
           },
           {
             nom: "Lycée Marguerite Yourcenar",
             ville: "Morangis",
             transport: "RER D puis Bus",
-            "distanceKm": 21,
-            "dureeMin": 83,
+            distanceKm: 21,
+            dureeMin: 83,
             trajet: "RER D puis RER D puis Bus 399"
           },
           {
             nom: "Lycée Parc de Vilgénis",
             ville: "Massy",
             transport: "RER D puis Tram 12",
-            "distanceKm": 28,
-            "dureeMin": 93,
+            distanceKm: 28,
+            dureeMin: 93,
             trajet: "Bus 4245 puis Tram T12 puis Bus 119"
           },
           {
             nom: "Lycée L'Essouriau",
             ville: "Les Ulis",
             transport: "RER D puis Bus",
-            "distanceKm": 30,
-            "dureeMin": 115,
+            distanceKm: 30,
+            dureeMin: 115,
             trajet: "RER D puis RER D puis Bus 9105 puis Bus 4609"
           },
           {
             nom: "Lycée Geoffroy Saint-Hilaire",
             ville: "Étampes",
             transport: "RER D puis RER C",
-            "distanceKm": 38,
-            "dureeMin": 110,
+            distanceKm: 38,
+            dureeMin: 110,
             trajet: "RER D puis RER D puis RER C"
           },
           {
             nom: "Lycée Nikola Tesla",
             ville: "Dourdan",
             transport: "RER D puis RER C",
-            "distanceKm": 46,
-            "dureeMin": 133,
+            distanceKm: 46,
+            dureeMin: 133,
             trajet: "Bus 4245 puis Tram T12 puis Bus 9103"
           }
         ]
@@ -496,16 +496,16 @@ const DOMAINS = {
             nom: "Lycée Gaspard Monge",
             ville: "Savigny-sur-Orge",
             transport: "RER D puis RER C",
-            "distanceKm": 17,
-            "dureeMin": 69,
+            distanceKm: 17,
+            dureeMin: 69,
             trajet: "Bus 4245 puis RER D puis RER C"
           },
           {
             nom: "Lycée Alexandre Denis",
             ville: "Cerny",
             transport: "RER D jusqu'à Mennecy puis Bus",
-            "distanceKm": 20,
-            "dureeMin": 59,
+            distanceKm: 20,
+            dureeMin: 59,
             trajet: "Bus 4243 puis RER D puis Bus 4306 puis Bus 4306"
           }
         ]
@@ -527,12 +527,74 @@ const DOMAINS = {
             nom: "Lycée Gaspard Monge",
             ville: "Savigny-sur-Orge",
             transport: "RER D puis RER C",
-            "distanceKm": 17,
-            "dureeMin": 69,
+            distanceKm: 17,
+            dureeMin: 69,
             trajet: "Bus 4245 puis RER D puis RER C"
           }
         ]
       },
+      {
+        nom: "CAP Opérateur/opératrice logistique",
+        niveau: "CAP",
+        coeffs: [
+          6,
+          5,
+          4,
+          5,
+          3,
+          3,
+          4
+        ],
+        etablissements: [
+          {
+            nom: "Lycée Gaspard Monge",
+            ville: "Savigny-sur-Orge",
+            transport: "RER D puis RER C",
+            distanceKm: 17,
+            dureeMin: 69,
+            trajet: "Bus 4245 puis RER D puis RER C"
+          },
+          {
+            nom: "Lycée Alexandre Denis",
+            ville: "Cerny",
+            transport: "RER D jusqu'à Mennecy puis Bus",
+            distanceKm: 20,
+            dureeMin: 59,
+            trajet: "Bus 4243 puis RER D puis Bus 4306 puis Bus 4306"
+          }
+        ]
+      }
+    ]
+  },
+  conduite: {
+    label: "Métiers de la Conduite",
+    keywords: [
+      "conducteur",
+      "conduire",
+      "chauffeur",
+      "routier",
+      "camion",
+      "poids lourd",
+      "bus",
+      "autobus",
+      "autocar",
+      "car",
+      "permis",
+      "route",
+      "transport de voyageurs",
+      "livraison",
+      "livreur"
+    ],
+    coeffs: [
+      6,
+      5,
+      4,
+      5,
+      3,
+      3,
+      4
+    ],
+    formations: [
       {
         nom: "Bac Pro Conducteur routier de marchandises",
         niveau: "Bac Pro",
@@ -550,8 +612,8 @@ const DOMAINS = {
             nom: "Lycée Alexandre Denis",
             ville: "Cerny",
             transport: "RER D jusqu'à Mennecy puis Bus",
-            "distanceKm": 20,
-            "dureeMin": 59,
+            distanceKm: 20,
+            dureeMin: 59,
             trajet: "Bus 4243 puis RER D puis Bus 4306 puis Bus 4306"
           }
         ]
@@ -573,39 +635,8 @@ const DOMAINS = {
             nom: "Lycée Alexandre Denis",
             ville: "Cerny",
             transport: "RER D jusqu'à Mennecy puis Bus",
-            "distanceKm": 20,
-            "dureeMin": 59,
-            trajet: "Bus 4243 puis RER D puis Bus 4306 puis Bus 4306"
-          }
-        ]
-      },
-      {
-        nom: "CAP Opérateur/opératrice logistique",
-        niveau: "CAP",
-        coeffs: [
-          6,
-          5,
-          4,
-          5,
-          3,
-          3,
-          4
-        ],
-        etablissements: [
-          {
-            nom: "Lycée Gaspard Monge",
-            ville: "Savigny-sur-Orge",
-            transport: "RER D puis RER C",
-            "distanceKm": 17,
-            "dureeMin": 69,
-            trajet: "Bus 4245 puis RER D puis RER C"
-          },
-          {
-            nom: "Lycée Alexandre Denis",
-            ville: "Cerny",
-            transport: "RER D jusqu'à Mennecy puis Bus",
-            "distanceKm": 20,
-            "dureeMin": 59,
+            distanceKm: 20,
+            dureeMin: 59,
             trajet: "Bus 4243 puis RER D puis Bus 4306 puis Bus 4306"
           }
         ]
@@ -660,56 +691,56 @@ const DOMAINS = {
             nom: "Lycée Charles Baudelaire",
             ville: "Évry-Courcouronnes",
             transport: "Bus 401",
-            "distanceKm": 7,
-            "dureeMin": 42,
+            distanceKm: 7,
+            dureeMin: 42,
             trajet: "Bus 4245 puis Bus 4204"
           },
           {
             nom: "Lycée Les Frères Moreau",
             ville: "Quincy-sous-Sénart",
             transport: "RER D",
-            "distanceKm": 14,
-            "dureeMin": 79,
+            distanceKm: 14,
+            dureeMin: 79,
             trajet: "RER D puis RER D"
           },
           {
             nom: "Lycée Léonard de Vinci",
             ville: "Saint-Michel-sur-Orge",
             transport: "RER D puis RER C",
-            "distanceKm": 14,
-            "dureeMin": 77,
+            distanceKm: 14,
+            dureeMin: 77,
             trajet: "Bus 4245 puis Bus 4504 puis Bus 4501"
           },
           {
             nom: "Lycée Jean Monnet",
             ville: "Juvisy-sur-Orge",
             transport: "RER D",
-            "distanceKm": 16,
-            "dureeMin": 53,
+            distanceKm: 16,
+            dureeMin: 53,
             trajet: "Bus 4245 puis RER D"
           },
           {
             nom: "Lycée Jean Perrin",
             ville: "Longjumeau",
             transport: "RER D puis Bus",
-            "distanceKm": 21,
-            "dureeMin": 90,
+            distanceKm: 21,
+            dureeMin: 90,
             trajet: "Bus 4245 puis RER D puis RER C puis Bus 4501"
           },
           {
             nom: "Lycée Henri Poincaré",
             ville: "Palaiseau",
             transport: "RER D puis Bus",
-            "distanceKm": 26,
-            "dureeMin": 110,
+            distanceKm: 26,
+            dureeMin: 110,
             trajet: "RER D puis RER D puis RER D puis RER B"
           },
           {
             nom: "Lycée Nelson Mandela",
             ville: "Étampes",
             transport: "RER D puis RER C",
-            "distanceKm": 39,
-            "dureeMin": 120,
+            distanceKm: 39,
+            dureeMin: 120,
             trajet: "RER D puis RER D puis RER C"
           }
         ]
@@ -731,24 +762,24 @@ const DOMAINS = {
             nom: "Lycée Léonard de Vinci",
             ville: "Saint-Michel-sur-Orge",
             transport: "RER D puis RER C",
-            "distanceKm": 14,
-            "dureeMin": 77,
+            distanceKm: 14,
+            dureeMin: 77,
             trajet: "Bus 4245 puis Bus 4504 puis Bus 4501"
           },
           {
             nom: "Lycée Henri Poincaré",
             ville: "Palaiseau",
             transport: "RER D puis Bus",
-            "distanceKm": 26,
-            "dureeMin": 110,
+            distanceKm: 26,
+            dureeMin: 110,
             trajet: "RER D puis RER D puis RER D puis RER B"
           },
           {
             nom: "Lycée Nelson Mandela",
             ville: "Étampes",
             transport: "RER D puis RER C",
-            "distanceKm": 39,
-            "dureeMin": 120,
+            distanceKm: 39,
+            dureeMin: 120,
             trajet: "RER D puis RER D puis RER C"
           }
         ]
@@ -770,11 +801,12 @@ const DOMAINS = {
             nom: "Lycée Léonard de Vinci",
             ville: "Saint-Michel-sur-Orge",
             transport: "RER D puis RER C",
-            "distanceKm": 14,
-            "dureeMin": 77,
+            distanceKm: 14,
+            dureeMin: 77,
             trajet: "Bus 4245 puis Bus 4504 puis Bus 4501"
           }
-        ]
+        ],
+        horsFamille: true
       },
       {
         nom: "CAP Accompagnant éducatif petite enfance",
@@ -793,16 +825,16 @@ const DOMAINS = {
             nom: "Lycée Charles Baudelaire",
             ville: "Évry-Courcouronnes",
             transport: "Bus 401",
-            "distanceKm": 7,
-            "dureeMin": 42,
+            distanceKm: 7,
+            dureeMin: 42,
             trajet: "Bus 4245 puis Bus 4204"
           },
           {
             nom: "Lycée Jean Perrin",
             ville: "Longjumeau",
             transport: "RER D puis Bus",
-            "distanceKm": 21,
-            "dureeMin": 90,
+            distanceKm: 21,
+            dureeMin: 90,
             trajet: "Bus 4245 puis RER D puis RER C puis Bus 4501"
           }
         ]
@@ -824,40 +856,40 @@ const DOMAINS = {
             nom: "Lycée Charles Baudelaire",
             ville: "Évry-Courcouronnes",
             transport: "Bus 401",
-            "distanceKm": 7,
-            "dureeMin": 42,
+            distanceKm: 7,
+            dureeMin: 42,
             trajet: "Bus 4245 puis Bus 4204"
           },
           {
             nom: "Lycée Léonard de Vinci",
             ville: "Saint-Michel-sur-Orge",
             transport: "RER D puis RER C",
-            "distanceKm": 14,
-            "dureeMin": 77,
+            distanceKm: 14,
+            dureeMin: 77,
             trajet: "Bus 4245 puis Bus 4504 puis Bus 4501"
           },
           {
             nom: "EREA Jean Isoard",
             ville: "Montgeron",
             transport: "RER D",
-            "distanceKm": 16,
-            "dureeMin": 81,
+            distanceKm: 16,
+            dureeMin: 81,
             trajet: "Bus 4245 puis Bus 4122"
           },
           {
             nom: "Lycée Paul Belmondo",
             ville: "Arpajon",
             transport: "Bus 91-04",
-            "distanceKm": 21,
-            "dureeMin": 77,
+            distanceKm: 21,
+            dureeMin: 77,
             trajet: "Bus 4245 puis Bus 4504 puis Bus 9114"
           },
           {
             nom: "Lycée Nelson Mandela",
             ville: "Étampes",
             transport: "RER D puis RER C",
-            "distanceKm": 39,
-            "dureeMin": 120,
+            distanceKm: 39,
+            dureeMin: 120,
             trajet: "RER D puis RER D puis RER C"
           }
         ]
@@ -905,8 +937,8 @@ const DOMAINS = {
             nom: "Lycée Charles Baudelaire",
             ville: "Évry-Courcouronnes",
             transport: "Bus 401",
-            "distanceKm": 7,
-            "dureeMin": 42,
+            distanceKm: 7,
+            dureeMin: 42,
             trajet: "Bus 4245 puis Bus 4204"
           }
         ]
@@ -928,8 +960,8 @@ const DOMAINS = {
             nom: "Lycée Charles Baudelaire",
             ville: "Évry-Courcouronnes",
             transport: "Bus 401",
-            "distanceKm": 7,
-            "dureeMin": 42,
+            distanceKm: 7,
+            dureeMin: 42,
             trajet: "Bus 4245 puis Bus 4204"
           }
         ]
@@ -951,8 +983,8 @@ const DOMAINS = {
             nom: "Lycée Charles Baudelaire",
             ville: "Évry-Courcouronnes",
             transport: "Bus 401",
-            "distanceKm": 7,
-            "dureeMin": 42,
+            distanceKm: 7,
+            dureeMin: 42,
             trajet: "Bus 4245 puis Bus 4204"
           }
         ]
@@ -1009,96 +1041,96 @@ const DOMAINS = {
             nom: "Lycée Robert Doisneau",
             ville: "Corbeil-Essonnes",
             transport: "Bus 401 ou à pied",
-            "distanceKm": 2,
-            "dureeMin": 26,
+            distanceKm: 2,
+            dureeMin: 26,
             trajet: "Bus 4245"
           },
           {
             nom: "Lycée Pierre Mendès France",
             ville: "Ris-Orangis",
             transport: "RER D",
-            "distanceKm": 8,
-            "dureeMin": 35,
+            distanceKm: 8,
+            dureeMin: 35,
             trajet: "Bus 4245 puis RER D"
           },
           {
             nom: "Lycée Nadar",
             ville: "Draveil",
             transport: "RER D puis Bus",
-            "distanceKm": 13,
-            "dureeMin": 73,
+            distanceKm: 13,
+            dureeMin: 73,
             trajet: "Bus 4245 puis RER D puis Bus 4116"
           },
           {
             nom: "Lycée André-Marie Ampère",
             ville: "Morsang-sur-Orge",
             transport: "RER D puis Bus",
-            "distanceKm": 14,
-            "dureeMin": 81,
+            distanceKm: 14,
+            dureeMin: 81,
             trajet: "Bus 4245 puis Tram T12 puis Bus 4521"
           },
           {
             nom: "Lycée Les Frères Moreau",
             ville: "Quincy-sous-Sénart",
             transport: "RER D",
-            "distanceKm": 14,
-            "dureeMin": 79,
+            distanceKm: 14,
+            dureeMin: 79,
             trajet: "RER D puis RER D"
           },
           {
             nom: "Lycée Léonard de Vinci",
             ville: "Saint-Michel-sur-Orge",
             transport: "RER D puis RER C",
-            "distanceKm": 14,
-            "dureeMin": 77,
+            distanceKm: 14,
+            dureeMin: 77,
             trajet: "Bus 4245 puis Bus 4504 puis Bus 4501"
           },
           {
             nom: "Lycée Clément Ader",
             ville: "Athis-Mons",
             transport: "RER D",
-            "distanceKm": 18,
-            "dureeMin": 69,
+            distanceKm: 18,
+            dureeMin: 69,
             trajet: "Bus 4245 puis RER D puis RER C"
           },
           {
             nom: "Lycée Paul Belmondo",
             ville: "Arpajon",
             transport: "Bus 91-04",
-            "distanceKm": 21,
-            "dureeMin": 77,
+            distanceKm: 21,
+            dureeMin: 77,
             trajet: "Bus 4245 puis Bus 4504 puis Bus 9114"
           },
           {
             nom: "Lycée Jean Perrin",
             ville: "Longjumeau",
             transport: "RER D puis Bus",
-            "distanceKm": 21,
-            "dureeMin": 90,
+            distanceKm: 21,
+            dureeMin: 90,
             trajet: "Bus 4245 puis RER D puis RER C puis Bus 4501"
           },
           {
             nom: "Lycée Parc de Vilgénis",
             ville: "Massy",
             transport: "RER D puis Tram 12",
-            "distanceKm": 28,
-            "dureeMin": 93,
+            distanceKm: 28,
+            dureeMin: 93,
             trajet: "Bus 4245 puis Tram T12 puis Bus 119"
           },
           {
             nom: "Lycée L'Essouriau",
             ville: "Les Ulis",
             transport: "RER D puis Bus",
-            "distanceKm": 30,
-            "dureeMin": 115,
+            distanceKm: 30,
+            dureeMin: 115,
             trajet: "RER D puis RER D puis Bus 9105 puis Bus 4609"
           },
           {
             nom: "Lycée Nikola Tesla",
             ville: "Dourdan",
             transport: "RER D puis RER C",
-            "distanceKm": 46,
-            "dureeMin": 133,
+            distanceKm: 46,
+            dureeMin: 133,
             trajet: "Bus 4245 puis Tram T12 puis Bus 9103"
           }
         ]
@@ -1120,40 +1152,40 @@ const DOMAINS = {
             nom: "Lycée Georges Brassens",
             ville: "Évry-Courcouronnes",
             transport: "Bus 401 puis Bus 402",
-            "distanceKm": 6,
-            "dureeMin": 35,
+            distanceKm: 6,
+            dureeMin: 35,
             trajet: "Bus 4245"
           },
           {
             nom: "Lycée André-Marie Ampère",
             ville: "Morsang-sur-Orge",
             transport: "RER D puis Bus",
-            "distanceKm": 14,
-            "dureeMin": 81,
+            distanceKm: 14,
+            dureeMin: 81,
             trajet: "Bus 4245 puis Tram T12 puis Bus 4521"
           },
           {
             nom: "Lycée Parc de Vilgénis",
             ville: "Massy",
             transport: "RER D puis Tram 12",
-            "distanceKm": 28,
-            "dureeMin": 93,
+            distanceKm: 28,
+            dureeMin: 93,
             trajet: "Bus 4245 puis Tram T12 puis Bus 119"
           },
           {
             nom: "Lycée L'Essouriau",
             ville: "Les Ulis",
             transport: "RER D puis Bus",
-            "distanceKm": 30,
-            "dureeMin": 115,
+            distanceKm: 30,
+            dureeMin: 115,
             trajet: "RER D puis RER D puis Bus 9105 puis Bus 4609"
           },
           {
             nom: "Lycée Nikola Tesla",
             ville: "Dourdan",
             transport: "RER D puis RER C",
-            "distanceKm": 46,
-            "dureeMin": 133,
+            distanceKm: 46,
+            dureeMin: 133,
             trajet: "Bus 4245 puis Tram T12 puis Bus 9103"
           }
         ]
@@ -1175,16 +1207,16 @@ const DOMAINS = {
             nom: "Lycée Pierre Mendès France",
             ville: "Ris-Orangis",
             transport: "RER D",
-            "distanceKm": 8,
-            "dureeMin": 35,
+            distanceKm: 8,
+            dureeMin: 35,
             trajet: "Bus 4245 puis RER D"
           },
           {
             nom: "Lycée Gustave Eiffel",
             ville: "Massy",
             transport: "RER D puis Tram 12",
-            "distanceKm": 26,
-            "dureeMin": 110,
+            distanceKm: 26,
+            dureeMin: 110,
             trajet: "RER D puis RER D puis Bus 399 puis Bus 319"
           }
         ]
@@ -1206,8 +1238,8 @@ const DOMAINS = {
             nom: "Lycée Auguste Perret",
             ville: "Évry-Courcouronnes",
             transport: "Bus 401",
-            "distanceKm": 7,
-            "dureeMin": 42,
+            distanceKm: 7,
+            dureeMin: 42,
             trajet: "Bus 4245 puis Bus 4204"
           }
         ]
@@ -1229,8 +1261,8 @@ const DOMAINS = {
             nom: "Lycée Pierre Mendès France",
             ville: "Ris-Orangis",
             transport: "RER D",
-            "distanceKm": 8,
-            "dureeMin": 35,
+            distanceKm: 8,
+            dureeMin: 35,
             trajet: "Bus 4245 puis RER D"
           }
         ]
@@ -1252,11 +1284,12 @@ const DOMAINS = {
             nom: "Lycée International Paris-Saclay",
             ville: "Palaiseau",
             transport: "RER B puis Bus",
-            "distanceKm": 30,
-            "dureeMin": 108,
+            distanceKm: 30,
+            dureeMin: 108,
             trajet: "RER D puis RER D puis Bus 9105"
           }
-        ]
+        ],
+        horsFamille: true
       },
       {
         nom: "CAP Électricien",
@@ -1275,72 +1308,72 @@ const DOMAINS = {
             nom: "Lycée Robert Doisneau",
             ville: "Corbeil-Essonnes",
             transport: "Bus 401 ou à pied",
-            "distanceKm": 2,
-            "dureeMin": 26,
+            distanceKm: 2,
+            dureeMin: 26,
             trajet: "Bus 4245"
           },
           {
             nom: "Lycée Pierre Mendès France",
             ville: "Ris-Orangis",
             transport: "RER D",
-            "distanceKm": 8,
-            "dureeMin": 35,
+            distanceKm: 8,
+            dureeMin: 35,
             trajet: "Bus 4245 puis RER D"
           },
           {
             nom: "Lycée Nadar",
             ville: "Draveil",
             transport: "RER D puis Bus",
-            "distanceKm": 13,
-            "dureeMin": 73,
+            distanceKm: 13,
+            dureeMin: 73,
             trajet: "Bus 4245 puis RER D puis Bus 4116"
           },
           {
             nom: "Lycée André-Marie Ampère",
             ville: "Morsang-sur-Orge",
             transport: "RER D puis Bus",
-            "distanceKm": 14,
-            "dureeMin": 81,
+            distanceKm: 14,
+            dureeMin: 81,
             trajet: "Bus 4245 puis Tram T12 puis Bus 4521"
           },
           {
             nom: "Lycée Les Frères Moreau",
             ville: "Quincy-sous-Sénart",
             transport: "RER D",
-            "distanceKm": 14,
-            "dureeMin": 79,
+            distanceKm: 14,
+            dureeMin: 79,
             trajet: "RER D puis RER D"
           },
           {
             nom: "EREA Jean Isoard",
             ville: "Montgeron",
             transport: "RER D",
-            "distanceKm": 16,
-            "dureeMin": 81,
+            distanceKm: 16,
+            dureeMin: 81,
             trajet: "Bus 4245 puis Bus 4122"
           },
           {
             nom: "Lycée Clément Ader",
             ville: "Athis-Mons",
             transport: "RER D",
-            "distanceKm": 18,
-            "dureeMin": 69,
+            distanceKm: 18,
+            dureeMin: 69,
             trajet: "Bus 4245 puis RER D puis RER C"
           },
           {
             nom: "Lycée L'Essouriau",
             ville: "Les Ulis",
             transport: "RER D puis Bus",
-            "distanceKm": 30,
-            "dureeMin": 115,
+            distanceKm: 30,
+            dureeMin: 115,
             trajet: "RER D puis RER D puis Bus 9105 puis Bus 4609"
           },
           {
             nom: "Lycée Nelson Mandela",
             ville: "Étampes",
             transport: "RER D puis RER C",
-            "distanceKm": 39,
-            "dureeMin": 120,
+            distanceKm: 39,
+            dureeMin: 120,
             trajet: "RER D puis RER D puis RER C"
           }
         ]
@@ -1362,8 +1395,8 @@ const DOMAINS = {
             nom: "Lycée Pierre Mendès France",
             ville: "Ris-Orangis",
             transport: "RER D",
-            "distanceKm": 8,
-            "dureeMin": 35,
+            distanceKm: 8,
+            dureeMin: 35,
             trajet: "Bus 4245 puis RER D"
           }
         ]
@@ -1385,8 +1418,62 @@ const DOMAINS = {
             nom: "Lycée Auguste Perret",
             ville: "Évry-Courcouronnes",
             transport: "Bus 401",
-            "distanceKm": 7,
-            "dureeMin": 42,
+            distanceKm: 7,
+            dureeMin: 42,
+            trajet: "Bus 4245 puis Bus 4204"
+          }
+        ]
+      },
+      {
+        nom: "CAP Monteur en installations sanitaires",
+        niveau: "CAP",
+        coeffs: [
+          5,
+          6,
+          3,
+          4,
+          3,
+          2,
+          7
+        ],
+        etablissements: [
+          {
+            nom: "Lycée Auguste Perret",
+            ville: "Évry-Courcouronnes",
+            transport: "Bus 401",
+            distanceKm: 7,
+            dureeMin: 42,
+            trajet: "Bus 4245 puis Bus 4204"
+          },
+          {
+            nom: "Lycée Gustave Eiffel",
+            ville: "Massy",
+            transport: "RER D puis Tram 12",
+            distanceKm: 26,
+            dureeMin: 110,
+            trajet: "RER D puis RER D puis Bus 399 puis Bus 319"
+          }
+        ]
+      },
+      {
+        nom: "CAP Interventions en maintenance technique des bâtiments",
+        niveau: "CAP",
+        coeffs: [
+          5,
+          6,
+          3,
+          4,
+          3,
+          2,
+          7
+        ],
+        etablissements: [
+          {
+            nom: "Lycée Auguste Perret",
+            ville: "Évry-Courcouronnes",
+            transport: "Bus 401",
+            distanceKm: 7,
+            dureeMin: 42,
             trajet: "Bus 4245 puis Bus 4204"
           }
         ]
@@ -1445,16 +1532,16 @@ const DOMAINS = {
             nom: "Lycée Auguste Perret",
             ville: "Évry-Courcouronnes",
             transport: "Bus 401",
-            "distanceKm": 7,
-            "dureeMin": 42,
+            distanceKm: 7,
+            dureeMin: 42,
             trajet: "Bus 4245 puis Bus 4204"
           },
           {
             nom: "Lycée Gustave Eiffel",
             ville: "Massy",
             transport: "RER D puis Tram 12",
-            "distanceKm": 26,
-            "dureeMin": 110,
+            distanceKm: 26,
+            dureeMin: 110,
             trajet: "RER D puis RER D puis Bus 399 puis Bus 319"
           }
         ]
@@ -1476,8 +1563,8 @@ const DOMAINS = {
             nom: "Lycée Jean-Pierre Timbaud",
             ville: "Brétigny-sur-Orge",
             transport: "RER D puis RER C",
-            "distanceKm": 14,
-            "dureeMin": 64,
+            distanceKm: 14,
+            dureeMin: 64,
             trajet: "Bus 4245 puis Bus 4504"
           }
         ]
@@ -1499,8 +1586,8 @@ const DOMAINS = {
             nom: "Lycée Jean-Pierre Timbaud",
             ville: "Brétigny-sur-Orge",
             transport: "RER D puis RER C",
-            "distanceKm": 14,
-            "dureeMin": 64,
+            distanceKm: 14,
+            dureeMin: 64,
             trajet: "Bus 4245 puis Bus 4504"
           }
         ]
@@ -1522,8 +1609,8 @@ const DOMAINS = {
             nom: "Lycée Jean-Pierre Timbaud",
             ville: "Brétigny-sur-Orge",
             transport: "RER D puis RER C",
-            "distanceKm": 14,
-            "dureeMin": 64,
+            distanceKm: 14,
+            dureeMin: 64,
             trajet: "Bus 4245 puis Bus 4504"
           }
         ]
@@ -1545,8 +1632,8 @@ const DOMAINS = {
             nom: "Lycée Jean-Pierre Timbaud",
             ville: "Brétigny-sur-Orge",
             transport: "RER D puis RER C",
-            "distanceKm": 14,
-            "dureeMin": 64,
+            distanceKm: 14,
+            dureeMin: 64,
             trajet: "Bus 4245 puis Bus 4504"
           }
         ]
@@ -1568,24 +1655,24 @@ const DOMAINS = {
             nom: "Lycée Auguste Perret",
             ville: "Évry-Courcouronnes",
             transport: "Bus 401",
-            "distanceKm": 7,
-            "dureeMin": 42,
+            distanceKm: 7,
+            dureeMin: 42,
             trajet: "Bus 4245 puis Bus 4204"
           },
           {
             nom: "Lycée Jean-Pierre Timbaud",
             ville: "Brétigny-sur-Orge",
             transport: "RER D puis RER C",
-            "distanceKm": 14,
-            "dureeMin": 64,
+            distanceKm: 14,
+            dureeMin: 64,
             trajet: "Bus 4245 puis Bus 4504"
           },
           {
             nom: "EREA Le Château du Lac",
             ville: "Ollainville",
             transport: "RER D puis Bus",
-            "distanceKm": 23,
-            "dureeMin": 98,
+            distanceKm: 23,
+            dureeMin: 98,
             trajet: "Bus 4245 puis RER D puis RER C"
           }
         ]
@@ -1607,8 +1694,8 @@ const DOMAINS = {
             nom: "Lycée Gustave Eiffel",
             ville: "Massy",
             transport: "RER D puis Tram 12",
-            "distanceKm": 26,
-            "dureeMin": 110,
+            distanceKm: 26,
+            dureeMin: 110,
             trajet: "RER D puis RER D puis Bus 399 puis Bus 319"
           }
         ]
@@ -1630,31 +1717,8 @@ const DOMAINS = {
             nom: "Lycée Gustave Eiffel",
             ville: "Massy",
             transport: "RER D puis Tram 12",
-            "distanceKm": 26,
-            "dureeMin": 110,
-            trajet: "RER D puis RER D puis Bus 399 puis Bus 319"
-          }
-        ]
-      },
-      {
-        nom: "CAP Charpentier bois",
-        niveau: "CAP",
-        coeffs: [
-          4,
-          6,
-          4,
-          2,
-          4,
-          3,
-          7
-        ],
-        etablissements: [
-          {
-            nom: "Lycée Gustave Eiffel",
-            ville: "Massy",
-            transport: "RER D puis Tram 12",
-            "distanceKm": 26,
-            "dureeMin": 110,
+            distanceKm: 26,
+            dureeMin: 110,
             trajet: "RER D puis RER D puis Bus 399 puis Bus 319"
           }
         ]
@@ -1676,8 +1740,8 @@ const DOMAINS = {
             nom: "Lycée Jean-Pierre Timbaud",
             ville: "Brétigny-sur-Orge",
             transport: "RER D puis RER C",
-            "distanceKm": 14,
-            "dureeMin": 64,
+            distanceKm: 14,
+            dureeMin: 64,
             trajet: "Bus 4245 puis Bus 4504"
           }
         ]
@@ -1699,63 +1763,9 @@ const DOMAINS = {
             nom: "EREA Le Château du Lac",
             ville: "Ollainville",
             transport: "RER D puis Bus",
-            "distanceKm": 23,
-            "dureeMin": 98,
+            distanceKm: 23,
+            dureeMin: 98,
             trajet: "Bus 4245 puis RER D puis RER C"
-          }
-        ]
-      },
-      {
-        nom: "CAP Monteur en installations sanitaires",
-        niveau: "CAP",
-        coeffs: [
-          5,
-          6,
-          3,
-          4,
-          3,
-          2,
-          7
-        ],
-        etablissements: [
-          {
-            nom: "Lycée Auguste Perret",
-            ville: "Évry-Courcouronnes",
-            transport: "Bus 401",
-            "distanceKm": 7,
-            "dureeMin": 42,
-            trajet: "Bus 4245 puis Bus 4204"
-          },
-          {
-            nom: "Lycée Gustave Eiffel",
-            ville: "Massy",
-            transport: "RER D puis Tram 12",
-            "distanceKm": 26,
-            "dureeMin": 110,
-            trajet: "RER D puis RER D puis Bus 399 puis Bus 319"
-          }
-        ]
-      },
-      {
-        nom: "CAP Interventions en maintenance technique des bâtiments",
-        niveau: "CAP",
-        coeffs: [
-          5,
-          6,
-          3,
-          4,
-          3,
-          2,
-          7
-        ],
-        etablissements: [
-          {
-            nom: "Lycée Auguste Perret",
-            ville: "Évry-Courcouronnes",
-            transport: "Bus 401",
-            "distanceKm": 7,
-            "dureeMin": 42,
-            trajet: "Bus 4245 puis Bus 4204"
           }
         ]
       }
@@ -1801,24 +1811,24 @@ const DOMAINS = {
             nom: "Lycée Auguste Perret",
             ville: "Évry-Courcouronnes",
             transport: "Bus 401",
-            "distanceKm": 7,
-            "dureeMin": 42,
+            distanceKm: 7,
+            dureeMin: 42,
             trajet: "Bus 4245 puis Bus 4204"
           },
           {
             nom: "Lycée Jean-Pierre Timbaud",
             ville: "Brétigny-sur-Orge",
             transport: "RER D puis RER C",
-            "distanceKm": 14,
-            "dureeMin": 64,
+            distanceKm: 14,
+            dureeMin: 64,
             trajet: "Bus 4245 puis Bus 4504"
           },
           {
             nom: "Lycée Gustave Eiffel",
             ville: "Massy",
             transport: "RER D puis Tram 12",
-            "distanceKm": 26,
-            "dureeMin": 110,
+            distanceKm: 26,
+            dureeMin: 110,
             trajet: "RER D puis RER D puis Bus 399 puis Bus 319"
           }
         ]
@@ -1840,16 +1850,16 @@ const DOMAINS = {
             nom: "Lycée Jean-Pierre Timbaud",
             ville: "Brétigny-sur-Orge",
             transport: "RER D puis RER C",
-            "distanceKm": 14,
-            "dureeMin": 64,
+            distanceKm: 14,
+            dureeMin: 64,
             trajet: "Bus 4245 puis Bus 4504"
           },
           {
             nom: "Lycée Gustave Eiffel",
             ville: "Massy",
             transport: "RER D puis Tram 12",
-            "distanceKm": 26,
-            "dureeMin": 110,
+            distanceKm: 26,
+            dureeMin: 110,
             trajet: "RER D puis RER D puis Bus 399 puis Bus 319"
           }
         ]
@@ -1871,8 +1881,8 @@ const DOMAINS = {
             nom: "Lycée Jean-Pierre Timbaud",
             ville: "Brétigny-sur-Orge",
             transport: "RER D puis RER C",
-            "distanceKm": 14,
-            "dureeMin": 64,
+            distanceKm: 14,
+            dureeMin: 64,
             trajet: "Bus 4245 puis Bus 4504"
           }
         ]
@@ -1919,16 +1929,16 @@ const DOMAINS = {
             nom: "Lycée Auguste Perret",
             ville: "Évry-Courcouronnes",
             transport: "Bus 401",
-            "distanceKm": 7,
-            "dureeMin": 42,
+            distanceKm: 7,
+            dureeMin: 42,
             trajet: "Bus 4245 puis Bus 4204"
           },
           {
             nom: "Lycée Gustave Eiffel",
             ville: "Massy",
             transport: "RER D puis Tram 12",
-            "distanceKm": 26,
-            "dureeMin": 110,
+            distanceKm: 26,
+            dureeMin: 110,
             trajet: "RER D puis RER D puis Bus 399 puis Bus 319"
           }
         ]
@@ -1950,8 +1960,8 @@ const DOMAINS = {
             nom: "Lycée Auguste Perret",
             ville: "Évry-Courcouronnes",
             transport: "Bus 401",
-            "distanceKm": 7,
-            "dureeMin": 42,
+            distanceKm: 7,
+            dureeMin: 42,
             trajet: "Bus 4245 puis Bus 4204"
           }
         ]
@@ -1973,8 +1983,8 @@ const DOMAINS = {
             nom: "Lycée Gustave Eiffel",
             ville: "Massy",
             transport: "RER D puis Tram 12",
-            "distanceKm": 26,
-            "dureeMin": 110,
+            distanceKm: 26,
+            dureeMin: 110,
             trajet: "RER D puis RER D puis Bus 399 puis Bus 319"
           }
         ]
@@ -1996,17 +2006,40 @@ const DOMAINS = {
             nom: "Lycée Auguste Perret",
             ville: "Évry-Courcouronnes",
             transport: "Bus 401",
-            "distanceKm": 7,
-            "dureeMin": 42,
+            distanceKm: 7,
+            dureeMin: 42,
             trajet: "Bus 4245 puis Bus 4204"
           },
           {
             nom: "EREA Le Château du Lac",
             ville: "Ollainville",
             transport: "RER D puis Bus",
-            "distanceKm": 23,
-            "dureeMin": 98,
+            distanceKm: 23,
+            dureeMin: 98,
             trajet: "Bus 4245 puis RER D puis RER C"
+          }
+        ]
+      },
+      {
+        nom: "CAP Charpentier bois",
+        niveau: "CAP",
+        coeffs: [
+          4,
+          6,
+          4,
+          2,
+          4,
+          3,
+          7
+        ],
+        etablissements: [
+          {
+            nom: "Lycée Gustave Eiffel",
+            ville: "Massy",
+            transport: "RER D puis Tram 12",
+            distanceKm: 26,
+            dureeMin: 110,
+            trajet: "RER D puis RER D puis Bus 399 puis Bus 319"
           }
         ]
       }
@@ -2056,24 +2089,24 @@ const DOMAINS = {
             nom: "Lycée Robert Doisneau",
             ville: "Corbeil-Essonnes",
             transport: "Bus 401 ou à pied",
-            "distanceKm": 2,
-            "dureeMin": 26,
+            distanceKm: 2,
+            dureeMin: 26,
             trajet: "Bus 4245"
           },
           {
             nom: "Lycée Les Frères Moreau",
             ville: "Quincy-sous-Sénart",
             transport: "RER D",
-            "distanceKm": 14,
-            "dureeMin": 79,
+            distanceKm: 14,
+            dureeMin: 79,
             trajet: "RER D puis RER D"
           },
           {
             nom: "Lycée Parc de Vilgénis",
             ville: "Massy",
             transport: "RER D puis Tram 12",
-            "distanceKm": 28,
-            "dureeMin": 93,
+            distanceKm: 28,
+            dureeMin: 93,
             trajet: "Bus 4245 puis Tram T12 puis Bus 119"
           }
         ]
@@ -2095,16 +2128,16 @@ const DOMAINS = {
             nom: "Lycée Jean-Pierre Timbaud",
             ville: "Brétigny-sur-Orge",
             transport: "RER D puis RER C",
-            "distanceKm": 14,
-            "dureeMin": 64,
+            distanceKm: 14,
+            dureeMin: 64,
             trajet: "Bus 4245 puis Bus 4504"
           },
           {
             nom: "Lycée Jean Perrin",
             ville: "Longjumeau",
             transport: "RER D puis Bus",
-            "distanceKm": 21,
-            "dureeMin": 90,
+            distanceKm: 21,
+            dureeMin: 90,
             trajet: "Bus 4245 puis RER D puis RER C puis Bus 4501"
           }
         ]
@@ -2126,16 +2159,16 @@ const DOMAINS = {
             nom: "Lycée Georges Brassens",
             ville: "Évry-Courcouronnes",
             transport: "Bus 401 puis Bus 402",
-            "distanceKm": 6,
-            "dureeMin": 35,
+            distanceKm: 6,
+            dureeMin: 35,
             trajet: "Bus 4245"
           },
           {
             nom: "Lycée Parc de Vilgénis",
             ville: "Massy",
             transport: "RER D puis Tram 12",
-            "distanceKm": 28,
-            "dureeMin": 93,
+            distanceKm: 28,
+            dureeMin: 93,
             trajet: "Bus 4245 puis Tram T12 puis Bus 119"
           }
         ]
@@ -2157,11 +2190,12 @@ const DOMAINS = {
             nom: "Lycée Jean Perrin",
             ville: "Longjumeau",
             transport: "RER D puis Bus",
-            "distanceKm": 21,
-            "dureeMin": 90,
+            distanceKm: 21,
+            dureeMin: 90,
             trajet: "Bus 4245 puis RER D puis RER C puis Bus 4501"
           }
-        ]
+        ],
+        horsFamille: true
       },
       {
         nom: "CAP Réalisations industrielles en chaudronnerie ou soudage - Option A : chaudronnerie",
@@ -2180,8 +2214,8 @@ const DOMAINS = {
             nom: "Lycée Jean-Pierre Timbaud",
             ville: "Brétigny-sur-Orge",
             transport: "RER D puis RER C",
-            "distanceKm": 14,
-            "dureeMin": 64,
+            distanceKm: 14,
+            dureeMin: 64,
             trajet: "Bus 4245 puis Bus 4504"
           }
         ]
@@ -2228,48 +2262,48 @@ const DOMAINS = {
             nom: "Lycée Nadar",
             ville: "Draveil",
             transport: "RER D puis Bus",
-            "distanceKm": 13,
-            "dureeMin": 73,
+            distanceKm: 13,
+            dureeMin: 73,
             trajet: "Bus 4245 puis RER D puis Bus 4116"
           },
           {
             nom: "Lycée Clément Ader",
             ville: "Athis-Mons",
             transport: "RER D",
-            "distanceKm": 18,
-            "dureeMin": 69,
+            distanceKm: 18,
+            dureeMin: 69,
             trajet: "Bus 4245 puis RER D puis RER C"
           },
           {
             nom: "Lycée Paul Belmondo",
             ville: "Arpajon",
             transport: "Bus 91-04",
-            "distanceKm": 21,
-            "dureeMin": 77,
+            distanceKm: 21,
+            dureeMin: 77,
             trajet: "Bus 4245 puis Bus 4504 puis Bus 9114"
           },
           {
             nom: "Lycée Jean Perrin",
             ville: "Longjumeau",
             transport: "RER D puis Bus",
-            "distanceKm": 21,
-            "dureeMin": 90,
+            distanceKm: 21,
+            dureeMin: 90,
             trajet: "Bus 4245 puis RER D puis RER C puis Bus 4501"
           },
           {
             nom: "Lycée L'Essouriau",
             ville: "Les Ulis",
             transport: "RER D puis Bus",
-            "distanceKm": 30,
-            "dureeMin": 115,
+            distanceKm: 30,
+            dureeMin: 115,
             trajet: "RER D puis RER D puis Bus 9105 puis Bus 4609"
           },
           {
             nom: "Lycée Nikola Tesla",
             ville: "Dourdan",
             transport: "RER D puis RER C",
-            "distanceKm": 46,
-            "dureeMin": 133,
+            distanceKm: 46,
+            dureeMin: 133,
             trajet: "Bus 4245 puis Tram T12 puis Bus 9103"
           }
         ]
@@ -2291,8 +2325,8 @@ const DOMAINS = {
             nom: "Lycée L'Essouriau",
             ville: "Les Ulis",
             transport: "RER D puis Bus",
-            "distanceKm": 30,
-            "dureeMin": 115,
+            distanceKm: 30,
+            dureeMin: 115,
             trajet: "RER D puis RER D puis Bus 9105 puis Bus 4609"
           }
         ]
@@ -2345,24 +2379,24 @@ const DOMAINS = {
             nom: "Lycée Les Frères Moreau",
             ville: "Quincy-sous-Sénart",
             transport: "RER D",
-            "distanceKm": 14,
-            "dureeMin": 79,
+            distanceKm: 14,
+            dureeMin: 79,
             trajet: "RER D puis RER D"
           },
           {
             nom: "Lycée Gaspard Monge",
             ville: "Savigny-sur-Orge",
             transport: "RER D puis RER C",
-            "distanceKm": 17,
-            "dureeMin": 69,
+            distanceKm: 17,
+            dureeMin: 69,
             trajet: "Bus 4245 puis RER D puis RER C"
           },
           {
             nom: "Lycée Alexandre Denis",
             ville: "Cerny",
             transport: "RER D jusqu'à Mennecy puis Bus",
-            "distanceKm": 20,
-            "dureeMin": 59,
+            distanceKm: 20,
+            dureeMin: 59,
             trajet: "Bus 4243 puis RER D puis Bus 4306 puis Bus 4306"
           }
         ]
@@ -2384,8 +2418,8 @@ const DOMAINS = {
             nom: "Lycée Nikola Tesla",
             ville: "Dourdan",
             transport: "RER D puis RER C",
-            "distanceKm": 46,
-            "dureeMin": 133,
+            distanceKm: 46,
+            dureeMin: 133,
             trajet: "Bus 4245 puis Tram T12 puis Bus 9103"
           }
         ]
@@ -2407,8 +2441,8 @@ const DOMAINS = {
             nom: "Lycée Nikola Tesla",
             ville: "Dourdan",
             transport: "RER D puis RER C",
-            "distanceKm": 46,
-            "dureeMin": 133,
+            distanceKm: 46,
+            dureeMin: 133,
             trajet: "Bus 4245 puis Tram T12 puis Bus 9103"
           }
         ]
@@ -2430,8 +2464,8 @@ const DOMAINS = {
             nom: "Lycée Nikola Tesla",
             ville: "Dourdan",
             transport: "RER D puis RER C",
-            "distanceKm": 46,
-            "dureeMin": 133,
+            distanceKm: 46,
+            dureeMin: 133,
             trajet: "Bus 4245 puis Tram T12 puis Bus 9103"
           }
         ]
@@ -2453,16 +2487,16 @@ const DOMAINS = {
             nom: "Lycée Gaspard Monge",
             ville: "Savigny-sur-Orge",
             transport: "RER D puis RER C",
-            "distanceKm": 17,
-            "dureeMin": 69,
+            distanceKm: 17,
+            dureeMin: 69,
             trajet: "Bus 4245 puis RER D puis RER C"
           },
           {
             nom: "Lycée Alexandre Denis",
             ville: "Cerny",
             transport: "RER D jusqu'à Mennecy puis Bus",
-            "distanceKm": 20,
-            "dureeMin": 59,
+            distanceKm: 20,
+            dureeMin: 59,
             trajet: "Bus 4243 puis RER D puis Bus 4306 puis Bus 4306"
           }
         ]
@@ -2484,24 +2518,24 @@ const DOMAINS = {
             nom: "Lycée Les Frères Moreau",
             ville: "Quincy-sous-Sénart",
             transport: "RER D",
-            "distanceKm": 14,
-            "dureeMin": 79,
+            distanceKm: 14,
+            dureeMin: 79,
             trajet: "RER D puis RER D"
           },
           {
             nom: "Lycée Gaspard Monge",
             ville: "Savigny-sur-Orge",
             transport: "RER D puis RER C",
-            "distanceKm": 17,
-            "dureeMin": 69,
+            distanceKm: 17,
+            dureeMin: 69,
             trajet: "Bus 4245 puis RER D puis RER C"
           },
           {
             nom: "Lycée Alexandre Denis",
             ville: "Cerny",
             transport: "RER D jusqu'à Mennecy puis Bus",
-            "distanceKm": 20,
-            "dureeMin": 59,
+            distanceKm: 20,
+            dureeMin: 59,
             trajet: "Bus 4243 puis RER D puis Bus 4306 puis Bus 4306"
           }
         ]
@@ -2523,16 +2557,16 @@ const DOMAINS = {
             nom: "Lycée Gaspard Monge",
             ville: "Savigny-sur-Orge",
             transport: "RER D puis RER C",
-            "distanceKm": 17,
-            "dureeMin": 69,
+            distanceKm: 17,
+            dureeMin: 69,
             trajet: "Bus 4245 puis RER D puis RER C"
           },
           {
             nom: "Lycée Alexandre Denis",
             ville: "Cerny",
             transport: "RER D jusqu'à Mennecy puis Bus",
-            "distanceKm": 20,
-            "dureeMin": 59,
+            distanceKm: 20,
+            dureeMin: 59,
             trajet: "Bus 4243 puis RER D puis Bus 4306 puis Bus 4306"
           }
         ]
@@ -2554,8 +2588,8 @@ const DOMAINS = {
             nom: "EREA Le Château du Lac",
             ville: "Ollainville",
             transport: "RER D puis Bus",
-            "distanceKm": 23,
-            "dureeMin": 98,
+            distanceKm: 23,
+            dureeMin: 98,
             trajet: "Bus 4245 puis RER D puis RER C"
           }
         ]
@@ -2604,8 +2638,8 @@ const DOMAINS = {
             nom: "Lycée Alexandre Denis",
             ville: "Cerny",
             transport: "RER D jusqu'à Mennecy puis Bus",
-            "distanceKm": 20,
-            "dureeMin": 59,
+            distanceKm: 20,
+            dureeMin: 59,
             trajet: "Bus 4243 puis RER D puis Bus 4306 puis Bus 4306"
           }
         ]
@@ -2627,8 +2661,8 @@ const DOMAINS = {
             nom: "Lycée Alexandre Denis",
             ville: "Cerny",
             transport: "RER D jusqu'à Mennecy puis Bus",
-            "distanceKm": 20,
-            "dureeMin": 59,
+            distanceKm: 20,
+            dureeMin: 59,
             trajet: "Bus 4243 puis RER D puis Bus 4306 puis Bus 4306"
           }
         ]
@@ -2650,8 +2684,8 @@ const DOMAINS = {
             nom: "Lycée Alexandre Denis",
             ville: "Cerny",
             transport: "RER D jusqu'à Mennecy puis Bus",
-            "distanceKm": 20,
-            "dureeMin": 59,
+            distanceKm: 20,
+            dureeMin: 59,
             trajet: "Bus 4243 puis RER D puis Bus 4306 puis Bus 4306"
           }
         ]
@@ -2673,8 +2707,8 @@ const DOMAINS = {
             nom: "Lycée Alexandre Denis",
             ville: "Cerny",
             transport: "RER D jusqu'à Mennecy puis Bus",
-            "distanceKm": 20,
-            "dureeMin": 59,
+            distanceKm: 20,
+            dureeMin: 59,
             trajet: "Bus 4243 puis RER D puis Bus 4306 puis Bus 4306"
           }
         ]
@@ -2725,8 +2759,8 @@ const DOMAINS = {
             nom: "Lycée Château des Coudraies",
             ville: "Étiolles",
             transport: "Bus 7001",
-            "distanceKm": 6,
-            "dureeMin": 45,
+            distanceKm: 6,
+            dureeMin: 45,
             trajet: "Bus 4245 puis Bus Tzen1 puis Bus 3703"
           }
         ]
@@ -2748,8 +2782,8 @@ const DOMAINS = {
             nom: "Lycée Château des Coudraies",
             ville: "Étiolles",
             transport: "Bus 7001",
-            "distanceKm": 6,
-            "dureeMin": 45,
+            distanceKm: 6,
+            dureeMin: 45,
             trajet: "Bus 4245 puis Bus Tzen1 puis Bus 3703"
           }
         ]
@@ -2771,8 +2805,8 @@ const DOMAINS = {
             nom: "Lycée Château des Coudraies",
             ville: "Étiolles",
             transport: "Bus 7001",
-            "distanceKm": 6,
-            "dureeMin": 45,
+            distanceKm: 6,
+            dureeMin: 45,
             trajet: "Bus 4245 puis Bus Tzen1 puis Bus 3703"
           }
         ]
@@ -2794,8 +2828,8 @@ const DOMAINS = {
             nom: "Lycée Château des Coudraies",
             ville: "Étiolles",
             transport: "Bus 7001",
-            "distanceKm": 6,
-            "dureeMin": 45,
+            distanceKm: 6,
+            dureeMin: 45,
             trajet: "Bus 4245 puis Bus Tzen1 puis Bus 3703"
           }
         ]
@@ -2817,32 +2851,32 @@ const DOMAINS = {
             nom: "Lycée Léonard de Vinci",
             ville: "Saint-Michel-sur-Orge",
             transport: "RER D puis RER C",
-            "distanceKm": 14,
-            "dureeMin": 77,
+            distanceKm: 14,
+            dureeMin: 77,
             trajet: "Bus 4245 puis Bus 4504 puis Bus 4501"
           },
           {
             nom: "EREA Jean Isoard",
             ville: "Montgeron",
             transport: "RER D",
-            "distanceKm": 16,
-            "dureeMin": 81,
+            distanceKm: 16,
+            dureeMin: 81,
             trajet: "Bus 4245 puis Bus 4122"
           },
           {
             nom: "Lycée L'Essouriau",
             ville: "Les Ulis",
             transport: "RER D puis Bus",
-            "distanceKm": 30,
-            "dureeMin": 115,
+            distanceKm: 30,
+            dureeMin: 115,
             trajet: "RER D puis RER D puis Bus 9105 puis Bus 4609"
           },
           {
             nom: "Lycée Nelson Mandela",
             ville: "Étampes",
             transport: "RER D puis RER C",
-            "distanceKm": 39,
-            "dureeMin": 120,
+            distanceKm: 39,
+            dureeMin: 120,
             trajet: "RER D puis RER D puis RER C"
           }
         ]
@@ -2893,8 +2927,8 @@ const DOMAINS = {
             nom: "Lycée Château des Coudraies",
             ville: "Étiolles",
             transport: "Bus 7001",
-            "distanceKm": 6,
-            "dureeMin": 45,
+            distanceKm: 6,
+            dureeMin: 45,
             trajet: "Bus 4245 puis Bus Tzen1 puis Bus 3703"
           }
         ]
@@ -2916,8 +2950,8 @@ const DOMAINS = {
             nom: "Lycée Château des Coudraies",
             ville: "Étiolles",
             transport: "Bus 7001",
-            "distanceKm": 6,
-            "dureeMin": 45,
+            distanceKm: 6,
+            dureeMin: 45,
             trajet: "Bus 4245 puis Bus Tzen1 puis Bus 3703"
           }
         ]
@@ -2964,16 +2998,16 @@ const DOMAINS = {
             nom: "Lycée Nadar",
             ville: "Draveil",
             transport: "RER D puis Bus",
-            "distanceKm": 13,
-            "dureeMin": 73,
+            distanceKm: 13,
+            dureeMin: 73,
             trajet: "Bus 4245 puis RER D puis Bus 4116"
           },
           {
             nom: "Lycée Paul Belmondo",
             ville: "Arpajon",
             transport: "Bus 91-04",
-            "distanceKm": 21,
-            "dureeMin": 77,
+            distanceKm: 21,
+            dureeMin: 77,
             trajet: "Bus 4245 puis Bus 4504 puis Bus 9114"
           }
         ]
@@ -2995,16 +3029,16 @@ const DOMAINS = {
             nom: "Lycée Nadar",
             ville: "Draveil",
             transport: "RER D puis Bus",
-            "distanceKm": 13,
-            "dureeMin": 73,
+            distanceKm: 13,
+            dureeMin: 73,
             trajet: "Bus 4245 puis RER D puis Bus 4116"
           },
           {
             nom: "Lycée Paul Belmondo",
             ville: "Arpajon",
             transport: "Bus 91-04",
-            "distanceKm": 21,
-            "dureeMin": 77,
+            distanceKm: 21,
+            dureeMin: 77,
             trajet: "Bus 4245 puis Bus 4504 puis Bus 9114"
           }
         ]
@@ -3057,16 +3091,16 @@ const DOMAINS = {
             nom: "Lycée Jean Monnet",
             ville: "Juvisy-sur-Orge",
             transport: "RER D",
-            "distanceKm": 16,
-            "dureeMin": 53,
+            distanceKm: 16,
+            dureeMin: 53,
             trajet: "Bus 4245 puis RER D"
           },
           {
             nom: "Lycée Gustave Eiffel",
             ville: "Massy",
             transport: "RER D puis Tram 12",
-            "distanceKm": 26,
-            "dureeMin": 110,
+            distanceKm: 26,
+            dureeMin: 110,
             trajet: "RER D puis RER D puis Bus 399 puis Bus 319"
           }
         ]
@@ -3088,8 +3122,8 @@ const DOMAINS = {
             nom: "Lycée Jean Monnet",
             ville: "Juvisy-sur-Orge",
             transport: "RER D",
-            "distanceKm": 16,
-            "dureeMin": 53,
+            distanceKm: 16,
+            dureeMin: 53,
             trajet: "Bus 4245 puis RER D"
           }
         ]
@@ -3111,11 +3145,12 @@ const DOMAINS = {
             nom: "Lycée Gustave Eiffel",
             ville: "Massy",
             transport: "RER D puis Tram 12",
-            "distanceKm": 26,
-            "dureeMin": 110,
+            distanceKm: 26,
+            dureeMin: 110,
             trajet: "RER D puis RER D puis Bus 399 puis Bus 319"
           }
-        ]
+        ],
+        horsFamille: true
       },
       {
         nom: "CAP Maroquinerie",
@@ -3134,8 +3169,8 @@ const DOMAINS = {
             nom: "Lycée Jean Monnet",
             ville: "Juvisy-sur-Orge",
             transport: "RER D",
-            "distanceKm": 16,
-            "dureeMin": 53,
+            distanceKm: 16,
+            dureeMin: 53,
             trajet: "Bus 4245 puis RER D"
           }
         ]
@@ -3157,8 +3192,8 @@ const DOMAINS = {
             nom: "Lycée Gustave Eiffel",
             ville: "Massy",
             transport: "RER D puis Tram 12",
-            "distanceKm": 26,
-            "dureeMin": 110,
+            distanceKm: 26,
+            dureeMin: 110,
             trajet: "RER D puis RER D puis Bus 399 puis Bus 319"
           }
         ]
@@ -3180,8 +3215,8 @@ const DOMAINS = {
             nom: "Lycée Charles Baudelaire",
             ville: "Évry-Courcouronnes",
             transport: "Bus 401",
-            "distanceKm": 7,
-            "dureeMin": 42,
+            distanceKm: 7,
+            dureeMin: 42,
             trajet: "Bus 4245 puis Bus 4204"
           }
         ]
@@ -3229,8 +3264,8 @@ const DOMAINS = {
             nom: "EREA Le Château du Lac",
             ville: "Ollainville",
             transport: "RER D puis Bus",
-            "distanceKm": 23,
-            "dureeMin": 98,
+            distanceKm: 23,
+            dureeMin: 98,
             trajet: "Bus 4245 puis RER D puis RER C"
           }
         ]
