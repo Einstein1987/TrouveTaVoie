@@ -616,7 +616,8 @@ const DOMAINS = {
             dureeMin: 59,
             trajet: "Bus 4243 puis RER D puis Bus 4306 puis Bus 4306"
           }
-        ]
+        ],
+        horsFamille: true
       },
       {
         nom: "CAP Conducteur Agent d'accueil en Autobus et Autocar",
@@ -743,7 +744,8 @@ const DOMAINS = {
             dureeMin: 120,
             trajet: "RER D puis RER D puis RER C"
           }
-        ]
+        ],
+        horsFamille: true
       },
       {
         nom: "Bac Pro Animation-enfance et personnes âgées (AEPA)",
@@ -782,7 +784,8 @@ const DOMAINS = {
             dureeMin: 120,
             trajet: "RER D puis RER D puis RER C"
           }
-        ]
+        ],
+        horsFamille: true
       },
       {
         nom: "Bac Pro Hygiène, Propreté, Stérilisation",
@@ -2499,7 +2502,8 @@ const DOMAINS = {
             dureeMin: 59,
             trajet: "Bus 4243 puis RER D puis Bus 4306 puis Bus 4306"
           }
-        ]
+        ],
+        horsFamille: true
       },
       {
         nom: "CAP Maintenance des véhicules - Option véhicules légers",
@@ -3010,7 +3014,8 @@ const DOMAINS = {
             dureeMin: 77,
             trajet: "Bus 4245 puis Bus 4504 puis Bus 9114"
           }
-        ]
+        ],
+        horsFamille: true
       },
       {
         nom: "CAP Agent de sécurité",
@@ -3103,7 +3108,8 @@ const DOMAINS = {
             dureeMin: 110,
             trajet: "RER D puis RER D puis Bus 399 puis Bus 319"
           }
-        ]
+        ],
+        horsFamille: true
       },
       {
         nom: "Bac Pro Métiers du cuir - Option maroquinerie",
@@ -3126,7 +3132,8 @@ const DOMAINS = {
             dureeMin: 53,
             trajet: "Bus 4245 puis RER D"
           }
-        ]
+        ],
+        horsFamille: true
       },
       {
         nom: "Bac Pro Artisanat et métiers d'art - Option marchandisage visuel",
