@@ -674,12 +674,155 @@ function searchNotFound(text){
   );
 }
 
+/* =============================================================================
+ * PLAFOND DES RÉSULTATS ET RECHERCHES TROP GÉNÉRIQUES
+ *
+ * Trois règles, dans cet ordre :
+ *
+ *   1. On retire les MOTS DE STRUCTURE de la saisie (« bac », « lycée »…).
+ *      Cf. dico_chatbot.js. Cela répare aussi « lycée Doisneau », qui ne
+ *      renvoyait rien.
+ *
+ *   2. S'il ne reste plus rien à chercher, on ne montre AUCUN résultat : on
+ *      pose une question adaptée à ce qui a été tapé. Un élève qui écrit
+ *      « bac » ne cherche pas un bac — il ne sait pas quoi chercher.
+ *
+ *   3. Au-delà de MAX_BOUTONS résultats, on ne tronque PAS la liste : tronquer
+ *      supposerait un classement par pertinence qui n'existe pas ici, et
+ *      « les 8 premières » serait un ordre arbitraire déguisé en réponse.
+ *      On REMONTE D'UN CRAN : on propose les familles de métiers concernées.
+ *      « maintenance » → 9 formations → 3 familles → 3 boutons.
+ * ========================================================================== */
+
+const MAX_BOUTONS = 8;
+
+/* Une famille de métiers, restreinte aux formations qui correspondent vraiment
+ * à la recherche. On réutilise la forme d'une sélection « formation » : la
+ * fiche affichera un bloc par formation retenue, et rien de plus. */
+function familleSelection(domainKey, formations) {
+  return {
+    type: 'formation',
+    label: DOMAINS[domainKey].label,
+    formations: formations,
+    statKey: domainKey
+  };
+}
+
+/* Regroupe des résultats [{domainKey, formation}] par famille de métiers. */
+function grouperParFamille(results) {
+  const familles = new Map();
+  results.forEach(function (r) {
+    if (!familles.has(r.domainKey)) familles.set(r.domainKey, []);
+    familles.get(r.domainKey).push(r.formation);
+  });
+  return familles;
+}
+
+/* L'élève a tapé « bac », « lycée », « formation »… : rien à chercher.
+ * On lui répond ce qui est vrai, et on lui rend la main. */
+function demanderPrecision(categories) {
+  const boutons = [
+    { label: "Faire le quiz",             action: "start_quiz", payload: null },
+    { label: "Chercher une autre chose",  action: "menu",       payload: null }
+  ];
+
+  if (categories.indexOf("lieu") !== -1 && categories.indexOf("niveau") === -1) {
+    addBotMessage(
+      "Il y a 29 lycées dans ma base : je ne vais pas tous te les afficher, tu n'y " +
+      "verrais rien. Donne-moi plutôt le nom du lycée (par exemple « Doisneau », " +
+      "« Baudelaire ») ou sa ville (« Évry », « Corbeil »).",
+      boutons
+    );
+    return;
+  }
+
+  if (categories.indexOf("niveau") !== -1) {
+    addBotMessage(
+      "Attention : « CAP » et « Bac Pro », ce sont des niveaux de diplôme, pas des " +
+      "métiers. Les deux existent dans presque tous les domaines. Dis-moi plutôt ce " +
+      "qui t'intéresse comme métier — « cuisine », « électricité », « petite enfance »… " +
+      "Et si tu ne sais pas encore, c'est normal : le quiz est fait pour ça.",
+      boutons
+    );
+    return;
+  }
+
+  addBotMessage(
+    "Là, tu m'as donné le genre de chose que tu cherches, mais pas ce qui t'intéresse " +
+    "dedans. Dis-moi un métier, une matière, une activité — même approximativement. " +
+    "Ou fais le quiz, il te posera les questions à ma place.",
+    boutons
+  );
+}
+
+/* Trop de résultats : on remonte à la famille de métiers plutôt que de tronquer. */
+function proposerFamilles(results, texteAffiche) {
+  const familles = grouperParFamille(results);
+
+  if (familles.size > MAX_BOUTONS) {
+    addBotMessage(
+      "J'ai trouvé " + results.length + " formations qui correspondent à « " + texteAffiche +
+      " », réparties dans " + familles.size + " familles de métiers. C'est beaucoup trop " +
+      "pour t'être utile. Essaie d'être plus précis, ou fais le quiz.",
+      [
+        { label: "Reformuler ma recherche", action: "set_state", payload: "search_formation" },
+        { label: "Faire le quiz",           action: "start_quiz", payload: null }
+      ]
+    );
+    return;
+  }
+
+  const opts = [];
+  familles.forEach(function (formations, domainKey) {
+    opts.push({
+      label: DOMAINS[domainKey].label + " (" + formations.length +
+             (formations.length > 1 ? " formations)" : " formation)"),
+      action: "confirm_selection",
+      payload: familleSelection(domainKey, formations)
+    });
+  });
+
+  addBotMessage(
+    "« " + texteAffiche + " », ça correspond à " + results.length + " formations : trop " +
+    "pour te les montrer d'un coup. Elles se répartissent dans " + familles.size +
+    " familles de métiers. Laquelle veux-tu regarder ?",
+    opts
+  );
+}
+
 function processSearch(text, type) {
+  // Règle 1 : on met de côté les mots de structure (« bac », « lycée »…).
+  const nettoye = (typeof retirerMotsStructure === "function")
+    ? retirerMotsStructure(text)
+    : { reste: text, categories: [] };
+
+  // Règle 2 : il ne reste rien à chercher.
+  if (!nettoye.reste) {
+    if (nettoye.categories.length) demanderPrecision(nettoye.categories);
+    else searchNotFound(text);
+    return;
+  }
+
+  const requete = nettoye.reste;
+
+  processSearchNettoye(requete, type);
+}
+
+function processSearchNettoye(text, type) {
   if (type === 'domaine') {
     // Recherche par domaine : on affiche tout le domaine (comportement voulu).
     const keys = matchDomains(text);
     if (keys.length === 1) {
       askConfirm(domainSelection(keys[0]));
+    } else if (keys.length > MAX_BOUTONS) {
+      addBotMessage(
+        "« " + text + " » touche à " + keys.length + " familles de métiers différentes : " +
+        "c'est trop large pour t'aider. Peux-tu préciser, ou faire le quiz ?",
+        [
+          { label: "Reformuler ma recherche", action: "set_state", payload: "search_domaine" },
+          { label: "Faire le quiz",           action: "start_quiz", payload: null }
+        ]
+      );
     } else if (keys.length > 1) {
       const opts = keys.map(k => ({label: DOMAINS[k].label, action: "confirm_selection", payload: domainSelection(k)}));
       addBotMessage("Plusieurs pistes correspondent. Laquelle te parle le plus ?", opts);
@@ -692,6 +835,9 @@ function processSearch(text, type) {
     const results = matchFormationsDetailed(text);
     if (results.length === 1) {
       askConfirm(formationSelection(results[0].domainKey, results[0].formation));
+    } else if (results.length > MAX_BOUTONS) {
+      // Règle 3 : on remonte à la famille plutôt que de tronquer arbitrairement.
+      proposerFamilles(results, text);
     } else if (results.length > 1) {
       const opts = results.map(r => ({
         label: `${r.formation.nom}${r.formation.niveau ? ' (' + r.formation.niveau + ')' : ''}`,
@@ -708,6 +854,17 @@ function processSearch(text, type) {
     const groups = matchEtablissementsDetailed(text);
     if (groups.length === 1) {
       askConfirm(etablissementSelection(groups[0]));
+    } else if (groups.length > MAX_BOUTONS) {
+      // Pas de repli par famille ici : regrouper des lycées par ville n'aiderait
+      // pas l'élève. On dit le nombre, honnêtement, et on demande de préciser.
+      addBotMessage(
+        "« " + text + " » correspond à " + groups.length + " établissements. C'est trop " +
+        "pour te les montrer d'un coup : donne-moi le nom exact du lycée, ou sa ville.",
+        [
+          { label: "Reformuler ma recherche", action: "set_state", payload: "search_etab" },
+          { label: "Faire le quiz",           action: "start_quiz", payload: null }
+        ]
+      );
     } else if (groups.length > 1) {
       const opts = groups.map(g => ({
         label: `${g.nom} (${g.ville})`,

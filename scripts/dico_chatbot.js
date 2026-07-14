@@ -241,6 +241,75 @@ const MOTS_VIDES = new Set([
   "etre", "que", "qui", "quoi", "comme", "sur", "ce", "ca", "cela", "sais", "pas"
 ]);
 
+/* -----------------------------------------------------------------------------
+ * MOTS DE STRUCTURE
+ *
+ * « bac », « pro », « CAP », « lycée », « seconde » ne décrivent pas un métier :
+ * ils décrivent la CATÉGORIE de ce qu'on cherche. Les laisser dans la recherche
+ * produit deux dégâts :
+ *
+ *   1. Du bruit. « bac » correspond aux 48 intitulés qui commencent par
+ *      « Bac Pro… » → 48 boutons dans le fil. Un élève qui tape « bac » ne sait
+ *      justement pas quoi chercher : lui jeter 48 boutons, c'est le punir de ne
+ *      pas savoir.
+ *
+ *   2. Des silences. « lycée Doisneau » — la formulation la PLUS naturelle pour
+ *      un élève de 3e — ne renvoyait RIEN, alors que « Doisneau » seul
+ *      fonctionne. Le mot générique empoisonnait la recherche légitime.
+ *
+ * On les retire donc de la saisie avant de chercher. S'il ne reste rien, c'est
+ * que l'élève n'a pas encore d'idée : on lui pose une question, on ne lui
+ * déverse pas la base.
+ *
+ * ATTENTION : ne mettre ici que des mots qui n'apparaissent JAMAIS seuls comme
+ * critère utile. « cuisine » est un métier, « seconde » n'en est pas un.
+ * -------------------------------------------------------------------------- */
+const MOTS_STRUCTURE = {
+  // Niveaux de diplôme
+  niveau: ["bac", "bacs", "pro", "professionnel", "professionnelle", "cap",
+           "seconde", "2nde", "diplome", "diplomes", "bacpro"],
+  // Types d'établissement
+  lieu:   ["lycee", "lycees", "etablissement", "etablissements", "ecole", "ecoles",
+           "erea", "college", "colleges"],
+  // Mots creux de recherche
+  vague:  ["formation", "formations", "metier", "metiers", "filiere", "filieres",
+           "orientation", "voie", "etude", "etudes", "cursus", "option", "options"]
+};
+
+const TOUS_MOTS_STRUCTURE = new Set(
+  [].concat(MOTS_STRUCTURE.niveau, MOTS_STRUCTURE.lieu, MOTS_STRUCTURE.vague)
+);
+
+/**
+ * Retire les mots de structure d'une saisie.
+ * Renvoie { reste, categories } :
+ *   - `reste`      : la saisie nettoyée, normalisée (peut être vide)
+ *   - `categories` : les familles de mots retirés ("niveau", "lieu", "vague"),
+ *                    ce qui permet de répondre PRÉCISÉMENT à l'élève plutôt
+ *                    que par un « je n'ai pas compris » générique.
+ *
+ * Exemples :
+ *   « lycée Doisneau »   → { reste: "doisneau",  categories: ["lieu"] }
+ *   « bac pro cuisine »  → { reste: "cuisine",   categories: ["niveau"] }
+ *   « bac »              → { reste: "",          categories: ["niveau"] }
+ */
+function retirerMotsStructure(texte) {
+  const mots = normalize(texte).replace(/[^a-z0-9\s]/g, " ").split(/\s+/).filter(Boolean);
+  const categories = [];
+  const gardes = [];
+
+  mots.forEach(function (mot) {
+    if (!TOUS_MOTS_STRUCTURE.has(mot)) { gardes.push(mot); return; }
+    Object.keys(MOTS_STRUCTURE).forEach(function (cat) {
+      if (MOTS_STRUCTURE[cat].indexOf(mot) !== -1 && categories.indexOf(cat) === -1) {
+        categories.push(cat);
+      }
+    });
+  });
+
+  return { reste: gardes.join(" ").trim(), categories: categories };
+}
+
 // Recherche un mot-clé dans la phrase en respectant les FRONTIÈRES DE MOT.
 // Sans cela, « plan » (études du bâtiment) se déclencherait sur « plantes »
 // (nature et paysage). Le pluriel reste toléré.
