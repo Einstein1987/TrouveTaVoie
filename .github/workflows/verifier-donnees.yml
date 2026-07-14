@@ -55,6 +55,12 @@ jobs:
       - name: Vérifier la cohérence des données
         run: node tools/verifier-donnees.mjs
 
+      # 18 coefficients étaient faux (juillet 2026), tous sur le même schéma :
+      # la formation portait les coefficients de son DOMAINE au lieu des siens.
+      # Un coefficient faux, c'est un élève qui calcule mal ses chances.
+      - name: Vérifier les coefficients (fiche technique n°21)
+        run: node tools/verifier-coefficients.mjs
+
       # Le bouton d'aide — celui des élèves les plus perdus — était à 2,54:1
       # sur blanc, pour un seuil AA de 4,5:1. Illisible pour précisément ceux
       # qu'il ne faut pas perdre. Ce contrôle empêche la palette de redériver.
