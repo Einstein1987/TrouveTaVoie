@@ -625,3 +625,76 @@ h1 {
   border-left: 3px solid #C8871B;
   border-radius: 4px;
 }
+
+/* =============================================================================
+ * SECTIONS DE LA CARTE D'ORIENTATION
+ *
+ * Trois sections, et le code couleur porte du sens — il n'est pas décoratif :
+ *
+ *   INDIGO  famille de métiers → seconde COMMUNE, une année pour découvrir
+ *           plusieurs spécialités avant de choisir. Le parcours le plus souple.
+ *   AMBRE   bac pro hors famille → spécialité choisie dès la seconde. Pas de
+ *           retour en arrière. L'ambre est un avertissement, pas une alerte.
+ *   VERT    CAP → hors du système des familles par nature. 2 ans au lieu de 3.
+ *
+ * Contrastes vérifiés (WCAG AA, seuil 4,5:1) — cf. tools/verifier-contrastes.mjs.
+ * La couleur ne porte JAMAIS l'information seule : chaque section a un titre
+ * écrit et une phrase d'explication. Un élève daltonien lit la même chose.
+ * ========================================================================== */
+
+.carte-section {
+     margin: 0 0 18px;
+     padding: 12px 12px 4px;
+     border-radius: 10px;
+     border: 1px solid var(--line);
+}
+
+.carte-section:last-child { margin-bottom: 0; }
+
+.carte-section-titre {
+     margin: 0 0 4px;
+     font-size: 0.95rem;
+     font-weight: 800;
+     line-height: 1.3;
+}
+
+.carte-section-note {
+     margin: 0 0 12px;
+     font-size: 0.8rem;
+     line-height: 1.45;
+}
+
+/* Famille de métiers — seconde commune */
+.carte-section-famille {
+     background: var(--brass-soft);
+     border-color: var(--brass);
+}
+.carte-section-famille .carte-section-titre { color: var(--brass-dark); }   /* 7,07:1 */
+.carte-section-famille .carte-section-note  { color: var(--muted-strong); } /* 6,78:1 */
+
+/* Bac pro hors famille — spécialité dès la seconde */
+.carte-section-hors-famille {
+     background: #FFFBEB;
+     border-color: #B45309;
+}
+.carte-section-hors-famille .carte-section-titre { color: #92400E; }        /* 6,84:1 */
+.carte-section-hors-famille .carte-section-note  { color: #78350F; }        /* 8,75:1 */
+
+/* CAP — hors du système des familles */
+.carte-section-cap {
+     background: var(--success-soft);
+     border-color: var(--teal);
+}
+.carte-section-cap .carte-section-titre { color: var(--teal); }             /* 5,21:1 */
+.carte-section-cap .carte-section-note  { color: #065F46; }                 /* 7,29:1 */
+
+@media print {
+     .carte-section {
+          break-inside: avoid;
+          page-break-inside: avoid;
+          border: 1px solid var(--line) !important;
+     }
+     .carte-section-famille     { background: var(--brass-soft) !important; }
+     .carte-section-hors-famille { background: #FFFBEB !important; }
+     .carte-section-cap         { background: var(--success-soft) !important; }
+}
