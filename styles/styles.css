@@ -574,3 +574,20 @@ h1 {
          page-break-inside: avoid;
     }
 }
+
+/* -----------------------------------------------------------------------------
+ * Avertissement « hors famille de métiers ».
+ * Certaines secondes pro (HPS, OPTL, MP3D, Marchandisage visuel) ne relèvent
+ * d'aucune famille : l'élève choisit sa spécialité dès la seconde, sans année
+ * commune de découverte. C'est une information décisive pour lui.
+ * -------------------------------------------------------------------------- */
+.formation-horsfamille {
+  margin: 8px 0 10px;
+  padding: 8px 10px;
+  font-size: 13px;
+  line-height: 1.45;
+  color: #7A4A00;
+  background: #FFF6E5;
+  border-left: 3px solid #C8871B;
+  border-radius: 4px;
+}
