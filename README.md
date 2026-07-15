@@ -19,14 +19,14 @@ L'élève ne sait pas toujours ce qui existe. L'espace est vaste : **48 bacs pro
 au total. L'application propose donc un **dialogue guidé**, avec quatre portes
 d'entrée :
 
-- il connaît déjà la formation qu'il veut ;
+- il connaît déjà la **formation** qu'il veut ;
 - il sait dans quel **secteur** il veut travailler ;
-- il connaît un lycée et veut voir ce qu'on y propose ;
-- **il est perdu** → un quiz le guide par élimination.
+- il connaît un **lycée** et veut voir ce qu'on y propose ;
+- s'il est **perdu** → un **quiz** le guide par élimination.
 
-En sortie, une fiche personnelle : la formation, les **coefficients Affelnet**
-correspondants, la liste des établissements publics de l'Essonne qui la proposent,
-avec pour chacun la distance (estimée) et le **temps de trajet depuis le collège**.
+En sortie, une fiche personnelle : la **formation**, les **coefficients Affelnet**
+correspondants, la liste des **établissements** publics de l'Essonne qui la proposent,
+avec pour chacun la **distance** (estimée) et le **temps de trajet depuis le collège**.
 
 #### Secteur ≠ famille de métiers
 
@@ -45,11 +45,6 @@ La fiche de sortie affiche donc **trois sections distinctes** : les familles de
 métiers concernées, les **bacs pro hors famille** (11 dans la base — engagement dès
 la seconde, sans année de découverte), et les **CAP**. Chaque section explique par
 écrit ce qu'elle implique : la couleur ne porte jamais l'information seule.
-
-> Confondre les deux notions a coûté cher : 13 CAP portaient les coefficients
-> Affelnet de leur *secteur* au lieu des leurs. Un coefficient faux, c'est un élève
-> qui calcule mal ses chances et peut se retrouver sans affectation. Corrigé en
-> juillet 2026, et désormais vérifié à chaque commit.
  
 ### 🎓 Voie générale et technologique — un comparateur de lycées
  
@@ -109,8 +104,7 @@ avec le total aller-retour quotidien. L'élève reste libre — mais il sait.
 Mobilités depuis le collège — ce sont de vrais itinéraires en transports. Les
 **distances en kilomètres**, en revanche, sont une **estimation** : distance à vol
 d'oiseau multipliée par 1,3 pour approcher un tracé routier. Elles donnent un ordre
-de grandeur, pas une mesure. Le README a longtemps parlé de « distance réelle » :
-c'était faux, et c'est corrigé.
+de grandeur, pas une mesure.
  
 **Aucune donnée personnelle collectée par l'application.** Pas de compte, pas de
 mot de passe, pas de cookie, pas de stockage local, pas d'adresse e-mail. Les
@@ -140,7 +134,7 @@ _headers                       En-têtes de sécurité Netlify (dont une CSP str
 ├── styles/
 │   ├── styles.css             Charte commune + voie professionnelle
 │   ├── 2gt.css                Comparateur 2GT (+ règles d'impression)
-│   └── fonts/                 7 fichiers .woff2 — @font-face local, aucun CDN
+│   └── fonts/                 7 fichiers .woff2 — @font-face local + Lisence OFL
 ├── scripts/
 │   ├── bdd_pro.js             Données voie pro : 18 secteurs, 81 formations, 188 offres
 │   ├── dico_chatbot.js        Vocabulaire d'élève + distance de Levenshtein
@@ -232,13 +226,6 @@ un élève.
 
 Ouvrir la page ou changer d'onglet n'envoie rien.
 
-> **Correction d'une affirmation erronée.** Ce README a longtemps prétendu que les
-> statistiques n'étaient « jamais envoyées au clic ». C'est faux : `quiz_lance` part
-> précisément au clic sur le bouton d'aide — c'est même tout son intérêt, puisqu'il
-> mesure *combien d'élèves se déclarent perdus*, y compris ceux qui abandonnent le
-> quiz en route. Le dire autrement revenait à masquer une mesure derrière une
-> promesse de sobriété qu'on ne tenait pas.
-
 **Ces chiffres sont falsifiables.** Le formulaire est public : n'importe qui peut y
 poster. Ils servent à savoir si l'outil est utilisé, pas à fonder une décision.
  
@@ -277,7 +264,7 @@ node tools/test-parcours.mjs         # parcours utilisateur dans un vrai DOM
 | `test-parcours` | Une fonction supprimée mais encore appelée : `node --check` passait, et **toute la voie pro était cassée en production**. |
 | `verifier-coefficients` | 18 coefficients faux — 13 CAP portaient ceux de leur *secteur*. |
 | `verifier-contrastes` | Le bouton d'aide à **2,54:1** sur blanc (seuil AA : 4,5:1) — illisible pour les élèves les plus perdus, précisément ceux qu'il vise. |
-| `test-pdf` | Le PDF n'était testé par **rien**. C'est ce trou qui a bloqué la mise à jour de jsPDF pendant des mois. |
+| `test-pdf` | Le PDF n'était testé par **rien**. C'est ce trou qui a bloqué la mise à jour de jsPDF. |
 
 > **`node --check` ne voit pas tout.** Une syntaxe valide n'est pas une application
 > qui fonctionne. C'est pour cette raison que `test-parcours.mjs` charge la page dans
@@ -293,7 +280,7 @@ Chaque validateur de ce dépôt a été testé **en le faisant échouer volontai
 1. **Codes vœux 2GT** → récupérer le nouveau catalogue Affelnet, mettre à jour
    `bdd_gt.js`.
 2. **Options des lycées** → vérifier auprès du CIO et des établissements.
-3. **Distances et trajets** → relancer le script de calcul (géocodage via l'Annuaire
+3. **Distances et trajets** → relancer les scripts de calcul (géocodage via l'Annuaire
    de l'Éducation nationale).
 4. **Coefficients** → vérifier la publication académique de l'année.
 ---
@@ -322,9 +309,7 @@ producteurs respectifs.
 - [jsPDF](https://github.com/parallax/jsPDF) 4.2.1, licence **MIT** — compatible AGPL.
   Sa licence est conservée dans `scripts/vendor/jspdf-LICENSE.txt`.
 - Polices **Outfit** et **Space Mono**, sous *SIL Open Font License 1.1* — compatible
-  AGPL, y compris en hébergement local. ⚠️ *Le fichier de licence n'est pas encore
-  joint aux `.woff2` de `styles/fonts/` : c'est une obligation de l'OFL, à corriger.*
-
+  AGPL, y compris en hébergement local.
 ---
 
 ## Auteur
