@@ -67,17 +67,25 @@ jobs:
       - name: Vérifier les contrastes (WCAG 2.1 AA)
         run: node tools/verifier-contrastes.mjs
 
+      # Le contrôle qui manquait le 13 juillet 2026 : une fonction supprimée mais
+      # encore appelée passait `node --check` sans erreur, et rendait pourtant
+      # toute la voie professionnelle inutilisable en production.
+      # jsdom simule un vrai navigateur. Les deux tests ci-dessous en dépendent :
+      # cette étape doit rester AVANT eux.
+      - name: Installer jsdom (simulation du navigateur)
+        run: npm install --no-save jsdom
+
       # Le PDF n'était testé par RIEN : test-parcours.mjs remplace jsPDF par un
       # bouchon. C'est ce trou qui a bloqué la mise à jour de la bibliothèque
       # pendant des mois — impossible de savoir ce qu'une bascule casserait.
       - name: Vérifier la génération du PDF (fiche pro + vœux 2GT)
         run: node tools/test-pdf.mjs
 
-      # Le contrôle qui manquait le 13 juillet 2026 : une fonction supprimée mais
-      # encore appelée passait `node --check` sans erreur, et rendait pourtant
-      # toute la voie professionnelle inutilisable en production.
-      - name: Installer jsdom (simulation du navigateur)
-        run: npm install --no-save jsdom
-
       - name: Tester les parcours utilisateur
         run: node tools/test-parcours.mjs
+
+      # Le README annonçait « 15 familles », « jsPDF 2.5.1 », « distance réelle »,
+      # « polices à internaliser », « jamais au clic » — cinq affirmations fausses.
+      # Un README faux est pire qu'un README absent : il donne confiance.
+      - name: Vérifier que le README dit la vérité
+        run: node tools/verifier-readme.mjs
