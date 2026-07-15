@@ -469,7 +469,7 @@
       }
     });
 
-    body =
+    const body =
       '<p class="gt-unseul"><strong>Tu ne seras affecté que sur UN SEUL de ces vœux</strong> : ' +
       'le premier de ta liste où il reste de la place. L\'ordre compte donc énormément — ' +
       'il doit refléter tes vraies préférences, pas tes chances.</p>' +
