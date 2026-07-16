@@ -57,7 +57,7 @@ jobs:
       # production : node --check et jsdom (non stricts) ne le voyaient pas, le
       # navigateur oui. ESLint le voit.
       - name: Détecter les variables non déclarées (ESLint no-undef)
-        run: npx --yes eslint@9 scripts/
+        run: npx --yes eslint@9 --config tools/eslint.config.mjs scripts/
 
       - name: Vérifier la cohérence des données
         run: node tools/verifier-donnees.mjs
