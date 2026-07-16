@@ -237,7 +237,29 @@ OK(CRITERES_SUR_PLACE.length + " atouts et " + Object.keys(SERIES_TECHNO_2GT).le
       }
     }
     if (etapes < 5) { KO(`Workflow : seulement ${etapes} étapes détectées, la CI en attend plus`); pb++; }
-    if (!pb) OK(`Workflow GitHub Actions : ${etapes} étapes, structure valide`);
+
+    // Les fichiers dont la CI a BESOIN pour tourner doivent exister. Sans
+    // eslint.config.mjs, ESLint 9 ne vérifie rien (ou casse selon la version) ;
+    // c'est précisément ce fichier qui manquait au dépôt et faisait échouer la
+    // CI, alors qu'il était présent en local. Un fichier requis mais non commité
+    // est un piège : tout marche chez soi, tout casse en ligne.
+    const requisParLaCI = [
+      ["eslint.config.mjs", "la config ESLint (étape « variables non déclarées »)"],
+    ];
+    // On n'exige un fichier que si une étape le référence vraiment.
+    const texteWorkflow = lignes.join("\n");
+    requisParLaCI.forEach(([fichier, role]) => {
+      const utilise = /eslint/i.test(texteWorkflow);   // l'étape ESLint est-elle présente ?
+      if (!utilise) return;
+      try { fs.readFileSync(new URL("../" + fichier, import.meta.url)); }
+      catch {
+        KO(`Fichier requis par la CI manquant : ${fichier} — ${role}. ` +
+           `Présent en local ne suffit pas : il doit être commité.`);
+        pb++;
+      }
+    });
+
+    if (!pb) OK(`Workflow GitHub Actions : ${etapes} étapes, structure valide, fichiers requis présents`);
   }
 }
 
