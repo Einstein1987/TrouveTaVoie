@@ -19,6 +19,19 @@
   let strategie   = null;        // null = l'élève n'a pas encore choisi : on n'affiche pas la liste
   let statEnvoyee = false;       // compteur : une seule statistique par chargement de page
 
+  // Ordre personnalisé des 5 lycées, UNIQUEMENT dans le cas « sans option ».
+  //
+  // Pourquoi seulement là : sans option, les 5 vœux sont tous équivalents (des
+  // vœux simples de couverture), il n'y a aucun filet de sécurité à protéger.
+  // L'élève peut donc les réordonner librement — c'est même le but : imprimer
+  // un brouillon de vœux dans SON ordre de préférence.
+  //
+  // Dès qu'il coche une option, ce tableau est ignoré : l'application reprend la
+  // main sur l'ordre (option → filet → couverture), parce que là, la position
+  // du filet juste sous son vœu N'EST PAS négociable. On efface donc l'ordre
+  // perso quand une option est cochée, pour ne pas le rappliquer par erreur.
+  let ordrePerso = null;         // tableau d'ids de lycées, ou null (= ordre par distance)
+
   /* ---------------------------------------------------------------------- */
   /* Utilitaires                                                            */
   /* ---------------------------------------------------------------------- */
@@ -307,10 +320,23 @@
     // « tu seras affecté dans l'un de ces 5 lycées ». Le filet de sécurité le
     // plus important, celui des élèves sans projet d'option, était désactivé.
     const dejaListes = new Set(liste.map(function (x) { return x.lyc.id; }));
-    ORDRE_LYCEES
-      .filter(function (id) { return !dejaListes.has(id); })
+    const reste = ORDRE_LYCEES.filter(function (id) { return !dejaListes.has(id); });
+
+    // Sans aucune option, si l'élève a réordonné les lycées (glisser-déposer ou
+    // flèches), on respecte SON ordre. Sinon, ordre par distance.
+    const sansOption = selection.size === 0 && selPlace.size === 0;
+    if (sansOption && ordrePerso) {
+      reste.sort(function (a, b) {
+        const ia = ordrePerso.indexOf(a), ib = ordrePerso.indexOf(b);
+        // Un lycée absent de l'ordre perso (cas improbable) retombe à la fin.
+        return (ia === -1 ? 99 : ia) - (ib === -1 ? 99 : ib);
+      });
+    } else {
+      reste.sort(function (a, b) { return parTrajet(LYCEES_2GT[a], LYCEES_2GT[b]); });
+    }
+
+    reste
       .map(function (id) { return LYCEES_2GT[id]; })
-      .sort(function (a, b) { return parTrajet(a, b); })
       .forEach(function (l) {
         const b = l.voeux.find(function (v) { return v.categorie === "base"; });
         if (b) liste.push({ lyc: l, voeu: b, filet: false, complement: true, atouts: [] });
@@ -444,7 +470,26 @@
                  : (o.filet ? (o.seul ? "is-simple" : "is-filet") : "");
       if (rang > LIMITE_VOEUX) classe += " is-hors-limite";
 
-      return avant + '<li class="' + classe + '">' +
+      // Réordonnancement : UNIQUEMENT sans option (vœux tous équivalents, aucun
+      // filet à protéger). On ajoute le glisser-déposer ET des flèches ↑↓ pour
+      // le clavier — sans quoi un élève qui n'utilise pas la souris ne pourrait
+      // pas réordonner, ce qui serait une régression d'accessibilité.
+      const reordonnable = (selection.size === 0 && selPlace.size === 0);
+      const attrsDrag = reordonnable
+        ? ' draggable="true" data-lyc="' + o.lyc.id + '"' : "";
+      if (reordonnable) classe += " gt-reordonnable";
+
+      const poignee = reordonnable
+        ? '<div class="gt-reorder">' +
+          '<button type="button" class="gt-move" data-move="up" data-lyc="' + o.lyc.id +
+          '" title="Monter ce vœu" aria-label="Monter ' + o.lyc.nom + '">\u25b2</button>' +
+          '<button type="button" class="gt-move" data-move="down" data-lyc="' + o.lyc.id +
+          '" title="Descendre ce vœu" aria-label="Descendre ' + o.lyc.nom + '">\u25bc</button>' +
+          '</div>'
+        : "";
+
+      return avant + '<li class="' + classe + '"' + attrsDrag + '>' +
+             poignee +
              '<div><span class="gt-v-main">' + v.libelle + '</span> ' +
              '<span class="gt-v-lyc">— ' + o.lyc.nom + ', ' + o.lyc.ville + '</span>' +
              '<span class="gt-v-code">' + v.code + '</span>' +
@@ -535,11 +580,22 @@
    * ------------------------------------------------------------------------ */
 
   // Les attributs qui identifient de façon stable un élément focusable du 2GT.
-  const ATTRIBUTS_FOCUS = ["data-critere", "data-place", "data-strat", "data-action"];
+  const ATTRIBUTS_FOCUS = ["data-critere", "data-place", "data-strat", "data-action", "data-move"];
 
   function repererFocus() {
     const actif = document.activeElement;
     if (!actif || actif === document.body) return null;
+
+    // Cas des flèches de réordonnancement : « monter Doisneau » et « monter
+    // Truffaut » ont le même data-move. Il faut combiner move + lyc pour viser
+    // le bon bouton après reconstruction, sinon le focus saute d'un lycée.
+    const move = actif.getAttribute("data-move");
+    if (move !== null) {
+      const lyc = actif.getAttribute("data-lyc");
+      const esc = (v) => (window.CSS && CSS.escape ? CSS.escape(v) : v);
+      return 'button[data-move="' + esc(move) + '"][data-lyc="' + esc(lyc) + '"]';
+    }
+
     for (let i = 0; i < ATTRIBUTS_FOCUS.length; i++) {
       const attr = ATTRIBUTS_FOCUS[i];
       const valeur = actif.getAttribute(attr);
@@ -575,6 +631,7 @@
     if (!c) return;
     if (selPlace.has(id)) { selPlace.delete(id); }
     else { selPlace.add(id); }
+    ordrePerso = null;   // dès qu'une option entre en jeu, l'app reprend l'ordre
     refresh();
   }
 
@@ -586,6 +643,35 @@
     } else {
       selection.add(id);
     }
+    ordrePerso = null;   // idem : l'ordre perso ne vaut que pour le cas sans option
+    refresh();
+  }
+
+  /* Ordre courant des 5 lycées dans le cas sans option (perso ou par distance). */
+  function ordreCourant() {
+    if (ordrePerso) return ordrePerso.slice();
+    return ORDRE_LYCEES.slice().sort(function (a, b) {
+      return parTrajet(LYCEES_2GT[a], LYCEES_2GT[b]);
+    });
+  }
+
+  /* Déplace un lycée d'un cran (flèches) ou à une position (glisser-déposer).
+   * N'a d'effet que sans option — le seul cas où le réordonnancement est permis. */
+  function deplacerLycee(idLyc, versId) {
+    if (selection.size > 0 || selPlace.size > 0) return;   // sécurité
+    const ordre = ordreCourant();
+    const de = ordre.indexOf(idLyc);
+    if (de === -1) return;
+    ordre.splice(de, 1);
+    let a;
+    if (versId === "up")      a = Math.max(0, de - 1);
+    else if (versId === "down") a = Math.min(ordre.length, de + 1);
+    else {                     // versId = id du lycée sur lequel on a lâché
+      const cible = ordre.indexOf(versId);
+      a = cible === -1 ? ordre.length : cible;
+    }
+    ordre.splice(a, 0, idLyc);
+    ordrePerso = ordre;
     refresh();
   }
 
@@ -634,7 +720,35 @@
         refresh();
         return;
       }
+      const move = e.target.closest("[data-move]");
+      if (move) { deplacerLycee(move.dataset.lyc, move.dataset.move); return; }
       if (chip && chip.tagName === "BUTTON") { toggle(chip.dataset.critere); }
+    });
+
+    // Glisser-déposer : uniquement sur les <li> réordonnables (cas sans option).
+    let idPris = null;
+    root.addEventListener("dragstart", function (e) {
+      const li = e.target.closest("li.gt-reordonnable");
+      if (!li) return;
+      idPris = li.dataset.lyc;
+      li.classList.add("gt-drag");
+      if (e.dataTransfer) e.dataTransfer.effectAllowed = "move";
+    });
+    root.addEventListener("dragend", function (e) {
+      const li = e.target.closest("li.gt-reordonnable");
+      if (li) li.classList.remove("gt-drag");
+      idPris = null;
+    });
+    root.addEventListener("dragover", function (e) {
+      if (idPris && e.target.closest("li.gt-reordonnable")) e.preventDefault(); // autorise le drop
+    });
+    root.addEventListener("drop", function (e) {
+      const li = e.target.closest("li.gt-reordonnable");
+      if (!li || !idPris) return;
+      e.preventDefault();
+      const cible = li.dataset.lyc;
+      if (cible !== idPris) deplacerLycee(idPris, cible);
+      idPris = null;
     });
     root.addEventListener("change", function (e) {
       if (e.target.matches('input[type="checkbox"][data-critere]')) {

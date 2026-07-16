@@ -3179,7 +3179,13 @@ const DOMAINS = {
             trajet: "Bus 4245 puis RER D"
           }
         ],
-        horsFamille: true
+        // Hors des 14 familles NATIONALES, mais avec une SECONDE COMMUNE propre
+        // (Fiche n°21 : « 2NDPRO MET.DU CUIR 2NDE COMMUNE »). L'élève entre donc
+        // en seconde de découverte avant de choisir son option de cuir — il ne
+        // s'engage PAS directement dans la spécialité. C'est ce que l'audit avait
+        // relevé : dire « tu choisis dès la seconde » ici est une info fausse.
+        horsFamille: true,
+        secondeCommune: true
       },
       {
         nom: "Bac Pro Artisanat et métiers d'art - Option marchandisage visuel",

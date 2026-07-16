@@ -386,28 +386,49 @@ function fillCardCustom(selection) {
  * ========================================================================== */
 
 function rendreParFamille(container, formations) {
-  const familles   = new Map();   // famille officielle → [formations]
-  const horsFamille = [];         // bacs pro hors famille
-  const caps        = [];         // CAP (jamais dans une famille)
+  const familles      = new Map();   // famille officielle → [formations]
+  const secondeCommune = [];         // hors des 14 familles, MAIS seconde commune propre
+  const entreeDirecte  = [];         // hors famille, entrée directe en spécialité
+  const caps           = [];         // CAP (jamais dans une famille)
 
   formations.forEach(function (f) {
     if (f.niveau === 'CAP') { caps.push(f); return; }
     const fam = familleDe(f);
-    if (!fam) { horsFamille.push(f); return; }
-    if (!familles.has(fam)) familles.set(fam, []);
-    familles.get(fam).push(f);
+    if (fam) {
+      if (!familles.has(fam)) familles.set(fam, []);
+      familles.get(fam).push(f);
+    } else if (f.secondeCommune) {
+      // Cas « Métiers du cuir » : pas dans les 14 familles nationales, mais une
+      // année de découverte quand même. Le confondre avec l'entrée directe donne
+      // une information pédagogique fausse (relevé par l'audit).
+      secondeCommune.push(f);
+    } else {
+      entreeDirecte.push(f);
+    }
   });
 
   familles.forEach(function (liste, nomFamille) {
     container.appendChild(sectionFamille(nomFamille, liste));
   });
 
-  if (horsFamille.length) {
+  // Chaque formation à seconde commune propre a sa section : le message doit
+  // parler de SON année de découverte, pas d'une famille inexistante.
+  secondeCommune.forEach(function (f) {
+    container.appendChild(sectionSimple(
+      f.nom.replace(/^Bac Pro\s+/, ""),
+      "Cette spécialité ne fait pas partie des grandes familles de métiers, mais " +
+      "elle commence quand même par une seconde commune : une année pour découvrir " +
+      "le métier avant de choisir ton option définitive. Tu ne t'engages donc pas " +
+      "sur tout dès le départ.",
+      [f], "seconde-commune"));
+  });
+
+  if (entreeDirecte.length) {
     container.appendChild(sectionSimple(
       "Bacs pro hors famille de métiers",
       "Tu choisis cette spécialité directement dès la seconde : il n'y a pas d'année " +
       "commune pour en découvrir d'autres avant de te décider.",
-      horsFamille, "hors-famille"));
+      entreeDirecte, "hors-famille"));
   }
 
   if (caps.length) {
