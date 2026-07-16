@@ -151,6 +151,11 @@
 
     function rendreBloc(bloc) {
       const titre  = ((bloc.querySelector(".formation-title") || {}).textContent || "").trim();
+      // L'avertissement « À vérifier » (coefficients non confirmés, ex. CAP
+      // Métallier absent de la fiche n°21). Il est visible à l'écran ; le PDF
+      // l'ignorait, présentant les coefficients comme certains. Or le PDF est ce
+      // que l'élève imprime et montre : l'y omettre transmet une info incomplète.
+      const avert = ((bloc.querySelector(".formation-warning") || {}).textContent || "").trim();
       const coeffs = Array.prototype.slice
         .call(bloc.querySelectorAll(".coeffs-table tbody td"))
         .map(function (td) { return td.textContent.trim(); });
@@ -221,6 +226,24 @@
         y += 18;
       }
 
+      /* ---- Avertissement « À vérifier » (coefficients non confirmés) ---- */
+      if (avert) {
+        const lignesAv = doc.splitTextToSize(avert, UTILE - 2 * PAD - 4);
+        const hAv = 4 + lignesAv.length * 4;
+        place(hAv + 3);
+        doc.setFillColor(255, 251, 235);            // ambre très pâle (#FFFBEB)
+        doc.setDrawColor(180, 83, 9);               // AMBRE
+        doc.setLineWidth(0.3);
+        doc.rect(M + PAD, y - 3, UTILE - 2 * PAD, hAv, "FD");
+        doc.setLineWidth(0.2);
+        doc.setTextColor(146, 64, 14);              // #92400E — 6,84:1 sur le fond ambre
+        doc.setFontSize(7.5);
+        doc.setFont(undefined, "bold");
+        doc.text(lignesAv, M + PAD + 2, y + 1);
+        doc.setFont(undefined, "normal");
+        y += hAv + 2;
+      }
+
       /* ---- Établissements ---- */
       place(12);
       doc.setTextColor.apply(doc, MUTED);
@@ -229,20 +252,35 @@
       doc.text("ÉTABLISSEMENTS PUBLICS EN ESSONNE", M + PAD, y);
       y += 5;
 
+      // Largeur utile pour le texte d'un établissement (marges + petit retrait).
+      const largeurEtab = UTILE - 2 * PAD - 4;
+
       ecoles.forEach(function (lignes) {
-        const h = 4.5 + (lignes.length - 1) * 4 + 2.5;
+        // Chaque ligne (nom du lycée, puis trajet/distance) peut être longue :
+        // un itinéraire « Bus X puis RER D puis Bus Y » dépassait la marge droite
+        // et se retrouvait tronqué à l'impression. On découpe donc TOUT à la
+        // largeur utile, et on calcule la hauteur d'après le nombre réel de
+        // lignes produites — sinon le cadre et le texte se chevauchent.
+        const nom   = doc.splitTextToSize(lignes[0] || "", largeurEtab);
+        const infos = lignes.slice(1).map(function (l) {
+          return doc.splitTextToSize(l, largeurEtab);
+        });
+        const nbInfos = infos.reduce(function (n, bloc) { return n + bloc.length; }, 0);
+        const h = nom.length * 4.5 + nbInfos * 4 + 2.5;
         place(h);
+
         doc.setTextColor.apply(doc, INK);
         doc.setFontSize(9.5);
         doc.setFont(undefined, "bold");
-        doc.text(lignes[0] || "", M + PAD + 2, y);
-        y += 4.5;
+        doc.text(nom, M + PAD + 2, y);
+        y += nom.length * 4.5;
+
         doc.setTextColor.apply(doc, MUTED);
         doc.setFontSize(8);
         doc.setFont(undefined, "normal");
-        lignes.slice(1).forEach(function (l) {
-          doc.text(l, M + PAD + 2, y);
-          y += 4;
+        infos.forEach(function (bloc) {
+          doc.text(bloc, M + PAD + 2, y);
+          y += bloc.length * 4;
         });
         y += 2.5;
       });
