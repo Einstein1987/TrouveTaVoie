@@ -158,12 +158,13 @@ _headers                       En-têtes de sécurité Netlify (dont une CSP str
 │   ├── verifier-contrastes.mjs     Contrastes WCAG 2.1 AA           (CI)
 │   ├── test-pdf.mjs                Génération réelle des deux PDF   (CI)
 │   ├── test-parcours.mjs           Parcours utilisateur via jsdom   (CI)
-│   └── verifier-readme.mjs         Chiffres du README vs code        (CI)
+│   ├── verifier-readme.mjs         Chiffres du README vs code        (CI)
+│   └── eslint.config.mjs           Règle no-undef (variables non déclarées)
 │   ├── calculer-distances.mjs      Géocodage → distances estimées
 │   └── calculer-durees.mjs         API PRIM → temps de trajet
 ├── .github/workflows/
 │   └── verifier-donnees.yml   Lance tous les contrôles ci-dessus à chaque commit
-eslint.config.mjs              Règle no-undef (variables non déclarées)
+
 └── img/                       Logo, favicon
 ```
 
