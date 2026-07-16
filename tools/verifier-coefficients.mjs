@@ -257,6 +257,19 @@ console.log("\n\u2500\u2500 RATTACHEMENT AUX FAMILLES (DGESCO) \u2500\u2500");
         KO(f.nom + " : le secteur « " + d.label + " » n'a pas de famille officielle, " +
            "donc cette formation doit porter `horsFamille: true`.");
       }
+
+      // INVARIANT 3 : `secondeCommune` (ex. Métiers du cuir) ne vaut que pour un
+      // bac pro hors famille. Un CAP n'a pas de seconde commune ; une formation
+      // en famille a DÉJÀ la seconde commune de sa famille.
+      if (f.secondeCommune) {
+        if (f.niveau === "CAP") {
+          KO(f.nom + " : `secondeCommune` sur un CAP n'a pas de sens.");
+        }
+        if (!f.horsFamille) {
+          KO(f.nom + " : `secondeCommune` ne s'emploie que hors famille " +
+             "(en famille, la seconde commune est celle de la famille).");
+        }
+      }
     }
   }
   if (secteursAvecFamille !== 13) {

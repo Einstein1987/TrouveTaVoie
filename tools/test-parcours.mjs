@@ -493,6 +493,62 @@ console.log("\n── CLASSEMENT 2GT ──");
   }
 }
 
+console.log("\n── RÉORDONNANCEMENT DES VŒUX (2GT sans option) ──");
+{
+  const ordreLycees = (doc) =>
+    Array.from(doc.querySelectorAll("#gt-carte ol.gt-voeux > li:not(.gt-sep-li):not(.gt-limite-li)"))
+      .map((li) => ((li.querySelector(".gt-v-lyc") || {}).textContent || "").replace(/^—\s*/, "").split(",")[0].trim());
+
+  // Sans option : les vœux sont réordonnables (souris + clavier).
+  {
+    const a = monterApplication2GT();
+    if (a) {
+      const drag = a.doc.querySelectorAll("#gt-carte li.gt-reordonnable[draggable='true']");
+      const fleches = a.doc.querySelectorAll("#gt-carte .gt-move");
+      if (drag.length === 5) OK("Sans option : les 5 vœux sont déplaçables à la souris (draggable)");
+      else KO("Sans option : " + drag.length + " vœu(x) déplaçable(s), on en attend 5");
+      // Deux flèches (↑ et ↓) par vœu = accès clavier, non négociable.
+      if (fleches.length === 10) OK("Sans option : chaque vœu a ses flèches ↑↓ (accès clavier)");
+      else KO("Sans option : " + fleches.length + " flèche(s), on en attend 10 (accessibilité clavier)");
+    }
+  }
+
+  // La flèche ↓ déplace bien le vœu.
+  {
+    const a = monterApplication2GT();
+    if (a) {
+      const avant = ordreLycees(a.doc);
+      const bas = a.doc.querySelector('#gt-carte .gt-move[data-move="down"]');
+      if (bas) {
+        bas.dispatchEvent(new a.window.Event("click", { bubbles: true }));
+        const apres = ordreLycees(a.doc);
+        if (apres[0] === avant[1] && apres[1] === avant[0]) {
+          OK("La flèche ↓ descend bien le premier vœu d'un cran");
+        } else {
+          KO("La flèche ↓ n'a pas réordonné comme attendu (" + avant[0] + " → position " + (apres.indexOf(avant[0]) + 1) + ")");
+        }
+      } else {
+        KO("Flèche de descente introuvable");
+      }
+    }
+  }
+
+  // Dès qu'une option est cochée, le réordonnancement DISPARAÎT : l'app reprend
+  // la main pour garder le filet de sécurité collé sous son vœu.
+  {
+    const a = monterApplication2GT();
+    if (a) {
+      const c = a.doc.querySelector('[data-critere="design"]');
+      if (c) c.dispatchEvent(new a.window.Event("click", { bubbles: true }));
+      const s = a.doc.querySelector('[data-strat="lycee"]');
+      if (s) s.dispatchEvent(new a.window.Event("click", { bubbles: true }));
+      const drag = a.doc.querySelectorAll("#gt-carte li.gt-reordonnable");
+      if (drag.length === 0) OK("Avec une option : le réordonnancement est désactivé (le filet reste protégé)");
+      else KO("Avec une option : " + drag.length + " vœu(x) encore déplaçable(s) — le filet pourrait être séparé");
+    }
+  }
+}
+
 console.log("\n── FOCUS CLAVIER (2GT) ──");
 {
   const a = monterApplication2GT();

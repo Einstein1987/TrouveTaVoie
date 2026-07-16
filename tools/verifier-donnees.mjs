@@ -192,6 +192,55 @@ Object.entries(SERIES_TECHNO_2GT).forEach(([s, ls]) => {
 });
 OK(CRITERES_SUR_PLACE.length + " atouts et " + Object.keys(SERIES_TECHNO_2GT).length + " séries vérifiés");
 
+/* ======================================================================
+ * LE WORKFLOW GITHUB ACTIONS LUI-MÊME
+ *
+ * Rien ne vérifiait le YAML de la CI. Résultat : une insertion maladroite a
+ * laissé un « run: | » vide suivi de lignes orphelines — YAML invalide, et
+ * TOUTE la CI a cessé de tourner en silence (« Invalid workflow file »).
+ * C'est le défaut le plus sournois : le garde-fou qui tombe sans prévenir.
+ *
+ * Node n'a pas de parseur YAML natif et on refuse d'ajouter une dépendance pour
+ * ça. On fait donc un contrôle ciblé sur les pièges réellement rencontrés,
+ * ligne à ligne. Ce n'est pas un validateur YAML complet — juste de quoi
+ * empêcher que la CI reparte cassée.
+ * ====================================================================== */
+{
+  const fs = await import("node:fs");
+  const chemin = new URL("../.github/workflows/verifier-donnees.yml", import.meta.url);
+  let lignes;
+  try { lignes = fs.readFileSync(chemin, "utf8").split("\n"); }
+  catch { lignes = null; KO("Workflow introuvable : .github/workflows/verifier-donnees.yml"); }
+
+  if (lignes) {
+    let etapes = 0, avecRun = 0, pb = 0;
+    lignes.forEach((ligne, i) => {
+      // Tabulations : interdites en YAML, cassent tout en silence.
+      if (/\t/.test(ligne)) { KO(`Workflow ligne ${i + 1} : tabulation (YAML n'accepte que des espaces)`); pb++; }
+    });
+    for (let i = 0; i < lignes.length; i++) {
+      const l = lignes[i];
+      if (/^\s*-\s+name:/.test(l)) etapes++;
+      // Un « run: | » (bloc multi-lignes) doit être suivi d'au moins une ligne
+      // indentée plus profondément. C'est exactement ce qui manquait.
+      const m = l.match(/^(\s*)run:\s*\|?\s*$/);
+      if (m) {
+        avecRun++;
+        const indent = m[1].length;
+        const suite = lignes[i + 1] || "";
+        const vide = suite.trim() === "";
+        const moinsIndente = suite.search(/\S/) <= indent && suite.trim() !== "";
+        if (vide || moinsIndente) {
+          KO(`Workflow ligne ${i + 1} : « run: » n'est suivi d'aucune commande indentée`);
+          pb++;
+        }
+      }
+    }
+    if (etapes < 5) { KO(`Workflow : seulement ${etapes} étapes détectées, la CI en attend plus`); pb++; }
+    if (!pb) OK(`Workflow GitHub Actions : ${etapes} étapes, structure valide`);
+  }
+}
+
 /* ====================================================================== */
 console.log("\n" + "─".repeat(52));
 if (erreurs) {
