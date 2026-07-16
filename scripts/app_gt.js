@@ -275,8 +275,14 @@
         const b = o.lyc.voeux.find(function (v) { return v.categorie === "base"; });
         if (b && !vus[o.id].has(b.code)) {
           vus[o.id].add(b.code);
-          liste.push({ lyc: o.lyc, voeu: b, filet: true, atouts: o.atouts,
-                       seul: opts.length === 0 });
+          // Un vœu simple n'est un FILET DE SÉCURITÉ que s'il est placé SOUS un
+          // vœu à option (Affelnet). Un atout « sur place » (japonais, latin…)
+          // ne crée aucun vœu au-dessus : le vœu simple n'est alors le filet de
+          // personne, c'est un vœu simple ordinaire. On teste donc le nombre
+          // d'OPTIONS produites (opts.length), pas la présence d'atouts.
+          const aUneOption = opts.length > 0;
+          liste.push({ lyc: o.lyc, voeu: b, filet: aUneOption, atouts: o.atouts,
+                       seul: !aUneOption });
         }
       });
     } else {
@@ -302,8 +308,11 @@
           const b = o.lyc.voeux.find(function (v) { return v.categorie === "base"; });
           if (b && !vus[o.id].has(b.code)) {
             vus[o.id].add(b.code);
-            liste.push({ lyc: o.lyc, voeu: b, filet: true, atouts: o.atouts,
-                         seul: scoreLycee(o.id) === 0 && atoutsDe(o.id).length === 0 });
+            // Filet uniquement si ce lycée a produit au moins un vœu à OPTION.
+            // Les atouts sur place ne comptent pas (ils ne créent pas de vœu).
+            const aUneOption = scoreLycee(o.id) > 0;
+            liste.push({ lyc: o.lyc, voeu: b, filet: aUneOption, atouts: o.atouts,
+                         seul: !aUneOption });
           }
         });
     }

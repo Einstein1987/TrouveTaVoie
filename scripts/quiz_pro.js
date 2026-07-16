@@ -22,7 +22,7 @@
  * QUIZ D'ORIENTATION — VOIE PROFESSIONNELLE
  *
  * Objectif : aider l'élève qui ne sait pas par où commencer à identifier
- * TROIS familles de métiers à explorer. Jamais une seule : un questionnaire
+ * TROIS secteurs à explorer. Jamais une seule : un questionnaire
  * d'intérêts ouvre des pistes, il ne désigne pas un destin.
  *
  * Méthode : les questions portent sur les GOÛTS et les GESTES, jamais sur les
@@ -30,7 +30,7 @@
  * maintenance d'installations automatisées »). Chaque réponse attribue des
  * points à plusieurs domaines.
  *
- * Les axes qui séparent réellement les 15 familles :
+ * Les axes qui séparent réellement les 18 secteurs :
  *   - la matière manipulée : humains / machines / matière brute / vivant / écrans
  *   - le lieu : dehors, atelier, bureau, contact public
  *   - le geste : créer, réparer, organiser, aider, protéger

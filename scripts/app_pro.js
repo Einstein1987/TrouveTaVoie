@@ -602,15 +602,30 @@ function createSchoolElement(etablissement) {
 // `message` permet de revenir au menu en cours de conversation sans redire
 // « Bonjour ! » à un élève qui discute depuis dix questions.
 // `garderCarte` évite d'effacer la fiche que l'élève vient d'obtenir.
+
+// Remet la carte d'orientation à son état vide. L'ancienne version ne masquait
+// que psyNote : après un « Non », la fiche précédente (ex. Bac Pro Cuisine)
+// restait affichée à droite, ce qui laissait croire qu'elle était toujours le
+// projet retenu. On efface donc VRAIMENT tout.
+function effacerCarte() {
+  const filled = document.getElementById("cardFilled");
+  const empty  = document.getElementById("cardEmpty");
+  const details = document.getElementById("cardDetailsContainer");
+  const actions = document.getElementById("cardActions");
+  const psyNote = document.getElementById("psyNote");
+  if (filled)  filled.style.display = "none";
+  if (empty)   empty.style.display = "";       // on réaffiche l'invite « ta fiche apparaîtra ici »
+  if (details) details.innerHTML = "";
+  if (actions) actions.style.display = "none";
+  if (psyNote) psyNote.style.display = "none";
+}
+
 function startMenu(message, garderCarte){
   verrouillerToutesLesLignes();
   state = 'start';
   pendingSelection = null;
   if (!garderCarte) {
-    const psyNote = document.getElementById("psyNote");
-    if (psyNote) {
-      psyNote.style.display = "none";
-    }
+    effacerCarte();
   }
   addBotMessage(message || "Bonjour ! Je suis là pour t'aider. Où en es-tu ?", [
     {label: "Je connais déjà la formation que je veux faire", action: "set_state", payload: "search_formation"},
@@ -733,8 +748,8 @@ function afficherResultatQuiz() {
 
   state = 'quiz_resultat';
   addBotMessage(
-    "Voilà, c'est fini ! D'après tes réponses, voici les trois familles de métiers " +
-    "qui te correspondent le mieux. Rien n'est figé : clique sur celle que tu veux " +
+    "Voilà, c'est fini ! D'après tes réponses, voici les trois secteurs " +
+    "qui te correspondent le mieux. Rien n'est figé : clique sur celui que tu veux " +
     "découvrir, tu pourras revenir voir les autres ensuite.",
     top.map(function (o) {
       const pct = Math.round(o.affinite * 100);
@@ -798,7 +813,7 @@ function searchNotFound(text){
 
     addBotMessage(
       "Je ne suis pas certain d'avoir bien compris. Mais d'après ce que tu as écrit, " +
-      "ces familles de métiers pourraient s'en rapprocher — dis-moi si l'une d'elles te parle :",
+      "ces secteurs pourraient s'en rapprocher — dis-moi si l'un d'eux te parle :",
       options
     );
     return;
@@ -975,7 +990,7 @@ function processSearchNettoye(text, type) {
       askConfirm(domainSelection(keys[0]));
     } else if (keys.length > MAX_BOUTONS) {
       addBotMessage(
-        "« " + text + " » touche à " + keys.length + " familles de métiers différentes : " +
+        "« " + text + " » touche à " + keys.length + " secteurs différents : " +
         "c'est trop large pour t'aider. Peux-tu préciser, ou faire le quiz ?",
         [
           { label: "Reformuler ma recherche", action: "set_state", payload: "search_domaine" },

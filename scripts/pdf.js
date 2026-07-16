@@ -346,7 +346,12 @@
       }
 
       const hors = rang > LIMITE;
-      const h = v.procedure ? 27 : 19;
+      // Hauteur du bloc, calculée d'après ce qu'il contient réellement :
+      //  - base : libellé + ligne lycée + ligne trajet
+      //  - + une étiquette (filet / couverture) sur sa propre ligne
+      //  - + le pavé « recrutement spécifique » si procédure
+      const aEtiquette = !!(v.complement || v.filet);
+      const h = 19 + (aEtiquette ? 4 : 0) + (v.procedure ? 8 : 0);
       y = saut(doc, y, h);
 
       const coul = hors ? [252, 165, 165]
@@ -365,21 +370,33 @@
       doc.setTextColor.apply(doc, hors ? MUTED : INK);
       doc.setFontSize(10.5);
       doc.setFont(undefined, "bold");
-      doc.text(v.libelle, M + 10, y + 3);
+      // Le libellé peut être long (« Langue vivante C rare — Portugais »). On le
+      // borne à la largeur utile pour qu'il ne parte jamais sous l'étiquette ni
+      // hors de la page ; s'il dépasse, jsPDF le renvoie à la ligne.
+      const largeurLibelle = UTILE - 12;
+      const lignesLib = doc.splitTextToSize(v.libelle, largeurLibelle);
+      doc.text(lignesLib, M + 10, y + 3);
 
-      const etiq = v.complement ? "  [couverture secteur]" : (v.filet ? "  [filet de sécurité]" : "");
+      // L'étiquette (« filet de sécurité », « couverture secteur ») va DESSOUS le
+      // libellé, plus jamais à sa droite : à côté, elle chevauchait le libellé
+      // dès qu'il était un peu long (bug relevé par l'audit). En dessous, la
+      // largeur du libellé n'a plus aucune importance.
+      const etiq = v.complement ? "couverture secteur"
+                 : (v.filet ? "filet de sécurité" : "");
+      let yInfo = y + 8;   // position de la ligne « lycée · code »
       if (etiq) {
         doc.setFontSize(7.5);
         doc.setFont(undefined, "normal");
-        doc.setTextColor.apply(doc, MUTED);
-        doc.text(etiq, M + 10 + doc.getTextWidth(v.libelle) + 1, y + 3);
+        doc.setTextColor.apply(doc, v.complement ? MUTED : TEAL);
+        doc.text("[ " + etiq + " ]", M + 10, y + 7.5);
+        yInfo = y + 12;    // on décale les infos pour laisser la place à l'étiquette
       }
 
       doc.setFont(undefined, "normal");
       doc.setFontSize(8.5);
       doc.setTextColor.apply(doc, MUTED);
-      doc.text(v.lycee + " (" + v.ville + ")   ·   Code vœu : " + v.code, M + 10, y + 8);
-      doc.text("Trajet depuis le collège : " + v.trajet, M + 10, y + 12.5);
+      doc.text(v.lycee + " (" + v.ville + ")   ·   Code vœu : " + v.code, M + 10, yInfo);
+      doc.text("Trajet depuis le collège : " + v.trajet, M + 10, yInfo + 4.5);
 
       if (v.procedure) {
         doc.setTextColor.apply(doc, AMBRE);
@@ -388,7 +405,7 @@
         doc.text(doc.splitTextToSize(
           "Recrutement spécifique (" + v.procedure + ") : entretien de présélection obligatoire. " +
           "L'avis de la commission donne des points bonus ou malus. À signaler très tôt à ton " +
-          "professeur principal.", UTILE - 12), M + 10, y + 17.5);
+          "professeur principal.", UTILE - 12), M + 10, yInfo + 9);
         doc.setFont(undefined, "normal");
       }
 
