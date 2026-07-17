@@ -389,7 +389,8 @@
       //  - + une étiquette (filet / couverture) sur sa propre ligne
       //  - + le pavé « recrutement spécifique » si procédure
       const aEtiquette = !!(v.complement || v.filet);
-      const h = 19 + (aEtiquette ? 4 : 0) + (v.procedure ? 8 : 0);
+      const aAtouts = !!(v.atouts && v.atouts.length);
+      const h = 19 + (aEtiquette ? 4 : 0) + (aAtouts ? 4 : 0) + (v.procedure ? 8 : 0);
       y = saut(doc, y, h);
 
       const coul = hors ? [252, 165, 165]
@@ -436,6 +437,21 @@
       doc.text(v.lycee + " (" + v.ville + ")   ·   Code vœu : " + v.code, M + 10, yInfo);
       doc.text("Trajet depuis le collège : " + v.trajet, M + 10, yInfo + 4.5);
 
+      let yApres = yInfo + 4.5;
+      // Atouts « sur place » proposés par ce lycée (japonais, latin…). Ils ne
+      // sont pas des vœux, mais l'élève doit savoir qu'ils sont là — à l'écran
+      // comme sur le PDF qu'il imprime.
+      if (v.atouts && v.atouts.length) {
+        doc.setTextColor.apply(doc, TEAL);
+        doc.setFont(undefined, "bold");
+        doc.setFontSize(7.5);
+        doc.text(doc.splitTextToSize(
+          "Propose aussi (à l'inscription, pas un vœu) : " + v.atouts.join(", "),
+          UTILE - 12), M + 10, yApres + 4);
+        doc.setFont(undefined, "normal");
+        yApres += 4;
+      }
+
       if (v.procedure) {
         doc.setTextColor.apply(doc, AMBRE);
         doc.setFont(undefined, "bold");
@@ -443,7 +459,7 @@
         doc.text(doc.splitTextToSize(
           "Recrutement spécifique (" + v.procedure + ") : entretien de présélection obligatoire. " +
           "L'avis de la commission donne des points bonus ou malus. À signaler très tôt à ton " +
-          "professeur principal.", UTILE - 12), M + 10, yInfo + 9);
+          "professeur principal.", UTILE - 12), M + 10, yApres + 4.5);
         doc.setFont(undefined, "normal");
       }
 
@@ -464,8 +480,17 @@
   /* ---- Aiguillage selon l'onglet actif ---- */
   function telechargerPDF() {
     const gt = document.getElementById("vue-2gt");
-    if (gt && gt.classList.contains("is-active")) pdf2GT();
-    else pdfPro();
+    if (gt && gt.classList.contains("is-active")) {
+      // Télécharger le PDF est un usage abouti, même si l'élève n'a rien coché
+      // ni réordonné (il accepte l'ordre par défaut). C'est le cas le plus
+      // fréquent : sans ce signal, ces élèves restaient invisibles.
+      if (window.TrouveTaVoie2GT && window.TrouveTaVoie2GT.signalerTelechargement) {
+        window.TrouveTaVoie2GT.signalerTelechargement();
+      }
+      pdf2GT();
+    } else {
+      pdfPro();
+    }
   }
 
   window.telechargerPDF = telechargerPDF;

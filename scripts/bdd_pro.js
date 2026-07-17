@@ -1782,12 +1782,13 @@ const DOMAINS = {
       {
         nom: "CAP Métallier",
         niveau: "CAP",
-        // Seule formation ABSENTE de la Fiche technique n°21 (Versailles).
-        // Coefficients repris des COEFFICIENTS NATIONAUX (Annexe 29, groupe 25
-        // « Mécanique, électricité, électronique »). La valeur précédente était
-        // celle du domaine « Bâtiment » — donc issue de l'erreur systématique
-        // corrigée en juillet 2026. À confirmer auprès du CIO.
-        aVerifier: "coefficients non confirmés par la fiche technique n°21 de l'académie de Versailles — demande confirmation à ta PsyEN.",
+        // Absent de la Fiche n°21 (qui liste surtout les formations de
+        // l'académie), mais PRÉSENT dans le tableau NATIONAL des coefficients de
+        // la voie professionnelle (guide AFFELNET-lycée RS2021, fiche n°11,
+        // groupe 25 « Mécanique, électricité, électronique »), sous son intitulé
+        // officiel « 1CAP2 SERRURIER METALLIER » : coefficients [4,6,3,4,3,2,8].
+        // Confirmé — plus d'avertissement.
+        // Source : blog.ac-versailles.fr/.../coefficients_voie_pro_2021.pdf
         coeffs: [
           4,
           6,

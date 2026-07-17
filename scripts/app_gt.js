@@ -863,7 +863,13 @@
   window.TrouveTaVoie2GT = {
     init: init,
     getVoeux: getVoeux,
-    limite: LIMITE_VOEUX
+    limite: LIMITE_VOEUX,
+    // Signale un usage abouti si aucun ne l'a encore été. Appelé au
+    // téléchargement du PDF : c'est LE cas qui restait dans l'angle mort —
+    // l'élève sans option, sans atout, qui accepte l'ordre par défaut et imprime
+    // sa liste. Il n'a rien coché ni réordonné, mais il repart avec ses vœux :
+    // c'est bien un usage. (Garde statEnvoyee : pas de double comptage.)
+    signalerTelechargement: function () { signalerUsage2GT("Liste par défaut téléchargée (sans option)"); }
   };
   if (document.readyState !== "loading") { init(); }
   else { document.addEventListener("DOMContentLoaded", function () { init(); }); }
