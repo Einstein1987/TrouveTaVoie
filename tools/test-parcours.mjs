@@ -546,25 +546,103 @@ console.log("\n── CLASSEMENT 2GT ──");
     }
   }
 
-  // 4. Un atout seul (japonais, sur place) : le lycée remonte, l'atout est cité.
+  // 4. Un atout seul (japonais, sur place) NE crée aucun vœu Affelnet. Le
+  //    parcours doit donc être IDENTIQUE à « rien coché » : 5 lycées par
+  //    distance, réordonnables, sans question de stratégie — plus la mention de
+  //    l'atout sur le lycée concerné, à l'écran ET transmise au PDF.
   {
     const a = monterApplication2GT();
     if (a && cocher(a, "sp_japonais")) {
-      strat(a, "lycee");
-      const txt = (a.doc.querySelector("#vue-2gt") || {}).textContent || "";
-      if (/japonais/i.test(txt)) OK("Atout seul (japonais) : l'atout est bien mentionné dans la carte");
-      else KO("Atout seul (japonais) : l'atout n'apparaît nulle part");
-      if (voeuxDe(a.doc).length === 5) OK("Atout seul : les 5 lycées restent proposés");
-      else KO("Atout seul : la couverture des 5 lycées est incomplète");
+      // Pas de bascule en mode « stratégie » : l'atout n'est pas une option.
+      const strats = a.doc.querySelectorAll("#gt-carte [data-strat]");
+      if (strats.length === 0) OK("Atout seul : aucun bouton de stratégie (l'atout n'est pas une option)");
+      else KO("Atout seul : " + strats.length + " bouton(s) de stratégie apparaissent à tort");
 
-      // Un atout ne crée AUCUN vœu à option, donc AUCUN vœu ne doit porter
-      // l'étiquette « filet de sécurité » : un filet n'a de sens que sous un
-      // vœu à option. (Bug repéré : Bondoufle affichait « filet » à tort.)
+      // La liste s'affiche directement, sans avoir à choisir quoi que ce soit.
+      if (voeuxDe(a.doc).length === 5) OK("Atout seul : les 5 lycées s'affichent directement");
+      else KO("Atout seul : " + voeuxDe(a.doc).length + " vœu(x), on en attend 5 affichés directement");
+
+      // Réordonnancement toujours possible (aucun filet à protéger).
+      const reord = a.doc.querySelectorAll("#gt-carte li.gt-reordonnable");
+      if (reord.length === 5) OK("Atout seul : les 5 lycées restent réordonnables (glisser-déposer + flèches)");
+      else KO("Atout seul : " + reord.length + " lycée(s) réordonnable(s), on en attend 5");
+
+      // L'atout est mentionné sur le lycée qui le propose.
+      const mention = a.doc.querySelector("#gt-carte .gt-v-atouts");
+      if (mention && /japonais/i.test(mention.textContent)) {
+        OK("Atout seul : l'atout est affiché sur le lycée concerné");
+      } else {
+        KO("Atout seul : l'atout n'est pas affiché sur le lycée qui le propose");
+      }
+
+      // Aucun faux filet.
       const filets = a.doc.querySelectorAll("#gt-carte .gt-tag-filet");
       if (filets.length === 0) OK("Atout seul : aucune fausse étiquette « filet de sécurité »");
-      else KO("Atout seul : " + filets.length + " étiquette(s) « filet » alors qu'il n'y a aucun vœu à option");
+      else KO("Atout seul : " + filets.length + " étiquette(s) « filet » à tort");
+
+      // L'atout doit partir au PDF (via getVoeux).
+      const gv = a.window.TrouveTaVoie2GT.getVoeux();
+      const avecAtout = gv.some(function (v) { return v.atouts && v.atouts.length; });
+      if (avecAtout) OK("Atout seul : l'atout est transmis à getVoeux() (donc au PDF)");
+      else KO("Atout seul : l'atout n'est pas transmis à getVoeux() — absent du PDF");
+
+      // Le lycée qui propose l'atout doit REMONTER en tête par défaut...
+      const noms = voeuxDe(a.doc).map(function (li) {
+        return ((li.querySelector(".gt-v-lyc") || {}).textContent || "").replace(/^—\s*/, "").split(",")[0].trim();
+      });
+      if (/Truffaut/.test(noms[0] || "")) {
+        OK("Atout seul : le lycée qui propose l'atout (Truffaut) remonte en tête");
+      } else {
+        KO("Atout seul : le lycée à atout n'est pas en tête (1er = « " + (noms[0] || "?") + " »)");
+      }
+
+      // ...tout en restant déplaçable (il ne doit pas être bloqué en tête).
+      const bas = a.doc.querySelector('#gt-carte .gt-move[data-move="down"]');
+      if (bas) {
+        bas.dispatchEvent(new a.window.Event("click", { bubbles: true }));
+        const noms2 = voeuxDe(a.doc).map(function (li) {
+          return ((li.querySelector(".gt-v-lyc") || {}).textContent || "").replace(/^—\s*/, "").split(",")[0].trim();
+        });
+        if (!/Truffaut/.test(noms2[0] || "")) OK("Atout seul : le lycée à atout reste déplaçable (pas bloqué en tête)");
+        else KO("Atout seul : le lycée à atout est bloqué en tête, impossible à déplacer");
+      }
     } else if (a) {
       KO("Le critère « sp_japonais » est introuvable");
+    }
+  }
+
+  // 5. Statistiques : tout usage abouti doit être compté, quelle que soit la
+  //    porte d'entrée. Avant, seul le clic « lycée/option » comptait — donc les
+  //    élèves sans option (la majorité) étaient invisibles dans les stats.
+  {
+    const scenarios = [
+      ["réordonner sans option", function (a) {
+        const b = a.doc.querySelector('#gt-carte .gt-move[data-move="down"]');
+        if (b) b.dispatchEvent(new a.window.Event("click", { bubbles: true }));
+      }],
+      ["cocher un atout", function (a) { cocher(a, "sp_japonais"); }],
+      ["cocher une option", function (a) { cocher(a, "design"); }],
+    ];
+    scenarios.forEach(function (sc) {
+      const a = monterApplication2GT();
+      if (!a) return;
+      const envoyees = [];
+      a.window.pingStats = function (type, val) { envoyees.push(type + ":" + val); };
+      sc[1](a);
+      const compte = envoyees.filter(function (s) { return s.indexOf("2gt_voeux") === 0; }).length;
+      if (compte >= 1) OK("Stat 2GT comptée pour : " + sc[0]);
+      else KO("Stat 2GT NON comptée pour : " + sc[0] + " (ces élèves seraient invisibles)");
+    });
+
+    // Ouvrir l'onglet sans rien faire ne doit RIEN compter.
+    const a = monterApplication2GT();
+    if (a) {
+      const envoyees = [];
+      a.window.pingStats = function (type, val) { envoyees.push(type + ":" + val); };
+      // on ne fait rien
+      const compte = envoyees.filter(function (s) { return s.indexOf("2gt_voeux") === 0; }).length;
+      if (compte === 0) OK("Stat 2GT : ouvrir l'onglet sans agir ne compte pas (pas de faux positif)");
+      else KO("Stat 2GT : une simple ouverture d'onglet est comptée à tort");
     }
   }
 
