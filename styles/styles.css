@@ -200,6 +200,20 @@ h1 {
      border-radius:10px;
      padding:16px;
 }
+/* Panneau « nu » : sert de simple conteneur pour la carte, sans cadre ni fond
+   (remplace un style="" inline sur le second panneau de la voie pro). */
+.panel-nu{
+     background:transparent;
+     border:none;
+     padding:0;
+}
+/* État caché par défaut. Le JavaScript rend l'élément visible en posant
+   directement element.style.display ("block"/"flex"), qui l'emporte sur cette
+   classe ; il repose l'élément à "none" pour le recacher. Remplace les
+   style="display:none" inline de cardFilled, cardActions et psyNote. */
+.est-cache{
+     display:none;
+}
 #chatlog{
      height:450px;
      overflow-y:auto;
