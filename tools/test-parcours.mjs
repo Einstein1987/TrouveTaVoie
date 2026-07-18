@@ -21,10 +21,13 @@ import { readFileSync } from "node:fs";
 import { JSDOM } from "jsdom";
 
 const racine = new URL("../", import.meta.url);
+// Lit un fichier du projet relativement à la racine du dépôt.
 const lire = (p) => readFileSync(new URL(p, racine), "utf8");
 
 let echecs = 0;
+// Affiche un cas de test réussi.
 const OK = (m) => console.log("  ✓ " + m);
+// Enregistre et affiche un cas de test échoué.
 const KO = (m) => { echecs++; console.log("  ✗ " + m); };
 
 /* -------------------------------------------------------------------------- */
@@ -97,11 +100,14 @@ function monterApplication2GT() {
 /* -------------------------------------------------------------------------- */
 /* Outils de simulation                                                        */
 /* -------------------------------------------------------------------------- */
+// Retourne les boutons encore actifs de la dernière ligne de choix affichée.
 const boutons = (doc) =>
   Array.from(doc.querySelectorAll(".optrow:last-of-type .optbtn:not([disabled])"));
 
+// Retourne tous les boutons du fil, y compris ceux des anciennes questions.
 const tousLesBoutons = (doc) => Array.from(doc.querySelectorAll(".optbtn"));
 
+// Simule un clic et transforme toute erreur navigateur en échec de test.
 function cliquer(app, bouton) {
   bouton.dispatchEvent(new app.window.Event("click", { bubbles: true }));
   if (app.erreurs.length) {
@@ -112,6 +118,7 @@ function cliquer(app, bouton) {
   return true;
 }
 
+// Simule une saisie libre puis son envoi, par bouton ou par touche Entrée.
 function ecrire(app, texte) {
   const champ = app.doc.getElementById("userInput");
   const envoyer = app.doc.getElementById("sendBtn") ||
@@ -185,6 +192,7 @@ console.log("\n── QUIZ COMPLET (10 questions) ──");
 /* ========================================================================== */
 console.log("\n── LES TROIS PISTES RESTENT CONSULTABLES ──");
 {
+  // Relit les boutons à chaque appel, car le fil peut être reconstruit entre deux clics.
   const pistes = () => tousLesBoutons(app.doc).filter((x) => /%$/.test(x.textContent));
   const p = pistes();
   if (!p.length) { KO("Aucune piste à consulter"); }
@@ -402,7 +410,9 @@ console.log("\n── EFFACEMENT DE LA CARTE APRÈS « NON » ──");
 {
   const a = monterApplication();
   if (a) {
+    // Relit les choix actifs après chaque tour de conversation.
     const boutonsActifs = () => boutons(a.doc);
+    // Indique si la carte remplie est actuellement visible dans le DOM de test.
     const carteVisible = () => a.doc.getElementById("cardFilled").style.display !== "none";
 
     // 1. Afficher une fiche (Bac Pro Cuisine).
@@ -487,13 +497,16 @@ console.log("\n── VOCABULAIRE SECTEUR / FAMILLE ──");
 
 console.log("\n── CLASSEMENT 2GT ──");
 {
+  // Extrait uniquement les vrais vœux, sans les bandeaux explicatifs de la liste.
   const voeuxDe = (doc) => Array.from(doc.querySelectorAll("#vue-2gt ol.gt-voeux > li"))
     .filter((li) => !li.classList.contains("gt-sep-li") && !li.classList.contains("gt-limite-li"));
+  // Coche un critère 2GT par son identifiant et indique s'il a été trouvé.
   const cocher = (a, id) => {
     const c = a.doc.querySelector('#vue-2gt [data-critere="' + id + '"],#vue-2gt [data-place="' + id + '"]');
     if (c) c.dispatchEvent(new a.window.Event("click", { bubbles: true }));
     return !!c;
   };
+  // Sélectionne la stratégie de classement 2GT demandée par le test.
   const strat = (a, s) => {
     const b = a.doc.querySelector('#vue-2gt [data-strat="' + s + '"]');
     if (b) b.dispatchEvent(new a.window.Event("click", { bubbles: true }));
@@ -558,6 +571,7 @@ console.log("\n── CLASSEMENT 2GT ──");
     if (a && cocher(a, "biotech") && cocher(a, "sp_management")) {
       strat(a, "lycee");
       const v = voeuxDe(a.doc);
+      // Extrait le libellé du lycée porté par un élément de vœu.
       const lyc = (li) => ((li.querySelector(".gt-v-lyc") || {}).textContent || "");
       const idxParc = v.findIndex((li) => /Parc des Loges/i.test(lyc(li)));
       const idxDois = v.findIndex((li) => /Doisneau/i.test(lyc(li)));
@@ -760,6 +774,7 @@ console.log("\n── CLASSEMENT 2GT ──");
 
 console.log("\n── RÉORDONNANCEMENT DES VŒUX (2GT sans option) ──");
 {
+  // Retourne l'ordre visuel courant des lycées dans la liste réordonnable.
   const ordreLycees = (doc) =>
     Array.from(doc.querySelectorAll("#gt-carte ol.gt-voeux > li:not(.gt-sep-li):not(.gt-limite-li)"))
       .map((li) => ((li.querySelector(".gt-v-lyc") || {}).textContent || "").replace(/^—\s*/, "").split(",")[0].trim());
@@ -818,7 +833,9 @@ console.log("\n── RÈGLE DES DEUX OPTIONS (point 7) ──");
 {
   const a = monterApplication2GT();
   if (a) {
+    // Relit le rappel après chaque reconstruction de l'interface.
     const regle = () => a.doc.querySelector("#vue-2gt .gt-rappel-deux");
+    // Coche une option Affelnet pour faire évoluer le rappel testé.
     const cocher2 = (id) => {
       const c = a.doc.querySelector('#vue-2gt [data-critere="' + id + '"]');
       if (c) c.dispatchEvent(new a.window.Event("click", { bubbles: true }));
@@ -961,6 +978,7 @@ console.log("\n── PLAFOND D'AFFICHAGE DES PISTES (point 4) ──");
       cles.map((k) => ({ domainKey: k, label: k, score: 10, affinite: 0.9 }));
     app.window.afficherResultatQuiz();
 
+    // Compte les pistes visibles dans la ligne de boutons la plus récente.
     const pistesAffichees = () =>
       boutons(app.doc).filter((b) => /%\s*$/.test(b.textContent));
 
@@ -980,6 +998,7 @@ console.log("\n── PLAFOND D'AFFICHAGE DES PISTES (point 4) ──");
 
       // Double-clic : le bouton de révélation ne doit PAS re-remplir le fil avec
       // une nouvelle copie des mêmes secteurs (bug relevé par l'audit).
+      // Compte toutes les pistes ajoutées au fil afin de détecter une duplication.
       const totalPct = () =>
         tousLesBoutons(app.doc).filter((b) => /%\s*$/.test(b.textContent)).length;
       const avant = totalPct();               // 4 principaux + 3 révélés = 7
@@ -1006,7 +1025,9 @@ console.log("\n── FOCUS CLAVIER (2GT) ──");
     const { doc } = a;
     // Re-chercher les puces à chaque tour : refresh() reconstruit le DOM, et
     // focus() sur un élément détaché ne fait rien. (Piège vécu.)
+    // Relit les puces après chaque reconstruction, les anciens nœuds étant détachés.
     const puces = () => Array.from(doc.querySelectorAll("#vue-2gt [data-critere]"));
+    // Déclenche un clic clavier/souris équivalent dans le DOM jsdom.
     const clic = (el) => el.dispatchEvent(new a.window.Event("click", { bubbles: true }));
 
     if (!puces().length) {

@@ -193,7 +193,11 @@ eslint.config.mjs              Règle no-undef — à la racine, découverte aut
 > `bdd_pro` → `dico_chatbot` → `quiz_pro` → `app_pro` → `export` →
 > `bdd_gt` → `app_gt` → `pdf` → `tabs`
 > jsPDF ne figure plus dans cette liste : il n'est plus chargé au démarrage mais
-> **à la demande** par `export.js`, au premier téléchargement de PDF (voir point 14).
+> **à la demande** par `export.js`, au premier téléchargement de PDF.
+
+Les deux fichiers `*.generated.json` sont des sorties reproductibles des outils de
+calcul. Ils ne sont pas lus par l'application : la source de vérité reste
+`scripts/bdd_pro.js` après contrôle humain et recopie des nouvelles valeurs.
 
 **Dépendances**
 
@@ -364,8 +368,8 @@ producteurs respectifs.
 - [jsPDF](https://github.com/parallax/jsPDF) 4.2.1, licence **MIT** — compatible AGPL.
   Sa licence est conservée dans `scripts/vendor/jspdf-LICENSE.txt`.
 - Polices **Outfit** et **Space Mono**, sous *SIL Open Font License 1.1* — compatible
-  AGPL, y compris en hébergement local. ⚠️ *Le fichier de licence n'est pas encore
-  joint aux `.woff2` de `styles/fonts/` : c'est une obligation de l'OFL, à corriger.*
+  AGPL, y compris en hébergement local. La licence est conservée dans
+  `styles/fonts/License_OFL.md` avec les fichiers `.woff2`.
 
 ---
 

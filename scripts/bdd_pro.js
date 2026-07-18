@@ -60,6 +60,21 @@
 //      coefficients faux : les CAP héritaient de ceux de leur secteur.
 // -----------------------------------------------------------------------------
 
+// SCHÉMA DE MAINTENANCE
+// ----------------------
+// Chaque entrée de DOMAINS est un SECTEUR d'affichage et contient :
+//   famille    : nom officiel de la famille de métiers, ou null ;
+//   label      : texte montré à l'élève ;
+//   keywords   : vocabulaire officiel de recherche (le vocabulaire courant est
+//                complété dans dico_chatbot.js) ;
+//   coeffs     : barème par défaut de la seconde commune ;
+//   formations : liste des CAP et bacs pro rattachés visuellement au secteur.
+// Une formation porte toujours SON tableau `coeffs` de 7 valeurs et sa liste
+// `etablissements`. `horsFamille` et `secondeCommune` modifient le message rendu
+// par app_pro.js : ne pas les déduire automatiquement du secteur parent.
+// Après toute modification, lancer `npm test` : les validateurs contrôlent la
+// structure, les coefficients, le README et les parcours qui consomment la base.
+
 const DOMAINS = {
   relation_client: {
     famille: "Métiers de la relation client",
@@ -3487,10 +3502,12 @@ const DUREES_TRANSPORT_CORBEIL = {
 const NORMALIZED_DUREES_CORBEIL = Object.fromEntries(
   Object.entries(DUREES_TRANSPORT_CORBEIL).map(([k, v]) => [normalizeDistanceKey(k), v])
 );
+// Retrouve le trajet en transports d'un établissement à partir de son nom et de sa ville.
 function getDureeFromCorbeil(etablissement) {
   const key = normalizeDistanceKey(`${etablissement.nom}|${etablissement.ville}`);
   return NORMALIZED_DUREES_CORBEIL[key] ?? null;
 }
+// Normalise une clé « nom|ville » pour résister aux accents, apostrophes et espaces.
 function normalizeDistanceKey(value) {
   return value
     .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
@@ -3533,6 +3550,7 @@ const DISTANCES_CORBEIL_ESSONNES = {
 const NORMALIZED_DISTANCES_CORBEIL = Object.fromEntries(
   Object.entries(DISTANCES_CORBEIL_ESSONNES).map(([key, distance]) => [normalizeDistanceKey(key), distance])
 );
+// Retourne la distance estimée d'un établissement, ou 999 pour le placer en dernier.
 function getDistanceFromCorbeil(etablissement) {
   const fullKey = normalizeDistanceKey(`${etablissement.nom}|${etablissement.ville}`);
   return NORMALIZED_DISTANCES_CORBEIL[fullKey] ?? 999;
@@ -3569,6 +3587,7 @@ function nettoyerTrajet(trajet) {
   return out.join(" puis ");
 }
 
+// Enrichit chaque établissement avec distance et trajet, puis stabilise son ordre d'affichage.
 function sortEtablissementsByDistance(domains) {
   Object.values(domains).forEach(domain => {
     domain.formations.forEach(formation => {

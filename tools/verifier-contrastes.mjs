@@ -73,6 +73,7 @@ function luminance(hex) {
     .map(c => (c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4));
   return 0.2126 * r + 0.7152 * g + 0.0722 * b;
 }
+// Calcule le ratio de contraste WCAG entre une couleur de texte et son fond.
 function ratio(avant, arriere) {
   const a = luminance(avant), b = luminance(arriere);
   return (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);

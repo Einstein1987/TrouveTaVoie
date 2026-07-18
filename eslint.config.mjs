@@ -1,3 +1,11 @@
+/*
+ * Configuration ESLint du code exécuté dans le navigateur.
+ *
+ * Les outils Node (*.mjs), les fichiers tiers et le bundle jsPDF sont exclus.
+ * La liste `globals` décrit les API navigateur et les symboles partagés entre
+ * scripts classiques. Ajouter ici tout nouveau symbole global intentionnel ;
+ * ne pas désactiver `no-undef`, qui protège contre les fautes de nom silencieuses.
+ */
 export default [
   { ignores: ["scripts/vendor/**", "tools/**", "**/*.mjs"] },
   {

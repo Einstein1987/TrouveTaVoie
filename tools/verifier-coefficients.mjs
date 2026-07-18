@@ -169,9 +169,12 @@ const FAMILLES = {
 };
 
 /* -------------------------------------------------------------------------- */
+// Compare deux tableaux de coefficients valeur par valeur.
 const eq = (a, b) => Array.isArray(a) && a.length === b.length && a.every((v, i) => v === b[i]);
 let echecs = 0;
+// Affiche les succès uniquement en mode VERBEUX.
 const OK = (m) => { if (process.env.VERBEUX) console.log("  \u2713 " + m); };
+// Enregistre et affiche une incohérence bloquante.
 const KO = (m) => { console.error("  \u2717 " + m); echecs++; };
 
 console.log("Coefficients Affelnet \u2014 contr\u00f4le contre la fiche n\u00b021 + le tableau national (RS2021)\n");
