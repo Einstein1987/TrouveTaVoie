@@ -134,10 +134,11 @@ const FICHE_21 = {
  * mais on les compte et on les annonce séparément : dire « conforme à la fiche
  * n°21 » pour une formation qui n'y figure pas serait inexact.
  *
- * ⚠ CAP Métallier : coefficient confirmé par le tableau national RS2021 (fiche
- * n°11, groupe 25 « Mécanique, électricité, électronique », intitulé officiel
- * « SERRURIER METALLIER »). Cette source a cinq ans : à reconfirmer auprès du
- * CIO / DRAIO pour la campagne 2026 si une fiche n°21 à jour le réintègre. */
+ * CAP Métallier : coefficient issu du tableau national RS2021 (fiche n°11, groupe
+ * 25 « Mécanique, électricité, électronique », intitulé officiel « SERRURIER
+ * METALLIER ») et CONFIRMÉ pour la campagne 2026 (vérification de l'auteur auprès
+ * du CIO / DRAIO). On l'annonce tout de même à part, car la formation n'apparaît
+ * pas dans la fiche n°21 académique : la source de vérification n'est pas la même. */
 const TABLEAU_NATIONAL = {
   "CAP Métallier": [4, 6, 3, 4, 3, 2, 8],
 };
@@ -207,7 +208,7 @@ for (const cle in DOMAINS) {
 }
 console.log("  " + (nb - echecs - absentes.length) + " formation(s) conforme(s) sur " + nb);
 if (parNational.length) {
-  console.log("  dont " + parNational.length + " via le TABLEAU NATIONAL (hors fiche n\u00b021 2026, \u00e0 reconfirmer) : " + parNational.join(", "));
+  console.log("  dont " + parNational.length + " via le TABLEAU NATIONAL RS2021 (hors fiche n\u00b021 acad\u00e9mique 2026, confirm\u00e9 pour 2026) : " + parNational.join(", "));
 }
 if (absentes.length) console.log("  " + absentes.length + " absente(s) de toute source, signal\u00e9e(s) \u00e0 l'\u00e9l\u00e8ve : " + absentes.join(", "));
 

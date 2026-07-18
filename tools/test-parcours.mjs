@@ -513,6 +513,23 @@ console.log("\n── CLASSEMENT 2GT ──");
     }
   }
 
+  // 1 bis. Un ATOUT seul (sans vraie option) remonte le lycée qui le propose : le
+  //   texte doit l'ANNONCER, au lieu de promettre « du plus proche au plus loin ».
+  {
+    const a = monterApplication2GT();
+    if (a && cocher(a, "sp_japonais")) {   // atout « sur place », à Truffaut (lycée éloigné)
+      const sep = a.doc.querySelector("#vue-2gt .gt-sep-li");
+      const txt = (sep || {}).textContent || "";
+      if (/atout/i.test(txt) && /(en premier|d'abord)/i.test(txt)) {
+        OK("Atout seul : le texte annonce que les lycées à atout sont placés en premier");
+      } else {
+        KO("Atout seul : le texte ne reflète pas l'ordre réel (« " + txt.slice(0, 60) + " »)");
+      }
+    } else if (a) {
+      KO("Le critère « sp_japonais » (atout) est introuvable");
+    }
+  }
+
   // 2. Une option (Design, proposée par un seul lycée) → ce lycée en tête.
   {
     const a = monterApplication2GT();
@@ -960,6 +977,22 @@ console.log("\n── PLAFOND D'AFFICHAGE DES PISTES (point 4) ──");
       const n2 = pistesAffichees().length;
       if (n2 === 3) OK("Quiz : les 3 secteurs ex æquo restants s'affichent à la demande");
       else KO("Quiz : révélation des ex æquo inattendue (" + n2 + " au lieu de 3)");
+
+      // Double-clic : le bouton de révélation ne doit PAS re-remplir le fil avec
+      // une nouvelle copie des mêmes secteurs (bug relevé par l'audit).
+      const totalPct = () =>
+        tousLesBoutons(app.doc).filter((b) => /%\s*$/.test(b.textContent)).length;
+      const avant = totalPct();               // 4 principaux + 3 révélés = 7
+      cliquer(app, voir);                      // 2e activation
+      cliquer(app, voir);                      // 3e activation
+      const apres = totalPct();
+      if (apres === avant) {
+        OK("Quiz : recliquer « voir les autres » ne duplique pas les secteurs (total stable : " + apres + ")");
+      } else {
+        KO("Quiz : le bouton « voir les autres » se réutilise (" + avant + " → " + apres + " boutons %)");
+      }
+      if (voir.disabled) OK("Quiz : le bouton de révélation est désactivé après le premier clic");
+      else KO("Quiz : le bouton de révélation reste actif après le premier clic");
     }
   }
 }
