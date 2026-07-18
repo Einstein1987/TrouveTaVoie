@@ -9,7 +9,7 @@
     "node": ">=20.19.0"
   },
   "scripts": {
-    "lint": "eslint --config tools/eslint.config.mjs scripts/",
+    "lint": "eslint scripts/",
     "verifier:donnees": "node tools/verifier-donnees.mjs",
     "verifier:coefficients": "node tools/verifier-coefficients.mjs",
     "verifier:contrastes": "node tools/verifier-contrastes.mjs",
