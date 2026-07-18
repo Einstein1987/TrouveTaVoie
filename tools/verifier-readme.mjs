@@ -114,7 +114,7 @@ const CITES = [
   "tools/verifier-donnees.mjs", "tools/verifier-coefficients.mjs",
   "tools/verifier-contrastes.mjs", "tools/test-pdf.mjs", "tools/test-parcours.mjs",
   "tools/verifier-readme.mjs",   // il doit se citer lui-même (relevé par l'audit)
-  "tools/eslint.config.mjs",
+  "eslint.config.mjs",           // remonté à la racine (découverte auto par ESLint)
   ".github/workflows/verifier-donnees.yml",
 ];
 let manquants = 0;

@@ -244,7 +244,7 @@ OK(CRITERES_SUR_PLACE.length + " atouts et " + Object.keys(SERIES_TECHNO_2GT).le
     // CI, alors qu'il était présent en local. Un fichier requis mais non commité
     // est un piège : tout marche chez soi, tout casse en ligne.
     const requisParLaCI = [
-      ["tools/eslint.config.mjs", "la config ESLint (étape « variables non déclarées »)"],
+      ["eslint.config.mjs", "la config ESLint (étape « variables non déclarées »)"],
     ];
     // On n'exige un fichier que si une étape le référence vraiment.
     const texteWorkflow = lignes.join("\n");
