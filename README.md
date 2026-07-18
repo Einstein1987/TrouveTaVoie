@@ -124,6 +124,15 @@ et jsPDF sont **hébergés localement** : plus aucune requête vers Google Fonts
 un CDN. Une politique de sécurité de contenu stricte (`_headers`) interdit d'ailleurs
 tout script d'origine tierce.
 
+*Exception à connaître — la dictée vocale.* Le bouton micro repose sur la **Web
+Speech API du navigateur**, pas sur l'application. Quand un élève l'active, c'est
+le **navigateur** qui envoie le son du micro à un service tiers (Google pour
+Chrome, par exemple) pour le convertir en texte — une requête qui échappe donc à
+la liste « Netlify + Google Forms » ci-dessus, et à la CSP. Comme les
+utilisateurs sont mineurs, l'application **prévient et demande l'accord** avant la
+toute première activation (une fois par session, sans rien mémoriser). La saisie
+au clavier reste toujours possible et n'émet, elle, aucune requête.
+
 *Limite assumée :* les statistiques Google Forms sont **falsifiables** — n'importe qui
 peut poster dans le formulaire. Elles sont **indicatives**, jamais décisionnelles.
  
@@ -137,6 +146,8 @@ serveur.** Le site est entièrement statique et hébergé sur Netlify.
 ```
 index.html                     Page unique, deux onglets
 _headers                       En-têtes de sécurité Netlify (dont une CSP stricte)
+package.json                   Outils de validation (CI) — PAS de dépendance d'exécution
+package-lock.json              Versions figées d'eslint et jsdom (npm ci reproductible)
 ├── styles/
 │   ├── styles.css             Charte commune + voie professionnelle
 │   ├── 2gt.css                Comparateur 2GT (+ règles d'impression)
@@ -148,10 +159,10 @@ _headers                       En-têtes de sécurité Netlify (dont une CSP str
 │   ├── app_pro.js             Assistant conversationnel, quiz, fiche de sortie
 │   ├── bdd_gt.js              Données 2GT : 5 lycées, 23 codes vœux, 11 critères
 │   ├── app_gt.js              Comparateur, génération de la liste de vœux
-│   ├── export.js              Branchement du bouton de téléchargement
+│   ├── export.js              Bouton de téléchargement + chargement à la demande de jsPDF
 │   ├── pdf.js                 Génération des PDF (jsPDF), pour les deux onglets
 │   ├── tabs.js                Bascule entre les onglets, remise à zéro via le logo
-│   └── vendor/                jsPDF 4.2.1 (MIT) + sa licence
+│   └── vendor/                jsPDF 4.2.1 (MIT) + sa licence — chargé au 1er téléchargement
 ├── tools/                     Scripts Node — jamais chargés par le navigateur
 │   ├── verifier-donnees.mjs        Cohérence des bases              (CI)
 │   ├── verifier-coefficients.mjs   Coefficients vs fiche n°21       (CI)
@@ -162,16 +173,20 @@ _headers                       En-têtes de sécurité Netlify (dont une CSP str
 │   └── eslint.config.mjs           Règle no-undef (variables non déclarées)
 │   ├── calculer-distances.mjs      Géocodage → distances estimées
 │   └── calculer-durees.mjs         API PRIM → temps de trajet
-├── .github/workflows/
-│   └── verifier-donnees.yml   Lance tous les contrôles ci-dessus à chaque commit
+├── .github/
+│   ├── workflows/
+│   │   └── verifier-donnees.yml   Lance tous les contrôles ci-dessus à chaque commit
+│   └── dependabot.yml             Met à jour actions + eslint/jsdom (PR mensuelles)
 
 └── img/                       Logo, favicon
 ```
 
 > **L'ordre des `<script>` dans `index.html` est contractuel.** Il n'y a pas de build :
 > les fichiers communiquent par variables globales.
-> `vendor/jspdf` → `bdd_pro` → `dico_chatbot` → `quiz_pro` → `app_pro` → `export` →
+> `bdd_pro` → `dico_chatbot` → `quiz_pro` → `app_pro` → `export` →
 > `bdd_gt` → `app_gt` → `pdf` → `tabs`
+> jsPDF ne figure plus dans cette liste : il n'est plus chargé au démarrage mais
+> **à la demande** par `export.js`, au premier téléchargement de PDF (voir point 14).
 
 **Dépendances**
 
@@ -181,7 +196,7 @@ _headers                       En-têtes de sécurité Netlify (dont une CSP str
 | Outfit, Space Mono (OFL) | Typographie | **Local** (`styles/fonts/`) — aucun CDN |
 | Google Forms | Statistiques anonymes | Externe, à la demande |
 | Web Speech API | Lecture vocale et dictée | Navigateur |
-| jsdom | Tests uniquement — jamais livré au navigateur | `npm install` en CI |
+| jsdom | Tests uniquement — jamais livré au navigateur | `npm ci` en CI (version figée) |
  
 ### Structure des données 2GT — trois niveaux à ne jamais confondre
  
@@ -261,20 +276,29 @@ Puis ouvrir <http://localhost:8000>.
 
 ### Valider avant de livrer
 
-Cinq contrôles, lancés à chaque commit par GitHub Actions. **Ils ne sont pas
+Huit contrôles, lancés à chaque commit par GitHub Actions. **Ils ne sont pas
 décoratifs : chacun existe parce qu'un vrai défaut est passé au travers.**
 
-```bash
-npm install jsdom                    # une seule fois
+Les versions d'`eslint` et de `jsdom` sont **figées** par `package-lock.json` :
+`npm ci` installe exactement ces versions, aujourd'hui comme dans deux ans. Ces
+outils ne servent qu'à la validation — l'application, elle, ne dépend de rien.
 
+```bash
+npm ci        # installe eslint + jsdom, versions verrouillées (une seule fois)
+npm test      # enchaîne les huit contrôles ci-dessous et s'arrête au premier échec
+```
+
+Chaque contrôle reste lançable seul (utile pour cibler un échec) :
+
+```bash
 node --check scripts/*.js            # syntaxe
-npx eslint scripts/                  # variables non déclarées (no-undef)
-node tools/verifier-donnees.mjs      # cohérence des bases
-node tools/verifier-coefficients.mjs # coefficients vs fiche n°21 + familles
-node tools/verifier-contrastes.mjs   # contrastes WCAG 2.1 AA
-node tools/test-pdf.mjs              # génération réelle des deux PDF
-node tools/test-parcours.mjs         # parcours utilisateur dans un vrai DOM
-node tools/verifier-readme.mjs       # ce README correspond-il au code ?
+npm run lint                         # variables non déclarées (ESLint no-undef)
+npm run verifier:donnees             # cohérence des bases
+npm run verifier:coefficients        # coefficients vs fiche n°21 + familles
+npm run verifier:contrastes          # contrastes WCAG 2.1 AA
+npm run test:pdf                     # génération réelle des deux PDF
+npm run test:parcours                # parcours utilisateur dans un vrai DOM
+npm run verifier:readme              # ce README correspond-il au code ?
 ```
 
 | Contrôle | Ce qu'il a rattrapé |
