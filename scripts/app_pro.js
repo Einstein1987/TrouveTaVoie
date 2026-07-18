@@ -195,7 +195,7 @@ function speak(text){
  * serait interprété comme une réponse à la question 7.
  *
  * Seules les lignes marquées `reutilisable` échappent au verrouillage
- * automatique : les trois pistes du quiz, que l'élève doit pouvoir explorer
+ * automatique : les pistes du quiz, que l'élève doit pouvoir explorer
  * l'une après l'autre.
  * -------------------------------------------------------------------------- */
 function verrouillerLigne(row, choisi){
@@ -249,7 +249,7 @@ function addBotMessage(text, options, config){
   if(options && options.length){
     // Toute nouvelle question rend les anciennes obsolètes : on verrouille les
     // lignes précédentes. Exception : les lignes marquées « réutilisables »
-    // (les trois pistes du quiz), que l'élève doit pouvoir reconsulter.
+    // (les pistes du quiz), que l'élève doit pouvoir reconsulter.
     verrouillerAnciennesLignes();
 
     const optRow = document.createElement('div');
@@ -263,6 +263,13 @@ function addBotMessage(text, options, config){
       b.textContent = opt.label;
 
       b.addEventListener('click', () => {
+        // Bouton à usage unique (ex. « voir les autres secteurs à égalité ») :
+        // même dans une ligne réutilisable, il ne doit s'activer qu'une fois,
+        // sinon chaque clic re-révélerait les mêmes secteurs en boucle.
+        if (opt.once) {
+          if (b.disabled) return;
+          b.disabled = true;
+        }
         if (optRow.dataset.reutilisable === "1") {
           // Ligne réutilisable : on met en évidence le choix, sans la verrouiller.
           Array.prototype.forEach.call(optRow.children, function (btn) {
@@ -302,8 +309,10 @@ function addUserMessage(text){
 }
 
 function statsRefusees() {
-    // Refus « pour cette visite » : on lit la case au moment de l'envoi. Pas de
-    // stockage (RGPD, mineurs) — le choix vaut pour la session, comme annoncé.
+    // Refus « à partir de maintenant » : on lit la case au moment de l'envoi.
+    // Le refus n'est PAS rétroactif (une statistique a pu partir avant que l'élève
+    // ne coche la case) ; l'intitulé le dit honnêtement. Pas de stockage (RGPD,
+    // mineurs) — le choix vaut pour la session en cours.
     const c = document.getElementById("statsOptOut");
     return !!(c && c.checked);
 }
@@ -696,14 +705,16 @@ function askConfirm(selection){
  * QUIZ D'ORIENTATION
  * Questions et barème : scripts/quiz_pro.js
  *
- * Le quiz ne DÉSIGNE pas un métier : il propose TROIS pistes à explorer, et
- * c'est l'élève qui tranche. Un questionnaire d'intérêts ouvre des portes, il
- * ne décide pas d'une orientation.
+ * Le quiz ne DÉSIGNE pas un métier : il propose PLUSIEURS pistes à explorer
+ * (jusqu'à quatre, plus d'éventuels ex æquo à la demande), et c'est l'élève qui
+ * tranche. Un questionnaire d'intérêts ouvre des portes, il ne décide pas d'une
+ * orientation.
  * ========================================================================== */
 
 let quizIndex        = 0;      // question en cours
 let quizReponses     = [];     // réponses choisies, dans l'ordre
 let quizStatEnvoyee  = false;  // le quiz n'est compté qu'UNE fois, à la première piste consultée
+let autresPistesAffichees = false;  // les ex æquo au-delà du plafond n'ont pas encore été révélés
 
 function startQuiz() {
   verrouillerToutesLesLignes();
@@ -711,11 +722,12 @@ function startQuiz() {
   quizIndex       = 0;
   quizReponses    = [];
   quizStatEnvoyee = false;
+  autresPistesAffichees = false;
   state = 'quiz';
   addBotMessage(
     "Pas de souci, c'est fait pour ça. Je vais te poser " + QUIZ_PRO.length +
     " questions sur ce que tu aimes — pas sur des métiers, tu n'as pas besoin " +
-    "de les connaître. À la fin, je te proposerai trois pistes à explorer.",
+    "de les connaître. À la fin, je te proposerai plusieurs pistes à explorer.",
     [{ label: "C'est parti !", action: "quiz_next", payload: null }]
   );
 }
@@ -750,7 +762,7 @@ function nextQuizStep(indexReponse) {
 // (jusqu'à 7) : ce plafond évite d'afficher jusqu'à sept boutons d'un coup.
 const PLAFOND_PISTES_QUIZ = 4;
 
-// Trois pistes, jamais une seule : c'est l'élève qui choisit celle qu'il veut voir.
+// Pistes à explorer : c'est l'élève qui choisit celle qu'il veut voir.
 function afficherResultatQuiz() {
   const top = calculerResultatQuiz(quizReponses);
 
@@ -762,6 +774,7 @@ function afficherResultatQuiz() {
   }
 
   state = 'quiz_resultat';
+  autresPistesAffichees = false;   // nouveau résultat : la révélation redevient possible
 
   const principaux = top.slice(0, PLAFOND_PISTES_QUIZ);
   const nbAutres   = top.length - principaux.length;
@@ -783,12 +796,14 @@ function afficherResultatQuiz() {
              action: "quiz_choix", payload: o.domainKey };
   });
   // Des secteurs supplémentaires arrivés À ÉGALITÉ au-delà du plafond ? On ne les
-  // cache pas et on n'en tranche aucun : on propose de les afficher.
+  // cache pas et on n'en tranche aucun : on propose de les afficher. Le bouton est
+  // marqué `once` : il ne se déclenche qu'UNE fois, sinon chaque clic re-révélerait
+  // les mêmes secteurs en boucle dans le fil.
   if (nbAutres > 0) {
     lignes.push({
       label: "Voir " + (nbAutres === 1 ? "l'autre secteur" : "les " + nbAutres + " autres secteurs") +
              " arrivé" + (nbAutres === 1 ? "" : "s") + " à égalité",
-      action: "quiz_voir_autres", payload: null
+      action: "quiz_voir_autres", payload: null, once: true
     });
   }
   lignes.push({ label: "Aucune ne me parle, refaire le quiz", action: "start_quiz", payload: null });
@@ -806,12 +821,15 @@ function afficherResultatQuiz() {
   );
 }
 
-// Montre les secteurs arrivés à égalité stricte au-delà du plafond d'affichage.
-// Recalculé depuis les réponses (fonction pure) : aucun état à mémoriser entre
-// les deux tours de parole.
+// Montre les secteurs arrivés à égalité stricte au-delà du plafond d'affichage,
+// UNE SEULE FOIS (le bouton `once` l'empêche déjà côté UI ; ce drapeau garantit
+// qu'aucun second appel ne duplique la liste). Recalculé depuis les réponses
+// (fonction pure) : aucun autre état à mémoriser entre les tours de parole.
 function afficherAutresPistesQuiz() {
+  if (autresPistesAffichees) return;
   const autres = calculerResultatQuiz(quizReponses).slice(PLAFOND_PISTES_QUIZ);
   if (!autres.length) return;
+  autresPistesAffichees = true;
   addBotMessage(
     "Ces secteurs sont arrivés exactement à égalité avec les précédents — à toi de voir " +
     "si l'un d'eux te parle :",
@@ -824,21 +842,21 @@ function afficherAutresPistesQuiz() {
   );
 }
 
-// L'élève a choisi l'une des trois pistes.
+// L'élève a choisi l'une des pistes proposées.
 // Pas de confirmation : il vient de cliquer, lui redemander « c'est bien ça ? »
 // serait un tour de parole inutile. La fiche s'affiche directement.
 function choisirPisteQuiz(domainKey) {
   const selection = domainSelection(domainKey);
   selection.fromQuiz = true;      // distingue quiz_resultat de domaine dans les statistiques
 
-  // L'élève peut consulter les trois pistes l'une après l'autre : on ne compte
-  // que la première, sinon le taux de complétion du quiz dépasserait 100 %.
+  // L'élève peut consulter les pistes l'une après l'autre : on ne compte que la
+  // première, sinon le taux de complétion du quiz dépasserait 100 %.
   selection.sansStat = quizStatEnvoyee;
   quizStatEnvoyee    = true;
   addBotMessage(
     "Très bien ! Voici ce que propose ce secteur, dans le panneau de droite. " +
     "Tu peux la télécharger en PDF — ou remonter un peu dans la discussion pour cliquer " +
-    "sur l'une des deux autres pistes, elles restent disponibles.",
+    "sur l'une des autres pistes, elles restent disponibles.",
     [
       { label: "Refaire le quiz",  action: "start_quiz", payload: null },
       { label: "Retour au menu",   action: "menu",       payload: null }
@@ -1187,7 +1205,7 @@ function handleFreeText(text){
     return;
   }
   if (state === 'quiz_resultat') {
-    addBotMessage("Choisis l'une des trois pistes ci-dessus, ou reviens au menu pour " +
+    addBotMessage("Choisis l'une des pistes ci-dessus, ou reviens au menu pour " +
                   "faire une autre recherche.",
       [{ label: "Retour au menu", action: "menu", payload: null }]);
     return;

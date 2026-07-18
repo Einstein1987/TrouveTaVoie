@@ -510,19 +510,16 @@
 
       if (o.complement && !separateurPose) {
         separateurPose = true;
-        // Aucune option cochée du tout : la liste n'est QUE de la couverture.
-        // On ne parle donc pas de « compléter » — c'est le classement principal.
+        // Aucune VRAIE option cochée : la liste n'est QUE de la couverture. Mais on
+        // distingue deux sous-cas, car l'ordre par défaut n'est pas le même :
+        //  - un ou plusieurs ATOUTS « sur place » cochés : les lycées qui les
+        //    proposent sont remontés en tête, puis les autres par trajet. Il faut
+        //    donc l'annoncer — sinon « du plus proche au plus loin » serait faux.
+        //  - rien du tout : ordre purement géographique, du plus proche au plus loin.
         const aucuneOption = (selection.size === 0);   // atout seul compris : pas de vraie option
-        avant += aucuneOption
+        const avecAtout    = aucuneOption && selPlace.size > 0;
+        avant += !aucuneOption
           ? '<li class="gt-sep-li"><div>' +
-            '<strong>Tes 5 lycées de secteur, du plus proche au plus loin</strong>' +
-            '<span>Tu ne cherches pas d\'option particulière, et c\'est très bien : la plupart ' +
-            'des élèves sont dans ce cas. En classant tes 5 lycées de secteur, tu mets toutes ' +
-            'les chances de ton côté d\'être affecté dans l\'un d\'eux — cela dépend des places ' +
-            'disponibles. Ici, du plus proche au plus lointain : <b>c\'est toi qui décides de ' +
-            'l\'ordre</b>, pas l\'administration. Tu peux les réordonner comme tu veux.</span>' +
-            '</div></li>'
-          : '<li class="gt-sep-li"><div>' +
             '<strong>Pour couvrir tous tes lycées de secteur</strong>' +
             '<span>En classant tous tes lycées de secteur, tu mets toutes les chances de ton ' +
             'côté d\'être affecté dans l\'un d\'eux (selon les places disponibles). Si tu n\'en ' +
@@ -531,6 +528,23 @@
             'proximité. En ajoutant les vœux ci-dessous, du plus proche au plus lointain, ' +
             '<b>c\'est toi qui gardes la main jusqu\'au bout</b>. Tu restes libre de les retirer ' +
             'ou de les réordonner.</span>' +
+            '</div></li>'
+          : avecAtout
+          ? '<li class="gt-sep-li"><div>' +
+            '<strong>Tes 5 lycées de secteur — ceux avec tes atouts d\'abord</strong>' +
+            '<span>Tu as coché un ou plusieurs <b>atouts « sur place »</b> (ils se choisissent ' +
+            'à l\'inscription, pas sur Affelnet). Les lycées qui les proposent sont placés ' +
+            'en premier, puis les autres par temps de trajet. Ces atouts ne changent rien à ' +
+            'la procédure d\'affectation : <b>c\'est toi qui décides de l\'ordre</b> — tu peux ' +
+            'tout réordonner comme tu veux.</span>' +
+            '</div></li>'
+          : '<li class="gt-sep-li"><div>' +
+            '<strong>Tes 5 lycées de secteur, du plus proche au plus loin</strong>' +
+            '<span>Tu ne cherches pas d\'option particulière, et c\'est très bien : la plupart ' +
+            'des élèves sont dans ce cas. En classant tes 5 lycées de secteur, tu mets toutes ' +
+            'les chances de ton côté d\'être affecté dans l\'un d\'eux — cela dépend des places ' +
+            'disponibles. Ici, du plus proche au plus lointain : <b>c\'est toi qui décides de ' +
+            'l\'ordre</b>, pas l\'administration. Tu peux les réordonner comme tu veux.</span>' +
             '</div></li>';
       }
 

@@ -8,9 +8,14 @@
 // =============================================================================
 
 /* =============================================================================
- * COEFFICIENTS AFFELNET — vérifiés le 13 juillet 2026 contre le document
- * officiel « Fichier des formations professionnelles / vœux du bassin »
- * (académie de Versailles, campagne 2026).
+ * COEFFICIENTS AFFELNET — sources vérifiées pour la campagne 2026 :
+ *   • la FICHE TECHNIQUE ACADÉMIQUE n°21 (académie de Versailles, 2026) pour
+ *     l'ensemble des coefficients ;
+ *   • le TABLEAU NATIONAL des coefficients (guide AFFELNET-lycée RS2021) pour le
+ *     seul CAP Métallier, absent de la fiche n°21 académique 2026.
+ * (Le « Fichier des formations professionnelles / vœux du bassin » liste l'offre
+ *  de formation par établissement — ce n'est PAS une table de coefficients ; il
+ *  ne sert donc pas à les vérifier.)
  *
  * Deux niveaux : les coefficients du DOMAINE (la famille de métiers) et ceux de
  * chaque FORMATION. Ils diffèrent quand une seconde pro est AUTONOME, c'est-à-dire
@@ -26,10 +31,10 @@
  * CAP Jardinier paysagiste : présent dans la fiche technique n°21 avec
  *   [4,5,3,3,4,3,8]. (Contrairement à ce qu'indiquait un ancien commentaire, il
  *   n'est pas absent.) Le seul cas hors fiche n°21 est le CAP Métallier :
- *   coefficient [4,6,3,4,3,2,8] confirmé par le TABLEAU NATIONAL (guide
- *   AFFELNET-lycée RS2021), mais absent de la fiche n°21 académique 2026. Source
- *   vieille de cinq ans, à reconfirmer auprès du CIO / DRAIO pour 2026. Le
- *   validateur des coefficients l'annonce séparément (« via le tableau national »).
+ *   coefficient [4,6,3,4,3,2,8], issu du TABLEAU NATIONAL (guide AFFELNET-lycée
+ *   RS2021) et CONFIRMÉ pour la campagne 2026 (vérification de l'auteur auprès du
+ *   CIO / DRAIO). Le validateur des coefficients l'annonce séparément (« via le
+ *   tableau national »), la formation étant absente de la fiche n°21 académique.
  * ========================================================================== */
 
 // -----------------------------------------------------------------------------
