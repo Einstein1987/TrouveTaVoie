@@ -152,6 +152,7 @@ _headers                       En-têtes de sécurité Netlify (dont une CSP str
 netlify.toml                   Déploiement Netlify — exclut src_data/ du site publié
 package.json                   Outils de validation (CI) — PAS de dépendance d'exécution
 package-lock.json              Versions figées d'eslint et jsdom (npm ci reproductible)
+eslint.config.mjs              Règle no-undef — à la racine, découverte auto par ESLint
 ├── styles/
 │   ├── styles.css             Charte commune + voie professionnelle
 │   ├── 2gt.css                Comparateur 2GT (+ règles d'impression)
@@ -174,9 +175,11 @@ package-lock.json              Versions figées d'eslint et jsdom (npm ci reprod
 │   ├── test-pdf.mjs                Génération réelle des deux PDF   (CI)
 │   ├── test-parcours.mjs           Parcours utilisateur via jsdom   (CI)
 │   ├── verifier-readme.mjs         Chiffres du README vs code        (CI)
-│   └── eslint.config.mjs           Règle no-undef (variables non déclarées)
-│   ├── calculer-distances.mjs      Géocodage → distances estimées
-│   └── calculer-durees.mjs         API PRIM → temps de trajet
+│   └── donnees_transports/        Pré-calcul manuel, une fois par an (hors CI)
+│       ├── calculer-distances.mjs      Géocodage → distances estimées
+│       ├── calculer-durees.mjs         API PRIM → temps de trajet
+│       ├── distances.generated.json    Distances pré-calculées (à recopier dans bdd_pro.js)
+│       └── transports.generated.json   Trajets pré-calculés (à recopier dans bdd_pro.js)
 ├── .github/
 │   ├── workflows/
 │   │   └── verifier-donnees.yml   Lance tous les contrôles ci-dessus à chaque commit
