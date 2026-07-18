@@ -210,6 +210,11 @@ ol.gt-voeux > li.is-filet::before { background: var(--teal, #047857); }
 .gt-rappel-deux { margin: 0 0 14px; font-size: .82rem; color: var(--muted, #5C6B80);
                   line-height: 1.5; padding-left: 12px;
                   border-left: 3px solid var(--line, #E2E8F0); }
+/* Renforcé quand l'élève dépasse deux options : ambre, plus visible.
+   Le texte change AUSSI (pas seulement la couleur) — un élève daltonien lit
+   « Tu as coché N options ». Contraste 6,84:1. */
+.gt-rappel-deux.is-warn { color: #92400E; background: #FFFBEB;
+                          border-left-color: #B45309; padding: 8px 12px; border-radius: 0 6px 6px 0; }
 
 /* ---------- Atouts affichés sur le vœu, vœu simple sans option ---------- */
 .gt-v-atouts { display: block; margin-top: 5px; font-size: .82rem;
