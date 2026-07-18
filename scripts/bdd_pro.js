@@ -14,11 +14,19 @@
  *
  * Deux niveaux : les coefficients du DOMAINE (la famille de métiers) et ceux de
  * chaque FORMATION. Ils diffèrent quand une seconde pro est AUTONOME, c'est-à-dire
- * qu'elle n'appartient à aucune famille : HPS, MP3D, OPTL, Marchandisage visuel
- * ont leur propre barème [4,6,4,2,4,3,7].
+ * qu'elle n'appartient à aucune famille — chacune a alors SON PROPRE barème, et
+ * ces barèmes ne sont PAS identiques entre eux. Par exemple :
+ *     HPS           [5,3,4,3,5,2,8]
+ *     MP3D          [5,6,3,4,3,2,7]
+ *     OPTL          [4,6,3,4,3,2,8]
+ *     Marchandisage [4,6,4,2,4,3,7]
+ * (Un ancien commentaire prétendait qu'elles partageaient toutes [4,6,4,2,4,3,7] :
+ *  c'était faux. Le code, lui, a toujours porté les bonnes valeurs.)
  *
- * ⚠ CAP Jardinier paysagiste : absent du document (formation agricole, relevant
- *   du ministère de l'Agriculture). Ses coefficients restent À VÉRIFIER.
+ * CAP Jardinier paysagiste : présent dans la fiche technique n°21 avec
+ *   [4,5,3,3,4,3,8]. (Contrairement à ce qu'indiquait un ancien commentaire, il
+ *   n'est pas absent.) Le seul cas hors fiche n°21 était le CAP Métallier,
+ *   désormais confirmé par le tableau national — plus aucune formation en attente.
  * ========================================================================== */
 
 // -----------------------------------------------------------------------------
@@ -125,7 +133,7 @@ const DOMAINS = {
             transport: "RER D",
             distanceKm: 17,
             dureeMin: 79,
-            trajet: "Bus 4245 puis RER D puis RER D"
+            trajet: "Bus 4245 puis RER D (avec correspondance)"
           },
           {
             nom: "Lycée Paul Belmondo",
@@ -220,7 +228,7 @@ const DOMAINS = {
             transport: "RER D",
             distanceKm: 17,
             dureeMin: 79,
-            trajet: "Bus 4245 puis RER D puis RER D"
+            trajet: "Bus 4245 puis RER D (avec correspondance)"
           },
           {
             nom: "Lycée Paul Belmondo",
@@ -244,7 +252,7 @@ const DOMAINS = {
             transport: "RER D puis Bus",
             distanceKm: 21,
             dureeMin: 83,
-            trajet: "RER D puis RER D puis Bus 399"
+            trajet: "RER D puis Bus 399 (avec correspondance)"
           },
           {
             nom: "Lycée Henri Poincaré",
@@ -252,7 +260,7 @@ const DOMAINS = {
             transport: "RER D puis Bus",
             distanceKm: 26,
             dureeMin: 110,
-            trajet: "RER D puis RER D puis RER D puis RER B"
+            trajet: "RER D puis RER B (avec correspondance)"
           },
           {
             nom: "Lycée Nelson Mandela",
@@ -260,7 +268,7 @@ const DOMAINS = {
             transport: "RER D puis RER C",
             distanceKm: 39,
             dureeMin: 120,
-            trajet: "RER D puis RER D puis RER C"
+            trajet: "RER D puis RER C (avec correspondance)"
           },
           {
             nom: "Lycée Nikola Tesla",
@@ -331,7 +339,7 @@ const DOMAINS = {
             transport: "RER D",
             distanceKm: 17,
             dureeMin: 79,
-            trajet: "Bus 4245 puis RER D puis RER D"
+            trajet: "Bus 4245 puis RER D (avec correspondance)"
           },
           {
             nom: "Lycée Marguerite Yourcenar",
@@ -339,7 +347,7 @@ const DOMAINS = {
             transport: "RER D puis Bus",
             distanceKm: 21,
             dureeMin: 83,
-            trajet: "RER D puis RER D puis Bus 399"
+            trajet: "RER D puis Bus 399 (avec correspondance)"
           },
           {
             nom: "Lycée Henri Poincaré",
@@ -347,7 +355,7 @@ const DOMAINS = {
             transport: "RER D puis Bus",
             distanceKm: 26,
             dureeMin: 110,
-            trajet: "RER D puis RER D puis RER D puis RER B"
+            trajet: "RER D puis RER B (avec correspondance)"
           },
           {
             nom: "Lycée Nelson Mandela",
@@ -355,7 +363,7 @@ const DOMAINS = {
             transport: "RER D puis RER C",
             distanceKm: 39,
             dureeMin: 120,
-            trajet: "RER D puis RER D puis RER C"
+            trajet: "RER D puis RER C (avec correspondance)"
           }
         ]
       }
@@ -444,7 +452,7 @@ const DOMAINS = {
             transport: "RER D",
             distanceKm: 17,
             dureeMin: 79,
-            trajet: "Bus 4245 puis RER D puis RER D"
+            trajet: "Bus 4245 puis RER D (avec correspondance)"
           },
           {
             nom: "Lycée Paul Belmondo",
@@ -468,7 +476,7 @@ const DOMAINS = {
             transport: "RER D puis Bus",
             distanceKm: 21,
             dureeMin: 83,
-            trajet: "RER D puis RER D puis Bus 399"
+            trajet: "RER D puis Bus 399 (avec correspondance)"
           },
           {
             nom: "Lycée Parc de Vilgénis",
@@ -484,7 +492,7 @@ const DOMAINS = {
             transport: "RER D puis Bus",
             distanceKm: 30,
             dureeMin: 115,
-            trajet: "RER D puis RER D puis Bus 9105 puis Bus 4609"
+            trajet: "RER D puis Bus 9105 puis Bus 4609 (avec correspondance)"
           },
           {
             nom: "Lycée Geoffroy Saint-Hilaire",
@@ -492,7 +500,7 @@ const DOMAINS = {
             transport: "RER D puis RER C",
             distanceKm: 38,
             dureeMin: 110,
-            trajet: "RER D puis RER D puis RER C"
+            trajet: "RER D puis RER C (avec correspondance)"
           },
           {
             nom: "Lycée Nikola Tesla",
@@ -531,7 +539,7 @@ const DOMAINS = {
             transport: "RER D jusqu'à Mennecy puis Bus",
             distanceKm: 20,
             dureeMin: 59,
-            trajet: "Bus 4243 puis RER D puis Bus 4306 puis Bus 4306"
+            trajet: "Bus 4243 puis RER D puis Bus 4306"
           }
         ]
       },
@@ -585,7 +593,7 @@ const DOMAINS = {
             transport: "RER D jusqu'à Mennecy puis Bus",
             distanceKm: 20,
             dureeMin: 59,
-            trajet: "Bus 4243 puis RER D puis Bus 4306 puis Bus 4306"
+            trajet: "Bus 4243 puis RER D puis Bus 4306"
           }
         ]
       }
@@ -640,7 +648,7 @@ const DOMAINS = {
             transport: "RER D jusqu'à Mennecy puis Bus",
             distanceKm: 20,
             dureeMin: 59,
-            trajet: "Bus 4243 puis RER D puis Bus 4306 puis Bus 4306"
+            trajet: "Bus 4243 puis RER D puis Bus 4306"
           }
         ],
         horsFamille: true
@@ -664,7 +672,7 @@ const DOMAINS = {
             transport: "RER D jusqu'à Mennecy puis Bus",
             distanceKm: 20,
             dureeMin: 59,
-            trajet: "Bus 4243 puis RER D puis Bus 4306 puis Bus 4306"
+            trajet: "Bus 4243 puis RER D puis Bus 4306"
           }
         ]
       }
@@ -729,7 +737,7 @@ const DOMAINS = {
             transport: "RER D",
             distanceKm: 14,
             dureeMin: 79,
-            trajet: "RER D puis RER D"
+            trajet: "RER D (avec correspondance)"
           },
           {
             nom: "Lycée Léonard de Vinci",
@@ -761,7 +769,7 @@ const DOMAINS = {
             transport: "RER D puis Bus",
             distanceKm: 26,
             dureeMin: 110,
-            trajet: "RER D puis RER D puis RER D puis RER B"
+            trajet: "RER D puis RER B (avec correspondance)"
           },
           {
             nom: "Lycée Nelson Mandela",
@@ -769,7 +777,7 @@ const DOMAINS = {
             transport: "RER D puis RER C",
             distanceKm: 39,
             dureeMin: 120,
-            trajet: "RER D puis RER D puis RER C"
+            trajet: "RER D puis RER C (avec correspondance)"
           }
         ],
         horsFamille: true
@@ -801,7 +809,7 @@ const DOMAINS = {
             transport: "RER D puis Bus",
             distanceKm: 26,
             dureeMin: 110,
-            trajet: "RER D puis RER D puis RER D puis RER B"
+            trajet: "RER D puis RER B (avec correspondance)"
           },
           {
             nom: "Lycée Nelson Mandela",
@@ -809,7 +817,7 @@ const DOMAINS = {
             transport: "RER D puis RER C",
             distanceKm: 39,
             dureeMin: 120,
-            trajet: "RER D puis RER D puis RER C"
+            trajet: "RER D puis RER C (avec correspondance)"
           }
         ],
         horsFamille: true
@@ -920,7 +928,7 @@ const DOMAINS = {
             transport: "RER D puis RER C",
             distanceKm: 39,
             dureeMin: 120,
-            trajet: "RER D puis RER D puis RER C"
+            trajet: "RER D puis RER C (avec correspondance)"
           }
         ]
       }
@@ -1107,7 +1115,7 @@ const DOMAINS = {
             transport: "RER D",
             distanceKm: 14,
             dureeMin: 79,
-            trajet: "RER D puis RER D"
+            trajet: "RER D (avec correspondance)"
           },
           {
             nom: "Lycée Léonard de Vinci",
@@ -1155,7 +1163,7 @@ const DOMAINS = {
             transport: "RER D puis Bus",
             distanceKm: 30,
             dureeMin: 115,
-            trajet: "RER D puis RER D puis Bus 9105 puis Bus 4609"
+            trajet: "RER D puis Bus 9105 puis Bus 4609 (avec correspondance)"
           },
           {
             nom: "Lycée Nikola Tesla",
@@ -1210,7 +1218,7 @@ const DOMAINS = {
             transport: "RER D puis Bus",
             distanceKm: 30,
             dureeMin: 115,
-            trajet: "RER D puis RER D puis Bus 9105 puis Bus 4609"
+            trajet: "RER D puis Bus 9105 puis Bus 4609 (avec correspondance)"
           },
           {
             nom: "Lycée Nikola Tesla",
@@ -1249,7 +1257,7 @@ const DOMAINS = {
             transport: "RER D puis Tram 12",
             distanceKm: 26,
             dureeMin: 110,
-            trajet: "RER D puis RER D puis Bus 399 puis Bus 319"
+            trajet: "RER D puis Bus 399 puis Bus 319 (avec correspondance)"
           }
         ]
       },
@@ -1318,7 +1326,7 @@ const DOMAINS = {
             transport: "RER B puis Bus",
             distanceKm: 30,
             dureeMin: 108,
-            trajet: "RER D puis RER D puis Bus 9105"
+            trajet: "RER D puis Bus 9105 (avec correspondance)"
           }
         ],
         horsFamille: true
@@ -1374,7 +1382,7 @@ const DOMAINS = {
             transport: "RER D",
             distanceKm: 14,
             dureeMin: 79,
-            trajet: "RER D puis RER D"
+            trajet: "RER D (avec correspondance)"
           },
           {
             nom: "EREA Jean Isoard",
@@ -1398,7 +1406,7 @@ const DOMAINS = {
             transport: "RER D puis Bus",
             distanceKm: 30,
             dureeMin: 115,
-            trajet: "RER D puis RER D puis Bus 9105 puis Bus 4609"
+            trajet: "RER D puis Bus 9105 puis Bus 4609 (avec correspondance)"
           },
           {
             nom: "Lycée Nelson Mandela",
@@ -1406,7 +1414,7 @@ const DOMAINS = {
             transport: "RER D puis RER C",
             distanceKm: 39,
             dureeMin: 120,
-            trajet: "RER D puis RER D puis RER C"
+            trajet: "RER D puis RER C (avec correspondance)"
           }
         ]
       },
@@ -1483,7 +1491,7 @@ const DOMAINS = {
             transport: "RER D puis Tram 12",
             distanceKm: 26,
             dureeMin: 110,
-            trajet: "RER D puis RER D puis Bus 399 puis Bus 319"
+            trajet: "RER D puis Bus 399 puis Bus 319 (avec correspondance)"
           }
         ]
       },
@@ -1575,7 +1583,7 @@ const DOMAINS = {
             transport: "RER D puis Tram 12",
             distanceKm: 26,
             dureeMin: 110,
-            trajet: "RER D puis RER D puis Bus 399 puis Bus 319"
+            trajet: "RER D puis Bus 399 puis Bus 319 (avec correspondance)"
           }
         ]
       },
@@ -1729,7 +1737,7 @@ const DOMAINS = {
             transport: "RER D puis Tram 12",
             distanceKm: 26,
             dureeMin: 110,
-            trajet: "RER D puis RER D puis Bus 399 puis Bus 319"
+            trajet: "RER D puis Bus 399 puis Bus 319 (avec correspondance)"
           }
         ]
       },
@@ -1752,7 +1760,7 @@ const DOMAINS = {
             transport: "RER D puis Tram 12",
             distanceKm: 26,
             dureeMin: 110,
-            trajet: "RER D puis RER D puis Bus 399 puis Bus 319"
+            trajet: "RER D puis Bus 399 puis Bus 319 (avec correspondance)"
           }
         ]
       },
@@ -1870,7 +1878,7 @@ const DOMAINS = {
             transport: "RER D puis Tram 12",
             distanceKm: 26,
             dureeMin: 110,
-            trajet: "RER D puis RER D puis Bus 399 puis Bus 319"
+            trajet: "RER D puis Bus 399 puis Bus 319 (avec correspondance)"
           }
         ]
       },
@@ -1901,7 +1909,7 @@ const DOMAINS = {
             transport: "RER D puis Tram 12",
             distanceKm: 26,
             dureeMin: 110,
-            trajet: "RER D puis RER D puis Bus 399 puis Bus 319"
+            trajet: "RER D puis Bus 399 puis Bus 319 (avec correspondance)"
           }
         ]
       },
@@ -1981,7 +1989,7 @@ const DOMAINS = {
             transport: "RER D puis Tram 12",
             distanceKm: 26,
             dureeMin: 110,
-            trajet: "RER D puis RER D puis Bus 399 puis Bus 319"
+            trajet: "RER D puis Bus 399 puis Bus 319 (avec correspondance)"
           }
         ]
       },
@@ -2027,7 +2035,7 @@ const DOMAINS = {
             transport: "RER D puis Tram 12",
             distanceKm: 26,
             dureeMin: 110,
-            trajet: "RER D puis RER D puis Bus 399 puis Bus 319"
+            trajet: "RER D puis Bus 399 puis Bus 319 (avec correspondance)"
           }
         ]
       },
@@ -2081,7 +2089,7 @@ const DOMAINS = {
             transport: "RER D puis Tram 12",
             distanceKm: 26,
             dureeMin: 110,
-            trajet: "RER D puis RER D puis Bus 399 puis Bus 319"
+            trajet: "RER D puis Bus 399 puis Bus 319 (avec correspondance)"
           }
         ]
       }
@@ -2142,7 +2150,7 @@ const DOMAINS = {
             transport: "RER D",
             distanceKm: 14,
             dureeMin: 79,
-            trajet: "RER D puis RER D"
+            trajet: "RER D (avec correspondance)"
           },
           {
             nom: "Lycée Parc de Vilgénis",
@@ -2340,7 +2348,7 @@ const DOMAINS = {
             transport: "RER D puis Bus",
             distanceKm: 30,
             dureeMin: 115,
-            trajet: "RER D puis RER D puis Bus 9105 puis Bus 4609"
+            trajet: "RER D puis Bus 9105 puis Bus 4609 (avec correspondance)"
           },
           {
             nom: "Lycée Nikola Tesla",
@@ -2371,7 +2379,7 @@ const DOMAINS = {
             transport: "RER D puis Bus",
             distanceKm: 30,
             dureeMin: 115,
-            trajet: "RER D puis RER D puis Bus 9105 puis Bus 4609"
+            trajet: "RER D puis Bus 9105 puis Bus 4609 (avec correspondance)"
           }
         ]
       }
@@ -2426,7 +2434,7 @@ const DOMAINS = {
             transport: "RER D",
             distanceKm: 14,
             dureeMin: 79,
-            trajet: "RER D puis RER D"
+            trajet: "RER D (avec correspondance)"
           },
           {
             nom: "Lycée Gaspard Monge",
@@ -2442,7 +2450,7 @@ const DOMAINS = {
             transport: "RER D jusqu'à Mennecy puis Bus",
             distanceKm: 20,
             dureeMin: 59,
-            trajet: "Bus 4243 puis RER D puis Bus 4306 puis Bus 4306"
+            trajet: "Bus 4243 puis RER D puis Bus 4306"
           }
         ]
       },
@@ -2542,7 +2550,7 @@ const DOMAINS = {
             transport: "RER D jusqu'à Mennecy puis Bus",
             distanceKm: 20,
             dureeMin: 59,
-            trajet: "Bus 4243 puis RER D puis Bus 4306 puis Bus 4306"
+            trajet: "Bus 4243 puis RER D puis Bus 4306"
           }
         ],
         horsFamille: true
@@ -2566,7 +2574,7 @@ const DOMAINS = {
             transport: "RER D",
             distanceKm: 14,
             dureeMin: 79,
-            trajet: "RER D puis RER D"
+            trajet: "RER D (avec correspondance)"
           },
           {
             nom: "Lycée Gaspard Monge",
@@ -2582,7 +2590,7 @@ const DOMAINS = {
             transport: "RER D jusqu'à Mennecy puis Bus",
             distanceKm: 20,
             dureeMin: 59,
-            trajet: "Bus 4243 puis RER D puis Bus 4306 puis Bus 4306"
+            trajet: "Bus 4243 puis RER D puis Bus 4306"
           }
         ]
       },
@@ -2613,7 +2621,7 @@ const DOMAINS = {
             transport: "RER D jusqu'à Mennecy puis Bus",
             distanceKm: 20,
             dureeMin: 59,
-            trajet: "Bus 4243 puis RER D puis Bus 4306 puis Bus 4306"
+            trajet: "Bus 4243 puis RER D puis Bus 4306"
           }
         ]
       },
@@ -2687,7 +2695,7 @@ const DOMAINS = {
             transport: "RER D jusqu'à Mennecy puis Bus",
             distanceKm: 20,
             dureeMin: 59,
-            trajet: "Bus 4243 puis RER D puis Bus 4306 puis Bus 4306"
+            trajet: "Bus 4243 puis RER D puis Bus 4306"
           }
         ]
       },
@@ -2710,7 +2718,7 @@ const DOMAINS = {
             transport: "RER D jusqu'à Mennecy puis Bus",
             distanceKm: 20,
             dureeMin: 59,
-            trajet: "Bus 4243 puis RER D puis Bus 4306 puis Bus 4306"
+            trajet: "Bus 4243 puis RER D puis Bus 4306"
           }
         ]
       },
@@ -2733,7 +2741,7 @@ const DOMAINS = {
             transport: "RER D jusqu'à Mennecy puis Bus",
             distanceKm: 20,
             dureeMin: 59,
-            trajet: "Bus 4243 puis RER D puis Bus 4306 puis Bus 4306"
+            trajet: "Bus 4243 puis RER D puis Bus 4306"
           }
         ]
       },
@@ -2756,7 +2764,7 @@ const DOMAINS = {
             transport: "RER D jusqu'à Mennecy puis Bus",
             distanceKm: 20,
             dureeMin: 59,
-            trajet: "Bus 4243 puis RER D puis Bus 4306 puis Bus 4306"
+            trajet: "Bus 4243 puis RER D puis Bus 4306"
           }
         ]
       }
@@ -2917,7 +2925,7 @@ const DOMAINS = {
             transport: "RER D puis Bus",
             distanceKm: 30,
             dureeMin: 115,
-            trajet: "RER D puis RER D puis Bus 9105 puis Bus 4609"
+            trajet: "RER D puis Bus 9105 puis Bus 4609 (avec correspondance)"
           },
           {
             nom: "Lycée Nelson Mandela",
@@ -2925,7 +2933,7 @@ const DOMAINS = {
             transport: "RER D puis RER C",
             distanceKm: 39,
             dureeMin: 120,
-            trajet: "RER D puis RER D puis RER C"
+            trajet: "RER D puis RER C (avec correspondance)"
           }
         ]
       }
@@ -3153,7 +3161,7 @@ const DOMAINS = {
             transport: "RER D puis Tram 12",
             distanceKm: 26,
             dureeMin: 110,
-            trajet: "RER D puis RER D puis Bus 399 puis Bus 319"
+            trajet: "RER D puis Bus 399 puis Bus 319 (avec correspondance)"
           }
         ],
         horsFamille: true
@@ -3207,7 +3215,7 @@ const DOMAINS = {
             transport: "RER D puis Tram 12",
             distanceKm: 26,
             dureeMin: 110,
-            trajet: "RER D puis RER D puis Bus 399 puis Bus 319"
+            trajet: "RER D puis Bus 399 puis Bus 319 (avec correspondance)"
           }
         ],
         horsFamille: true
@@ -3254,7 +3262,7 @@ const DOMAINS = {
             transport: "RER D puis Tram 12",
             distanceKm: 26,
             dureeMin: 110,
-            trajet: "RER D puis RER D puis Bus 399 puis Bus 319"
+            trajet: "RER D puis Bus 399 puis Bus 319 (avec correspondance)"
           }
         ]
       },
@@ -3521,6 +3529,30 @@ function getDistanceFromCorbeil(etablissement) {
   const fullKey = normalizeDistanceKey(`${etablissement.nom}|${etablissement.ville}`);
   return NORMALIZED_DISTANCES_CORBEIL[fullKey] ?? 999;
 }
+/* Nettoie un libellé de trajet avant affichage.
+ *
+ * Le calculateur d'itinéraires produit parfois des segments successifs
+ * identiques : « RER D puis RER D », voire « Bus 4306 puis Bus 4306 ». Pour un
+ * élève, cette répétition ressemble à un bug. On fusionne donc les doublons
+ * successifs. Quand ce sont des RER (branches différentes d'une même ligne), la
+ * répétition signalait une correspondance réelle : on la conserve sous forme
+ * lisible « (avec correspondance) » plutôt que de la laisser deviner. Pour un
+ * bus répété (artefact du calcul), on fusionne sans rien ajouter. */
+function nettoyerTrajet(trajet) {
+  if (!trajet) return trajet;
+  const segments = trajet.split(" puis ").map(function (s) { return s.trim(); }).filter(Boolean);
+  const out = [];
+  let correspondance = false;
+  segments.forEach(function (seg) {
+    if (out.length && out[out.length - 1] === seg) {
+      if (/^RER/.test(seg)) correspondance = true;   // même ligne RER = changement de branche
+      return;                                        // on ne répète pas le segment
+    }
+    out.push(seg);
+  });
+  return out.join(" puis ") + (correspondance ? " (avec correspondance)" : "");
+}
+
 function sortEtablissementsByDistance(domains) {
   Object.values(domains).forEach(domain => {
     domain.formations.forEach(formation => {
@@ -3529,7 +3561,7 @@ function sortEtablissementsByDistance(domains) {
         const d = getDureeFromCorbeil(e);
         if (d) { 
           e.dureeMin = d.dureeMin; 
-          e.trajet = d.trajet; 
+          e.trajet = nettoyerTrajet(d.trajet); 
         }
       });
       formation.etablissements.sort((a, b) => {

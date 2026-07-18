@@ -747,10 +747,20 @@ function afficherResultatQuiz() {
   }
 
   state = 'quiz_resultat';
+  // Le nombre de pistes n'est pas toujours trois : on en montre parfois quatre
+  // quand deux se retrouvent à égalité stricte à la frontière du top 3 (les
+  // départager serait arbitraire), et moins si l'élève n'a ouvert que peu de
+  // secteurs. Le message s'adapte donc au nombre réel.
+  const n = top.length;
+  const combien = n === 1 ? "le secteur" :
+                  n === 2 ? "les deux secteurs" :
+                  n === 3 ? "les trois secteurs" :
+                            "les " + n + " secteurs";
+  const pluriel = n === 1 ? "celui-ci" : "celui que tu veux";
   addBotMessage(
-    "Voilà, c'est fini ! D'après tes réponses, voici les trois secteurs " +
-    "qui te correspondent le mieux. Rien n'est figé : clique sur celui que tu veux " +
-    "découvrir, tu pourras revenir voir les autres ensuite.",
+    "Voilà, c'est fini ! D'après tes réponses, voici " + combien + " " +
+    "qui te correspondent le mieux. Rien n'est figé : clique sur " + pluriel + " " +
+    "pour le découvrir" + (n > 1 ? ", tu pourras revenir voir les autres ensuite." : "."),
     top.map(function (o) {
       const pct = Math.round(o.affinite * 100);
       return {

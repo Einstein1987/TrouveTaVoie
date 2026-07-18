@@ -230,10 +230,11 @@ function calculerResultatQuiz(reponses) {
   // le désigner l'a effectivement désigné ? »
   const maxima = maximaParDomaine();
 
-  return Object.keys(scores)
+  const classe = Object.keys(scores)
     .map(function (k) {
       return {
         domainKey: k,
+        label: DOMAINS[k].label,
         score: scores[k],
         affinite: maxima[k] ? scores[k] / maxima[k] : 0   // entre 0 et 1
       };
@@ -241,9 +242,27 @@ function calculerResultatQuiz(reponses) {
     .filter(function (o) { return o.score > 0; })
     .sort(function (a, b) {
       if (b.affinite !== a.affinite) return b.affinite - a.affinite;
-      return b.score - a.score;                            // départage
-    })
-    .slice(0, 3);
+      if (b.score !== a.score) return b.score - a.score;
+      // Dernier départage : ordre ALPHABÉTIQUE du libellé. Ce n'est pas
+      // « meilleur », mais c'est NEUTRE et stable — il ne dépend plus de l'ordre
+      // de déclaration des secteurs dans DOMAINS (qui, lui, était arbitraire et
+      // invisible : deux pistes à égalité parfaite étaient départagées par un
+      // détail du code, toujours en faveur de la même). L'audit avait relevé que
+      // 5,46 % des parcours tombaient dans ce cas.
+      return a.label.localeCompare(b.label, "fr");
+    });
+
+  // Combien de pistes montrer ? Trois en principe. MAIS si la 4e est à égalité
+  // STRICTE (même affinité ET même score) avec la 3e, les départager serait
+  // mentir à l'élève : elles lui correspondent autant. On les montre alors
+  // toutes les deux (voire plus, si plusieurs sont ex æquo pile à la frontière).
+  let n = Math.min(3, classe.length);
+  while (n < classe.length &&
+         classe[n].affinite === classe[n - 1].affinite &&
+         classe[n].score === classe[n - 1].score) {
+    n++;   // la suivante est à égalité stricte avec la dernière retenue
+  }
+  return classe.slice(0, n);
 }
 
 // Score maximal qu'un domaine pourrait atteindre si l'élève choisissait, à

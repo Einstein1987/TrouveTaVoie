@@ -74,7 +74,11 @@
 
   function trajetLigne(lyc) {
     const t = lyc.trajet || {};
-    return t.ligne ? t.ligne : "";
+    // nettoyerTrajet est défini dans bdd_pro.js (chargé avant). On l'applique par
+    // sécurité : les 5 trajets 2GT sont propres aujourd'hui, mais si la table
+    // évolue, un doublon « RER D puis RER D » serait fusionné comme ailleurs.
+    if (!t.ligne) return "";
+    return (typeof nettoyerTrajet === "function") ? nettoyerTrajet(t.ligne) : t.ligne;
   }
 
   // Les vœux d'un lycée qui répondent à un critère donné.
@@ -140,6 +144,19 @@
       return chipHTML(c, selPlace.has(c.id), "place");
     }).join("");
 
+    // Rappel de la règle des deux enseignements optionnels. Discret par défaut,
+    // il se renforce dès que l'élève coche une 3e option — c'est là qu'il sert.
+    // (La règle était définie dans bdd_gt.js mais n'était affichée nulle part.)
+    const tropDOptions = selection.size > 2;
+    const rappelDeux =
+      '<p class="gt-rappel-deux' + (tropDOptions ? " is-warn" : "") + '">' +
+      (tropDOptions
+        ? "<strong>Tu as coché " + selection.size + " options.</strong> Or, en 2nde GT, tu " +
+          "pourras en suivre au maximum DEUX. Garde seulement celles qui comptent vraiment : " +
+          "en cocher plus n'augmente pas tes chances, ça disperse ta liste de vœux."
+        : REGLE_MAX_DEUX_OPTIONS) +
+      '</p>';
+
     root.innerHTML =
       '<h3>Qu\'est-ce qui t\'intéresse ?</h3>' +
 
@@ -147,6 +164,7 @@
       '<p class="gt-hint">Ces options font partie de ton vœu : « Doisneau Théâtre » n\'est pas le même ' +
       'vœu que « Doisneau ». Le contour en pointillés = un seul lycée la propose.</p>' +
       '<div class="gt-chips">' + chipsVoeu + '</div>' +
+      rappelDeux +
 
       '<h4 class="gt-groupe">② Atouts du lycée <span class="gt-groupe-sub">(ne se demandent PAS sur Affelnet)</span></h4>' +
       '<p class="gt-hint">Ces enseignements se choisissent une fois que tu es affecté, à l\'inscription. ' +
