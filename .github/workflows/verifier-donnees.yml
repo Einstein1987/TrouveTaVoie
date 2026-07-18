@@ -70,8 +70,11 @@ jobs:
           for f in scripts/*.js scripts/vendor/*.js; do
             node --check "$f" || exit 1
           done
-          # Les outils sont des modules ES : --check les accepte via l'extension .mjs
-          for f in tools/*.mjs; do
+          # La config ESLint vit désormais à la racine (découverte auto par ESLint).
+          node --check eslint.config.mjs || exit 1
+          # Les outils sont des modules ES : --check les accepte via l'extension .mjs.
+          # `find` (au lieu de tools/*.mjs) descend aussi dans tools/donnees_transports/.
+          for f in $(find tools -name '*.mjs'); do
             node --check "$f" || exit 1
           done
           echo "Tous les scripts et outils compilent."
