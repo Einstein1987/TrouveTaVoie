@@ -32,6 +32,7 @@ export default [
           "MOTS_STRUCTURE": "writable",
           "MOTS_VIDES": "writable",
           "NORMALIZED_DISTANCES_CORBEIL": "writable",
+          "nettoyerTrajet": "readonly",
           "NORMALIZED_DUREES_CORBEIL": "writable",
           "NO_WORDS": "writable",
           "QUIZ_PRO": "writable",

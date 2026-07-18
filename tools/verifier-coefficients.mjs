@@ -285,6 +285,60 @@ console.log("\n\u2500\u2500 RATTACHEMENT AUX FAMILLES (DGESCO) \u2500\u2500");
   console.log("  " + Object.keys(DOMAINS).length + " secteur(s) v\u00e9rifi\u00e9(s)");
 }
 
+/* ==========================================================================
+ * LES COMMENTAIRES QUI CITENT DES COEFFICIENTS DOIVENT DIRE VRAI
+ *
+ * L'en-tête de bdd_pro.js donne des exemples chiffrés (HPS, MP3D, OPTL,
+ * Marchandisage, Jardinier). Un ancien commentaire prétendait qu'ils
+ * partageaient tous [4,6,4,2,4,3,7] — c'était faux. Le code était juste, mais un
+ * commentaire faux trompe le prochain mainteneur. On vérifie donc que chaque
+ * couple « nom [coeffs] » cité dans l'en-tête correspond bien au code.
+ * ======================================================================== */
+console.log("\n\u2500\u2500 COMMENTAIRES CHIFFR\u00c9S (bd_pro.js) \u2500\u2500");
+{
+  const source = readFileSync(join(RACINE, "scripts", "bdd_pro.js"), "utf8");
+  const entete = source.slice(0, source.indexOf("const DOMAINS"));
+
+  // Retrouver une formation par un fragment de son nom.
+  const parFragment = (frag) => {
+    for (const cle in DOMAINS) {
+      for (const f of DOMAINS[cle].formations) {
+        if (f.nom.toLowerCase().includes(frag.toLowerCase())) return f;
+      }
+    }
+    return null;
+  };
+
+  // Les exemples cités dans l'en-tête : étiquette → fragment de nom réel.
+  const EXEMPLES = {
+    "HPS":           "Hygiène, Propreté",
+    "MP3D":          "Modélisation et prototypage 3D",
+    "OPTL":          "Optique Photonique",
+    "Marchandisage": "marchandisage",
+    "Jardinier":     "Jardinier paysagiste",
+  };
+
+  let verifs = 0;
+  for (const [label, frag] of Object.entries(EXEMPLES)) {
+    // Cherche « LABEL   [a,b,c,...] » dans l'en-tête.
+    const m = entete.match(new RegExp(label + "\\s*\\[([\\d,\\s]+)\\]"));
+    if (!m) continue;                       // ce label n'est pas cité avec des chiffres
+    verifs++;
+    const cite = m[1].split(",").map((x) => parseInt(x, 10));
+    const f = parFragment(frag);
+    if (!f) { KO("Commentaire : « " + label + " » ne correspond à aucune formation."); continue; }
+    if (!eq(cite, f.coeffs)) {
+      KO("Commentaire FAUX pour « " + label + " » : l'en-tête dit [" + cite.join(",") +
+         "], le code porte [" + f.coeffs.join(",") + "].");
+    }
+  }
+  if (verifs === 0) {
+    KO("Aucun exemple chiffré trouvé dans l'en-tête — le commentaire a-t-il changé de forme ?");
+  } else {
+    OK(verifs + " exemple(s) chiffré(s) de l'en-tête vérifié(s) contre le code");
+  }
+}
+
 console.log("\n" + "\u2500".repeat(52));
 if (echecs) {
   console.error("\u2717 " + echecs + " coefficient(s) faux. Un \u00e9l\u00e8ve calculerait mal ses chances.");

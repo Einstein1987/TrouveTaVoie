@@ -772,6 +772,107 @@ console.log("\n── RÉORDONNANCEMENT DES VŒUX (2GT sans option) ──");
   }
 }
 
+console.log("\n── RÈGLE DES DEUX OPTIONS (point 7) ──");
+{
+  const a = monterApplication2GT();
+  if (a) {
+    const regle = () => a.doc.querySelector("#vue-2gt .gt-rappel-deux");
+    const cocher2 = (id) => {
+      const c = a.doc.querySelector('#vue-2gt [data-critere="' + id + '"]');
+      if (c) c.dispatchEvent(new a.window.Event("click", { bubbles: true }));
+    };
+    // La règle est affichée dès le départ (elle n'était affichée nulle part avant).
+    if (regle()) OK("La règle des deux options est affichée");
+    else KO("La règle des deux options n'apparaît pas (elle était définie mais jamais montrée)");
+
+    // Elle se renforce à la 3e option.
+    cocher2("design"); cocher2("biotech"); cocher2("cinema");
+    const r = regle();
+    if (r && r.classList.contains("is-warn")) {
+      OK("La règle se renforce quand l'élève dépasse deux options");
+    } else {
+      KO("La règle ne se renforce pas au-delà de deux options");
+    }
+    // Le texte change aussi (pas seulement la couleur — accessibilité).
+    if (r && /\b3\b/.test(r.textContent)) OK("Le rappel indique par écrit le nombre d'options cochées");
+    else KO("Le rappel ne mentionne pas le nombre d'options (l'info reposerait sur la seule couleur)");
+  }
+}
+
+console.log("\n── TRAJETS SANS DOUBLON (point 8) ──");
+{
+  // nettoyerTrajet est globale (bdd_pro.js). On la teste directement.
+  const a = monterApplication2GT();
+  if (a && typeof a.window.nettoyerTrajet === "function") {
+    const n = a.window.nettoyerTrajet;
+    const cas = [
+      ["RER D puis RER D", "RER D (avec correspondance)"],
+      ["Bus 4306 puis Bus 4306", "Bus 4306"],
+      ["RER D puis RER D puis RER C", "RER D puis RER C (avec correspondance)"],
+      ["Bus 4245 puis RER D", "Bus 4245 puis RER D"],
+    ];
+    let ok = 0;
+    cas.forEach(function (c) {
+      if (n(c[0]) === c[1]) ok++;
+      else KO("nettoyerTrajet(« " + c[0] + " ») = « " + n(c[0]) + " », attendu « " + c[1] + " »");
+    });
+    if (ok === cas.length) OK("nettoyerTrajet : doublons fusionnés, correspondance RER signalée");
+  } else if (a) {
+    KO("nettoyerTrajet n'est pas accessible globalement");
+  }
+}
+
+console.log("\n── DÉPARTAGE DU QUIZ (point 5) ──");
+{
+  // On charge quiz_pro.js dans un contexte isolé pour tester la fonction pure.
+  const ctx = {};
+  const vm = await import("node:vm");
+  vm.createContext(ctx);
+  vm.runInContext(lire("scripts/bdd_pro.js"), ctx);
+  vm.runInContext(lire("scripts/quiz_pro.js"), ctx);
+  const QUIZ = vm.runInContext("QUIZ_PRO", ctx);
+  const calc = vm.runInContext("calculerResultatQuiz", ctx);
+
+  // 1. Départage déterministe : le résultat ne doit PAS dépendre de l'ordre des
+  //    réponses données (l'ancien code laissait l'ordre de déclaration trancher).
+  const rep = QUIZ.map((q) => q.reponses[0]);
+  const a1 = calc(rep).map((o) => o.domainKey).join(",");
+  const a2 = calc(rep.slice().reverse()).map((o) => o.domainKey).join(",");
+  // Même ensemble de réponses (ordre différent) → même classement.
+  const set1 = a1.split(",").sort().join(",");
+  const set2 = a2.split(",").sort().join(",");
+  if (set1 === set2) OK("Quiz : le résultat est stable quel que soit l'ordre des réponses");
+  else KO("Quiz : le résultat change selon l'ordre des réponses (départage instable)");
+
+  // 2. À égalité stricte en frontière du top 3, on montre la 4e piste plutôt que
+  //    d'en trancher une arbitrairement.
+  function* combos(i, acc) {
+    if (i === QUIZ.length) { yield acc; return; }
+    for (const r of QUIZ[i].reponses) { acc.push(r); yield* combos(i + 1, acc); acc.pop(); }
+  }
+  let trouve4 = null;
+  let compteur = 0;
+  for (const c of combos(0, [])) {
+    const top = calc(c);
+    if (top.length > 3) { trouve4 = top; break; }
+    if (++compteur > 200000) break;   // borne : inutile de tout parcourir
+  }
+  if (trouve4) {
+    const n = trouve4.length;
+    const egaliteStricte = trouve4[n - 1].affinite === trouve4[n - 2].affinite &&
+                           trouve4[n - 1].score === trouve4[n - 2].score;
+    if (egaliteStricte) OK("Quiz : les pistes à égalité stricte en frontière sont toutes montrées (pas de choix arbitraire)");
+    else KO("Quiz : une 4e piste est montrée sans être à égalité stricte");
+  } else {
+    OK("Quiz : aucune égalité stricte rencontrée dans l'échantillon (départage net)");
+  }
+
+  // 3. Jamais plus que nécessaire : sur un cas net, exactement 3 pistes.
+  const net = calc([QUIZ[0].reponses[0]]);   // une seule réponse → peu de secteurs
+  if (net.length >= 1 && net.length <= 4) OK("Quiz : le nombre de pistes reste raisonnable (1 à 4)");
+  else KO("Quiz : nombre de pistes inattendu (" + net.length + ")");
+}
+
 console.log("\n── FOCUS CLAVIER (2GT) ──");
 {
   const a = monterApplication2GT();

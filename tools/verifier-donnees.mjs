@@ -263,6 +263,44 @@ OK(CRITERES_SUR_PLACE.length + " atouts et " + Object.keys(SERIES_TECHNO_2GT).le
   }
 }
 
+/* ======================================================================
+ * TRAJETS : aucun segment successif dupliqué après nettoyage
+ *
+ * Le calculateur d'itinéraires produisait « RER D puis RER D » (correspondance
+ * sur la même ligne) et parfois « Bus X puis Bus X » (artefact). nettoyerTrajet
+ * fusionne ces doublons — en signalant « (avec correspondance) » pour les RER.
+ * On vérifie ici que, une fois nettoyé, PLUS AUCUN trajet ne contient de segment
+ * successif identique. Si un nouveau trajet à triple doublon échappait à la
+ * fonction, on le saurait.
+ * ====================================================================== */
+{
+  // On récupère nettoyerTrajet depuis bdd_pro.js (fonction globale).
+  const { nettoyerTrajet } = evaluer(lire("bdd_pro.js"), ["nettoyerTrajet"]);
+  let doublons = 0;
+  const dejaVus = new Set();
+  for (const k of clesDom) {
+    for (const f of DOMAINS[k].formations) {
+      for (const e of f.etablissements) {
+        if (!e.trajet) continue;
+        const propre = nettoyerTrajet(e.trajet);
+        const base = propre.replace(" (avec correspondance)", "");
+        const segs = base.split(" puis ").map((s) => s.trim());
+        for (let i = 1; i < segs.length; i++) {
+          if (segs[i] === segs[i - 1]) {
+            if (!dejaVus.has(e.trajet)) {
+              KO(`Trajet à segment dupliqué même après nettoyage : « ${e.trajet} » (${e.nom})`);
+              dejaVus.add(e.trajet);
+            }
+            doublons++;
+            break;
+          }
+        }
+      }
+    }
+  }
+  if (!doublons) OK("Trajets : aucun segment successif dupliqué après nettoyage");
+}
+
 /* ====================================================================== */
 console.log("\n" + "─".repeat(52));
 if (erreurs) {
