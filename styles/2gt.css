@@ -1,6 +1,10 @@
 /* =============================================================================
  * 2gt.css — Comparateur 2nde Générale et Technologique
- * Réutilise les variables de styles/style.css (--brass, --teal, --paper…)
+ * Réutilise les variables de styles/styles.css (--brass, --teal, --paper…)
+ *
+ * MAINTENANCE : les classes `is-*`, `gt-reordonnable`, `gt-sep-li` et les
+ * attributs `data-*` sont posés ou lus par app_gt.js. Les renommer uniquement
+ * après une recherche globale, puis exécuter les tests de parcours et contrastes.
  * ========================================================================== */
 
 .gt-wrap { display: flex; flex-direction: column; gap: 22px; }

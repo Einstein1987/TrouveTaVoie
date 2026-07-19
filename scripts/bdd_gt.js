@@ -54,6 +54,17 @@ const REGLE_VOEUX_EXCLUSIFS =
 
 /* -----------------------------------------------------------------------------
  * LES 5 LYCÉES
+ *
+ * SCHÉMA DE MAINTENANCE D'UN LYCÉE :
+ *   id / uai / nom / ville  -> identité stable de l'établissement ;
+ *   trajet                  -> { km, minutes, ligne } depuis La Nacelle ;
+ *   voeux[]                 -> codes Affelnet, catégorie et ids de critères ;
+ *   horsAffelnet[]          -> candidatures qui suivent une autre procédure ;
+ *   optionsSurPlace[]       -> choix possibles uniquement après affectation ;
+ *   seriesTechno[]          -> information pour le choix effectué en fin de 2nde.
+ *
+ * Les identifiants placés dans `voeux[].criteres` doivent exister dans
+ * CRITERES_2GT plus bas. tools/verifier-donnees.mjs contrôle les deux sens.
  * -------------------------------------------------------------------------- */
 const LYCEES_2GT = {
 

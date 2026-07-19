@@ -29,10 +29,13 @@ import { dirname, join } from "node:path";
 import { JSDOM } from "jsdom";
 
 const RACINE = join(dirname(fileURLToPath(import.meta.url)), "..");
+// Lit un fichier du dépôt indépendamment du dossier courant.
 const lire = (f) => readFileSync(join(RACINE, f), "utf8");
 
 let echecs = 0;
+// Affiche une assertion PDF réussie.
 const OK = (m) => console.log("  \u2713 " + m);
+// Enregistre et affiche une assertion PDF échouée.
 const KO = (m) => { console.error("  \u2717 " + m); echecs++; };
 
 /* -------------------------------------------------------------------------- */
@@ -65,7 +68,9 @@ const BLOCS_INNERTEXT = new Set([
   "DIV", "P", "LI", "UL", "OL", "TR", "TABLE", "THEAD", "TBODY", "SECTION",
   "ARTICLE", "HEADER", "FOOTER", "H1", "H2", "H3", "H4", "H5", "H6",
 ]);
+// Reproduit les retours à la ligne de innerText absents de jsdom.
 function emulerInnerText(el) {
+  // Parcourt récursivement un sous-arbre et encadre les éléments de bloc de sauts de ligne.
   function parcourir(node) {
     let out = "";
     node.childNodes.forEach(function (n) {
@@ -134,9 +139,12 @@ window.jspdf.jsPDF.API.save = function (nom) {
   return this;
 };
 
+// Simule un clic utilisateur dans le DOM de test.
 const clic = (b) => b.dispatchEvent(new window.Event("click", { bubbles: true }));
+// Retourne tous les boutons de conversation encore utilisables.
 const boutons = () => Array.from(doc.querySelectorAll("#chatlog .optbtn:not([disabled])"));
 
+// Lance le vrai générateur et retourne les octets interceptés par le faux save().
 function genererPDF(quoi) {
   octets = null; nomFichier = null; erreurs.length = 0;
   try { window.telechargerPDF(); }
@@ -146,6 +154,7 @@ function genererPDF(quoi) {
   return Buffer.from(octets);
 }
 
+// Compte les objets Page d'un PDF sans dépendre d'un lecteur externe.
 const pagesDe = (buf) => (buf.toString("latin1").match(/\/Type\s*\/Page[^s]/g) || []).length;
 
 /* ==========================================================================

@@ -36,6 +36,7 @@
   /* Utilitaires                                                            */
   /* ---------------------------------------------------------------------- */
 
+  // Transmet une statistique au module principal lorsqu'il est disponible.
   function ping(type, valeur) {
     if (typeof pingStats === "function") pingStats(type, valeur);
   }
@@ -57,6 +58,7 @@
     ping("2gt_voeux", detail);
   }
 
+  // Formate la durée et la distance d'un trajet pour l'interface et le PDF.
   function trajetTexte(lyc) {
     const t = lyc.trajet || {};
     if (t.minutes == null) return "trajet à renseigner";
@@ -67,11 +69,13 @@
   const SEUIL_TRAJET_LONG = 45;   // minutes : au-delà, on alerte l'élève
   const LIMITE_VOEUX      = 10;   // Affelnet : 10 vœux maximum
 
+  // Indique si le trajet dépasse le seuil à partir duquel l'interface avertit l'élève.
   function trajetLong(lyc) {
     const t = lyc.trajet || {};
     return t.minutes != null && t.minutes > SEUIL_TRAJET_LONG;
   }
 
+  // Retourne le descriptif de transport nettoyé, sans segment successif dupliqué.
   function trajetLigne(lyc) {
     const t = lyc.trajet || {};
     // nettoyerTrajet est défini dans bdd_pro.js (chargé avant). On l'applique par
@@ -95,7 +99,8 @@
     });
   }
 
-  function scoreLycee(lycId) {          // sert à construire les vœux
+  // Compte les véritables options Affelnet cochées que propose un lycée.
+  function scoreLycee(lycId) {
     let n = 0;
     CRITERES_2GT.forEach(function (c) {
       if (selection.has(c.id) && c.lycees.includes(lycId)) n++;
@@ -103,7 +108,8 @@
     return n;
   }
 
-  function atoutsDe(lycId) {            // atouts cochés que CE lycée propose
+  // Liste les atouts « sur place » cochés que propose un lycée donné.
+  function atoutsDe(lycId) {
     return CRITERES_SUR_PLACE.filter(function (c) {
       return selPlace.has(c.id) && c.lycees.includes(lycId);
     });
@@ -127,6 +133,7 @@
   /* 1. Les cases à cocher                                                  */
   /* ---------------------------------------------------------------------- */
 
+  // Construit le bouton HTML d'une option ou d'un atout dans le panneau de critères.
   function chipHTML(c, on, groupe) {
     const solo = (c.exclusif || (c.lycees && c.lycees.length === 1)) ? " is-solo" : "";
     return '<button type="button" class="gt-chip' + solo + '" data-' + groupe + '="' + c.id + '"' +
@@ -136,6 +143,7 @@
            '</button>';
   }
 
+  // Reconstruit le panneau des critères et le rappel de la limite des options.
   function renderCriteres(root) {
     const chipsVoeu = CRITERES_2GT.map(function (c) {
       return chipHTML(c, selection.has(c.id), "critere");
@@ -184,6 +192,7 @@
   /* 2. Le tableau comparatif                                               */
   /* ---------------------------------------------------------------------- */
 
+  // Reconstruit le tableau comparatif des cinq lycées à partir des sélections.
   function renderTable(root) {
 
     let html = '<table class="gt-table"><thead><tr><th>Ce que je cherche</th>';
@@ -262,8 +271,11 @@
   /* 3. La carte « Mes vœux 2GT »                                            */
   /* ---------------------------------------------------------------------- */
 
+  // Indique si un objet de classement correspond à un vœu de section européenne.
   function estEuroVoeu(x)  { return x.voeu.categorie === "section_euro"; }
+  // Indique si un critère représente une section européenne.
   function estEuroCrit(c)  { return c.id.indexOf("euro_") === 0; }
+  // Compare deux lycées ou objets-vœux selon leur temps de trajet connu.
   function parTrajet(a, b) {
     const ta = a.lyc ? a.lyc.trajet : a.trajet, tb = b.lyc ? b.lyc.trajet : b.trajet;
     const ma = ta && ta.minutes, mb = tb && tb.minutes;
@@ -271,6 +283,7 @@
     return ma - mb;
   }
 
+  // Produit la liste ordonnée des vœux, filets et vœux de couverture à afficher.
   function construireVoeux() {
     // CAS SANS AUCUNE VRAIE OPTION (rien coché, ou seulement des atouts sur
     // place comme le japonais). Les 5 lycées forment alors UNE SEULE liste de
@@ -324,12 +337,14 @@
     const vus = {};                        // codes déjà placés, par lycée
     retenus.forEach(function (o) { vus[o.id] = new Set(); });
 
+    // Ajoute un vœu une seule fois pour un lycée, en mémorisant son code.
     function pousser(liste, o, v) {
       if (vus[o.id].has(v.code)) return;
       vus[o.id].add(v.code);
       liste.push({ lyc: o.lyc, voeu: v, filet: false, atouts: o.atouts });
     }
-    function optionsDe(o) {                // euro d'abord, dans l'ordre des critères
+    // Construit les vœux à option d'un lycée, sections européennes en premier.
+    function optionsDe(o) {
       const out = [];
       const crits = CRITERES_2GT.filter(function (c) { return selection.has(c.id); });
       crits.filter(estEuroCrit).concat(crits.filter(function (c) { return !estEuroCrit(c); }))
@@ -367,6 +382,7 @@
       // Option par option : euro d'abord, puis les autres options par ordre alphabétique.
       // Dans une même option, les lycées sont triés par temps de trajet.
       const crits = CRITERES_2GT.filter(function (c) { return selection.has(c.id); });
+      // Compare les critères selon leur libellé français pour stabiliser l'ordre.
       const parLabel = function (a, b) { return a.label.localeCompare(b.label, "fr"); };
       const ordonnes = crits.filter(estEuroCrit).sort(parLabel)
                     .concat(crits.filter(function (c) { return !estEuroCrit(c); }).sort(parLabel));
@@ -437,6 +453,7 @@
     return liste;
   }
 
+  // Reconstruit la carte finale des vœux et ses explications selon la stratégie choisie.
   function renderCarte(root) {
     const date = new Date().toLocaleDateString("fr-FR");
 
@@ -702,6 +719,7 @@
   // Les attributs qui identifient de façon stable un élément focusable du 2GT.
   const ATTRIBUTS_FOCUS = ["data-critere", "data-place", "data-strat", "data-action", "data-move"];
 
+  // Transforme l'élément actuellement focalisé en sélecteur stable pour le retrouver.
   function repererFocus() {
     const actif = document.activeElement;
     if (!actif || actif === document.body) return null;
@@ -712,6 +730,7 @@
     const move = actif.getAttribute("data-move");
     if (move !== null) {
       const lyc = actif.getAttribute("data-lyc");
+      // Échappe une valeur seulement si le navigateur fournit CSS.escape.
       const esc = (v) => (window.CSS && CSS.escape ? CSS.escape(v) : v);
       return 'button[data-move="' + esc(move) + '"][data-lyc="' + esc(lyc) + '"]';
     }
@@ -728,6 +747,7 @@
     return null;
   }
 
+  // Replace le focus après reconstruction, sans faire défiler la page.
   function reposerFocus(selecteur, root) {
     if (!selecteur || !root) return;
     let cible = null;
@@ -737,6 +757,7 @@
     cible.focus({ preventScroll: true });
   }
 
+  // Reconstruit les trois zones du comparateur tout en conservant le focus clavier.
   function refresh() {
     const racine = elCriteres && elCriteres.closest ? elCriteres.closest("#vue-2gt") : null;
     const selecteur = repererFocus();
@@ -746,6 +767,7 @@
     reposerFocus(selecteur, racine || document);
   }
 
+  // Coche ou décoche un atout disponible après affectation, sans créer de vœu.
   function togglePlace(id) {
     const c = CRITERES_SUR_PLACE.find(function (x) { return x.id === id; });
     if (!c) return;
@@ -756,6 +778,7 @@
     refresh();
   }
 
+  // Coche ou décoche une véritable option Affelnet et réinitialise l'ordre manuel.
   function toggle(id) {
     const c = CRITERES_2GT.find(function (x) { return x.id === id; });
     if (!c) return;
@@ -806,6 +829,7 @@
     refresh();
   }
 
+  // Initialise le comparateur 2GT, son HTML et tous ses gestionnaires d'événements.
   function init(rootId) {
     const root = document.getElementById(rootId || "vue-2gt");
     if (!root) return;
@@ -890,7 +914,7 @@
     refresh();
   }
 
-  // Données structurées pour la génération du PDF
+  // Exporte les vœux affichés sous une forme stable consommée par pdf.js.
   function getVoeux() {
     return construireVoeux().map(function (o) {
       return {

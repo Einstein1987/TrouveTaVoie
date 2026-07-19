@@ -14,6 +14,7 @@
 
 import { readFileSync } from "node:fs";
 
+// Lit un script applicatif relativement au dossier tools/, quel que soit le dossier courant.
 const lire = (f) => readFileSync(new URL("../scripts/" + f, import.meta.url), "utf8");
 
 // Les fichiers de l'application sont des scripts de navigateur (variables
@@ -25,14 +26,18 @@ const evaluer = (src, noms) => {
 
 let erreurs = 0;
 let alertes = 0;
+// Enregistre une erreur bloquante qui fera échouer le processus.
 const KO = (m) => { erreurs++; console.log("  ✗ " + m); };
+// Enregistre une alerte non bloquante qui demande une vérification humaine.
 const WARN = (m) => { alertes++; console.log("  ! " + m); };
 
 // Un « ✓ rassurant » juste après une croix rouge serait trompeur.
 // On mémorise le nombre d'erreurs au début d'un bloc, et OK() ne s'affiche que
 // si rien n'a échoué entre-temps.
 let jalon = 0;
+// Mémorise le compteur d'erreurs avant le début d'un groupe de contrôles.
 const debutBloc = () => { jalon = erreurs; };
+// Affiche le bilan d'un groupe sans masquer les erreurs survenues depuis son jalon.
 const OK = (m) => {
   if (erreurs > jalon) console.log("  ✗ " + m + " → CONTRÔLE ÉCHOUÉ, voir ci-dessus");
   else console.log("  ✓ " + m);

@@ -5,9 +5,9 @@
 // À lancer À LA MAIN, une fois par an (quand l'offre change) :
 //   PRIM_API_KEY=ta_cle  node calculer-durees.mjs
 //
-// Il produit "durees.generated.json" : un objet
+// Il produit "transports.generated.json" dans tools/ : un objet
 //   { "Nom|Ville": { "dureeMin": 71, "trajet": "RER D puis Bus 402" } }
-// à recopier dans bdd.js (table DUREES_TRANSPORT_CORBEIL).
+// à recopier dans scripts/bdd_pro.js (table DUREES_TRANSPORT_CORBEIL).
 //
 // Données © Île-de-France Mobilités (licence OdBL) — attribution obligatoire.
 // =============================================================================
@@ -82,12 +82,14 @@ const MODE_LABELS = {
 // Navitia attend les coordonnées au format "lon;lat" (⚠️ lon d'abord).
 const toNavitia = ([lat, lon]) => `${lon};${lat}`;
 
+// Appelle l'API Navitia PRIM avec la clé configurée et retourne sa réponse JSON.
 async function callNavitia(path) {
   const res = await fetch(`${BASE}${path}`, { headers: AUTH_HEADERS });
   if (!res.ok) throw new Error(`HTTP ${res.status} — ${await res.text()}`);
   return res.json();
 }
 
+// Résout un nom de lieu en coordonnées [latitude, longitude] via Navitia.
 async function geocode(query) {
   const data = await callNavitia(`/places?q=${encodeURIComponent(query)}&count=1`);
   const place = data.places?.[0];
@@ -97,9 +99,11 @@ async function geocode(query) {
   return [parseFloat(coord.lat), parseFloat(coord.lon)];
 }
 
+// Produit l'horodatage Navitia du prochain lundi à 8 h, base commune de comparaison.
 function prochainLundi8h() {
   const d = new Date();
   d.setDate(d.getDate() + ((8 - d.getDay()) % 7 || 7));
+  // Complète chaque composante de date sur deux chiffres.
   const p = (n) => String(n).padStart(2, "0");
   return `${d.getFullYear()}${p(d.getMonth() + 1)}${p(d.getDate())}T080000`;
 }
@@ -139,6 +143,7 @@ async function trajet(fromLatLon, toLatLon) {
   };
 }
 
+// Espace les requêtes successives envoyées à l'API PRIM.
 const pause = (ms) => new Promise((r) => setTimeout(r, ms));
 
 // --- Programme principal -----------------------------------------------------

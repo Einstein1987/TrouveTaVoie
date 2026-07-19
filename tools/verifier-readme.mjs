@@ -26,10 +26,13 @@ import { dirname, join } from "node:path";
 import { createContext, runInContext } from "node:vm";
 
 const RACINE = join(dirname(fileURLToPath(import.meta.url)), "..");
+// Lit un fichier du dépôt indépendamment du dossier depuis lequel l'outil est lancé.
 const lire = (f) => readFileSync(join(RACINE, f), "utf8");
 
 let echecs = 0;
+// Affiche un contrôle réussi.
 const OK = (m) => console.log("  \u2713 " + m);
+// Affiche un contrôle échoué et incrémente le code de sortie futur.
 const KO = (m) => { console.error("  \u2717 " + m); echecs++; };
 
 const readme = lire("README.md");

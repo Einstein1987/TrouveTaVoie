@@ -1,5 +1,11 @@
 /* ==========================================================================
-     FICHIER CSS - CHARTE GRAPHIQUE
+     FICHIER CSS - CHARTE GRAPHIQUE ET VOIE PROFESSIONNELLE
+
+     ORDRE DES ZONES : polices, palette et focus, structure générale, onglets,
+     chat, carte d'orientation, tableaux de coefficients, boutons et pied de page.
+     Le comparateur 2GT possède ses règles dans 2gt.css mais réutilise cette
+     palette. Toute nouvelle paire texte/fond doit aussi être ajoutée dans
+     tools/verifier-contrastes.mjs afin que la CI puisse contrôler son contraste.
 ========================================================================== */
 
 /* --- POLICES — hébergées avec l'application. --- */

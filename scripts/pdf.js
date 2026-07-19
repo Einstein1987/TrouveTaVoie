@@ -54,11 +54,13 @@
     return d.getFullYear() + "-" + mois + "-" + jour;
   }
 
+  // Ajoute une page si le prochain bloc ne tient pas et renvoie la nouvelle ordonnée.
   function saut(doc, y, besoin) {
     if (y + besoin > HAUT - M - 10) { doc.addPage(); return M + 5; }
     return y;
   }
 
+  // Dessine l'en-tête commun du PDF et renvoie la première position verticale utile.
   function bandeau(doc, titre) {
     doc.setFillColor.apply(doc, INK);
     doc.rect(0, 0, LARG, 26, "F");
@@ -72,6 +74,7 @@
     return 34;
   }
 
+  // Ajoute le nom de l'application et la pagination sur toutes les pages existantes.
   function piedDePage(doc) {
     const n = doc.internal.getNumberOfPages();
     for (let i = 1; i <= n; i++) {
@@ -83,6 +86,7 @@
     }
   }
 
+  // Place la note de sources finale sur la page courante ou sur une nouvelle page.
   function noteFinale(doc, y, texte) {
     y = saut(doc, y, 22) + 4;
     doc.setTextColor.apply(doc, MUTED);
@@ -91,6 +95,7 @@
     doc.text(doc.splitTextToSize(texte, UTILE), M, y);
   }
 
+  // Crée un document A4 jsPDF ou explique à l'utilisateur la solution de repli.
   function nouveauDoc() {
     if (!window.jspdf || !window.jspdf.jsPDF) {
       alert("La génération du PDF n'a pas pu se faire : la bibliothèque n'a pas été chargée.\n\n" +
@@ -103,6 +108,7 @@
   /* ========================================================================
    * 1. VOIE PROFESSIONNELLE — lu depuis la carte affichée
    * ===================================================================== */
+  // Génère la fiche PDF de la voie professionnelle depuis la carte affichée.
   function pdfPro() {
     const doc = nouveauDoc();
     if (!doc) return;
@@ -161,6 +167,7 @@
       }
     }
 
+    // Dessine une formation et prolonge proprement son cadre sur plusieurs pages.
     function rendreBloc(bloc) {
       const titre  = ((bloc.querySelector(".formation-title") || {}).textContent || "").trim();
       // L'avertissement « À vérifier » (coefficients non confirmés, ex. CAP
@@ -347,6 +354,7 @@
   /* ========================================================================
    * 2. VOIE GÉNÉRALE ET TECHNOLOGIQUE — lu depuis les données
    * ===================================================================== */
+  // Génère la liste PDF des vœux 2GT depuis l'API exposée par app_gt.js.
   function pdf2GT() {
     const doc = nouveauDoc();
     if (!doc) return;
@@ -490,6 +498,7 @@
   }
 
   /* ---- Aiguillage selon l'onglet actif ---- */
+  // Aiguille le téléchargement vers le PDF correspondant à l'onglet actif.
   function telechargerPDF() {
     const gt = document.getElementById("vue-2gt");
     if (gt && gt.classList.contains("is-active")) {

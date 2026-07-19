@@ -17,6 +17,24 @@
  *
  * Code source : https://github.com/Einstein1987/TrouveTaVoie
  */
+
+/* =============================================================================
+ * ARCHITECTURE DE MAINTENANCE
+ *
+ * Dépend de bdd_pro.js, dico_chatbot.js et quiz_pro.js, chargés avant ce
+ * fichier dans index.html. Le script est volontairement classique (pas un
+ * module) : ses fonctions sont aussi appelées par app_gt.js et par les tests.
+ *
+ * Le parcours est piloté par `state` : start, recherche, confirmation, quiz ou
+ * résultat du quiz. Toute nouvelle action de bouton passe par applyChoice(); toute
+ * saisie clavier passe par handleFreeText(). La carte ne doit être remplie qu'à
+ * partir d'un objet de sélection construit par les fonctions *Selection().
+ *
+ * SÉCURITÉ : le texte de l'élève est toujours affecté avec textContent. Ne jamais
+ * le concaténer dans innerHTML. Les seuls innerHTML de ce fichier sont des SVG
+ * constants ou servent à vider/reconstruire du contenu issu de la base locale.
+ * ========================================================================== */
+
 // L'ordre compte : les négations sont testées EN PREMIER.
 // « pas exactement » contient « exact » : sans cette précaution, la réponse
 // serait interprétée comme un oui. Même piège avec « pas vraiment » / « vraiment ».
@@ -131,15 +149,18 @@ function familleDe(formation){
   return (secteur && secteur.famille) || null;
 }
 
+// Construit une sélection contenant toutes les formations d'un secteur.
 function domainSelection(domainKey){
   const d = DOMAINS[domainKey];
   return { type: 'domaine', label: d.label, formations: avecSecteur(domainKey, d.formations), statKey: domainKey };
 }
 
+// Construit une sélection limitée à une formation précise.
 function formationSelection(domainKey, formation){
   return { type: 'formation', label: DOMAINS[domainKey].label, formations: avecSecteur(domainKey, [formation]), statKey: domainKey };
 }
 
+// Construit une sélection regroupant toutes les formations d'un établissement.
 function etablissementSelection(group){
   // Pour un lycée donné, on ne garde que CE lycée dans chaque bloc formation.
   const formations = group.items.map(item => ({
@@ -163,6 +184,7 @@ function contientExpression(phrase, expr){
   return new RegExp("(^|[^a-z0-9])" + e + "([^a-z0-9]|$)").test(phrase);
 }
 
+// Interprète une réponse libre comme oui, non ou indéterminée.
 function matchYesNo(text){
   const n = normalize(text);
   // 1) Les négations d'abord, sinon « pas exactement » passerait pour un oui.
@@ -179,6 +201,7 @@ const chatlog = document.getElementById('chatlog');
 const input = document.getElementById('userInput');
 const sendBtn = document.getElementById('sendBtn');
 
+// Lit un message du chatbot avec la synthèse vocale du navigateur.
 function speak(text){
   if(!('speechSynthesis' in window)) return;
   window.speechSynthesis.cancel();
@@ -228,6 +251,7 @@ function verrouillerToutesLesLignes(){
   });
 }
 
+// Ajoute une bulle du bot et, si besoin, sa ligne de boutons d'action.
 function addBotMessage(text, options, config){
   const row = document.createElement('div');
   row.className = 'msg-row';
@@ -308,6 +332,7 @@ function addUserMessage(text){
   chatlog.scrollTop = chatlog.scrollHeight;
 }
 
+// Retourne vrai si l'utilisateur a refusé les prochains envois statistiques.
 function statsRefusees() {
     // Refus « à partir de maintenant » : on lit la case au moment de l'envoi.
     // Le refus n'est PAS rétroactif (une statistique a pu partir avant que l'élève
@@ -317,6 +342,7 @@ function statsRefusees() {
     return !!(c && c.checked);
 }
 
+// Envoie un événement statistique minimal à Google Forms, sauf refus explicite.
 function pingStats(type, valeur) {
     if (statsRefusees()) return;
     const FORM_ID = "1FAIpQLSfG2xzc8VM2r52ae0MVS--AuzaHgFO6Mth6csdnuetRXi0cYw";
@@ -334,6 +360,7 @@ function pingStats(type, valeur) {
     .catch(err => console.error("Erreur stats :", err));
 }
 
+// Traduit le type d'une sélection en événement statistique, sans double comptage.
 function pingStatsForSelection(selection) {
     if (typeof pingStats !== "function" || !selection) return;
     if (selection.sansStat) return;   // piste de quiz déjà comptée : on n'envoie rien
@@ -347,6 +374,7 @@ function pingStatsForSelection(selection) {
         pingStats('domaine', selection.statKey || selection.label);
     }
 }
+// Remplit et affiche la carte d'orientation à partir d'une sélection validée.
 function fillCardCustom(selection) {
     if (!selection || !selection.formations || !selection.formations.length) return;
 
@@ -506,6 +534,7 @@ function sectionSimple(titreTexte, noteTexte, formations, variante) {
   return section;
 }
 
+// Construit le bloc DOM complet d'une formation, coefficients et lycées compris.
 function createFormationBlock(formation) {
     const block = document.createElement("div");
     block.className = "formation-block";
@@ -546,6 +575,7 @@ function createFormationBlock(formation) {
     return block;
 }
 
+// Construit le tableau accessible des sept coefficients Affelnet d'une formation.
 function createCoefficientsTable(coeffs) {
     const subjects = [
         "Français",
@@ -586,6 +616,7 @@ function createCoefficientsTable(coeffs) {
     return wrapper;
 }
 
+// Construit la fiche DOM d'un établissement avec sa localisation et son trajet.
 function createSchoolElement(etablissement) {
     const card = document.createElement("div");
     card.className = "estab";
@@ -637,6 +668,7 @@ function effacerCarte() {
   if (psyNote) psyNote.style.display = "none";
 }
 
+// Réinitialise la conversation et affiche le menu principal, avec conservation optionnelle de la carte.
 function startMenu(message, garderCarte){
   verrouillerToutesLesLignes();
   state = 'start';
@@ -678,6 +710,7 @@ function afficherFiche(selection){
   state = 'start';
 }
 
+// Demande confirmation lorsqu'une sélection a été déduite d'un texte libre.
 function askConfirm(selection){
   if(!selection || !selection.formations || !selection.formations.length){
     startMenu("Je n'ai rien trouvé pour cette piste. Reprenons : que veux-tu faire ?");
@@ -1039,6 +1072,7 @@ function proposerSecteurs(results, texteAffiche) {
   );
 }
 
+// Nettoie les mots de structure avant de lancer la recherche correspondant au mode actif.
 function processSearch(text, type) {
   // Règle 1 : on met de côté les mots de structure (« bac », « lycée »…).
   const nettoye = (typeof retirerMotsStructure === "function")
@@ -1057,6 +1091,7 @@ function processSearch(text, type) {
   processSearchNettoye(requete, type);
 }
 
+// Recherche une saisie déjà nettoyée parmi les secteurs, formations ou lycées.
 function processSearchNettoye(text, type) {
   if (type === 'domaine') {
     // Recherche par domaine : on affiche tout le domaine (comportement voulu).
@@ -1127,6 +1162,7 @@ function processSearchNettoye(text, type) {
   }
 }
 
+// Affiche le libellé du bouton choisi puis transmet son action au routeur central.
 function handleUserChoice(displayText, action, payload){
   addUserMessage(displayText);
   applyChoice(action, payload);
@@ -1174,6 +1210,7 @@ function applyChoice(action, payload){
   }
 }
 
+// Traite une saisie libre selon l'état courant de la conversation.
 function handleFreeText(text){
   addUserMessage(text);
 
@@ -1225,6 +1262,7 @@ function handleFreeText(text){
 // alors nourrir l'analyse par mot (distance de Levenshtein × chaque terme du
 // vocabulaire) et faire ramer un téléphone modeste. On coupe ici par sécurité.
 const LIMITE_SAISIE = 300;
+// Lit et borne la saisie à la longueur maximale acceptée par l'analyseur.
 function lireSaisie() {
   const brut = input.value.trim();
   return brut.length > LIMITE_SAISIE ? brut.slice(0, LIMITE_SAISIE) : brut;

@@ -58,8 +58,10 @@ const ETABLISSEMENTS = [
   "Lycée Nikola Tesla|Dourdan"
 ];
 
+// Attend entre deux appels pour ne pas surcharger les services publics de géocodage.
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
+// Géocode un établissement avec l'Annuaire de l'Éducation nationale.
 async function geocodeAnnuaire(nom, ville) {
   const q = `${nom} ${ville}`;
   const url = "https://data.education.gouv.fr/api/records/1.0/search/"
@@ -94,6 +96,7 @@ async function geocodeAnnuaire(nom, ville) {
   };
 }
 
+// Géocode un établissement avec la Base Adresse Nationale de secours.
 async function geocodeBAN(nom, ville) {
   const url = "https://api-adresse.data.gouv.fr/search/?limit=1&q="
             + encodeURIComponent(`${nom} ${ville}`);
@@ -121,6 +124,7 @@ async function geocodeBAN(nom, ville) {
   };
 }
 
+// Interroge d'abord l'Annuaire, puis bascule automatiquement sur la BAN.
 async function geocode(nom, ville) {
   try {
     const a = await geocodeAnnuaire(nom, ville);
@@ -135,8 +139,10 @@ async function geocode(nom, ville) {
   return geocodeBAN(nom, ville);
 }
 
+// Calcule la distance à vol d'oiseau entre deux coordonnées GPS, en kilomètres.
 function haversineKm(a, b) {
   const R = 6371;
+  // Convertit localement des degrés en radians pour la formule de Haversine.
   const toRad = d => d * Math.PI / 180;
 
   const dLat = toRad(b.lat - a.lat);
@@ -150,6 +156,7 @@ function haversineKm(a, b) {
   return 2 * R * Math.asin(Math.sqrt(s));
 }
 
+// Géocode tous les lycées, calcule les distances estimées et écrit le JSON généré.
 async function main() {
   console.log(`Départ : ${ORIGIN_NOM}, ${ORIGIN_VILLE}`);
 

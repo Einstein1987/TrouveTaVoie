@@ -12,6 +12,7 @@
     const vues    = Array.prototype.slice.call(document.querySelectorAll(".vue"));
     if (!onglets.length) return;
 
+    // Active un onglet et synchronise classes, attributs ARIA et panneau visible.
     function activer(cible) {
       onglets.forEach(function (t) {
         const on = t.dataset.vue === cible;
@@ -66,6 +67,7 @@
       logo.setAttribute("role", "button");
       logo.setAttribute("tabindex", "0");
       logo.setAttribute("title", "Revenir au début");
+      // Recharge la page pour remettre simultanément les deux parcours à zéro.
       const recommencer = function () { window.location.reload(); };
       logo.addEventListener("click", recommencer);
       logo.addEventListener("keydown", function (e) {

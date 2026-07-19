@@ -315,6 +315,7 @@ function retirerMotsStructure(texte) {
 // (nature et paysage). Le pluriel reste toléré.
 function echappe(s) { return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); }
 
+// Teste un terme simple ou composé dans une phrase normalisée, sans faux positif lexical.
 function contientTerme(phrase, terme) {
   if (terme.indexOf(" ") !== -1) return phrase.indexOf(terme) !== -1;  // expression
   return new RegExp("\\b" + echappe(terme) + "(s|es|x)?\\b").test(phrase);
@@ -327,6 +328,7 @@ function contientTerme(phrase, terme) {
 // app_pro.js, qui borne la saisie en amont).
 const MAX_MOTS_ANALYSES = 30;
 
+// Extrait les mots significatifs d'une saisie et borne le coût de leur analyse.
 function motsDe(texte) {
   return normalize(texte)
     .replace(/[^a-z0-9\s]/g, " ")
@@ -350,6 +352,7 @@ function scoreDomaines(texte) {
     res[dom] = { domainKey: dom, score: 0, indices: [] };
   });
 
+  // Ajoute des points à un domaine et conserve une seule fois l'indice reconnu.
   function ajouter(dom, points, indice) {
     if (!res[dom]) return;
     res[dom].score += points;

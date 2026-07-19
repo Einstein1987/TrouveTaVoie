@@ -24,13 +24,16 @@ document.addEventListener("DOMContentLoaded", function () {
   // script, même si l'élève clique plusieurs fois de suite.
   var chargement = null;
 
+  // Charge jsPDF une seule fois à la demande et permet un nouvel essai après échec.
   function chargerJsPDF() {
     if (window.jspdf && window.jspdf.jsPDF) return Promise.resolve();
     if (chargement) return chargement;
     chargement = new Promise(function (resoudre, rejeter) {
       var script = document.createElement("script");
       script.src = "scripts/vendor/jspdf.umd.min.js";
+      // Résout la promesse dès que le navigateur a exposé la bibliothèque.
       script.onload = function () { resoudre(); };
+      // Réinitialise l'état en cas d'échec afin qu'un clic ultérieur puisse réessayer.
       script.onerror = function () {
         // On oublie la promesse échouée : un clic suivant pourra réessayer
         // (utile si le premier échec venait d'une coupure réseau passagère).
@@ -53,6 +56,7 @@ document.addEventListener("DOMContentLoaded", function () {
     btn.disabled = true;
     btn.textContent = "Préparation du PDF…";
 
+    // Rétablit le bouton de téléchargement après succès ou échec.
     var reactiver = function () {
       btn.disabled = false;
       btn.textContent = libelle;

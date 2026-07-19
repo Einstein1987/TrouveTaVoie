@@ -22,8 +22,9 @@
  * QUIZ D'ORIENTATION — VOIE PROFESSIONNELLE
  *
  * Objectif : aider l'élève qui ne sait pas par où commencer à identifier
- * TROIS secteurs à explorer. Jamais une seule : un questionnaire
- * d'intérêts ouvre des pistes, il ne désigne pas un destin.
+ * plusieurs secteurs à explorer. Trois sont retenus en principe, davantage en
+ * cas d'égalité stricte. Jamais une seule piste imposée : un questionnaire
+ * d'intérêts ouvre des possibilités, il ne désigne pas un destin.
  *
  * Méthode : les questions portent sur les GOÛTS et les GESTES, jamais sur les
  * métiers (un élève de 3e ne sait pas ce que fait un « technicien de
@@ -205,9 +206,10 @@ const QUIZ_PRO = [
 
 /* -----------------------------------------------------------------------------
  * Calcul du résultat.
- * Renvoie les TROIS domaines les mieux placés, avec leur score.
- * Trois et pas un : un questionnaire d'intérêts ouvre des pistes, il ne
- * désigne pas un métier. C'est l'élève qui choisit ensuite.
+ * Renvoie les TROIS domaines les mieux placés, plus tous les domaines en
+ * égalité stricte avec le troisième. Plusieurs pistes plutôt qu'une seule :
+ * un questionnaire d'intérêts ouvre des possibilités, il ne désigne pas un
+ * métier. C'est l'élève qui choisit ensuite.
  * -------------------------------------------------------------------------- */
 function calculerResultatQuiz(reponses) {
   const scores = {};
@@ -268,6 +270,7 @@ function calculerResultatQuiz(reponses) {
 // Score maximal qu'un domaine pourrait atteindre si l'élève choisissait, à
 // chaque question, la réponse qui lui rapporte le plus. Calculé une fois.
 let _maxima = null;
+// Calcule puis mémorise le score maximal atteignable pour chacun des 18 secteurs.
 function maximaParDomaine() {
   if (_maxima) return _maxima;
   _maxima = {};

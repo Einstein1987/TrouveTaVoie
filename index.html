@@ -1,4 +1,16 @@
 <!DOCTYPE html>
+<!--
+  Point d'entrée unique de TrouveTaVoie.
+
+  MAINTENANCE : les identifiants du chat (#chatlog, #userInput, #cardFilled…) sont
+  utilisés directement par app_pro.js et pdf.js. Ceux du 2GT (#vue-2gt,
+  #tab-2gt) sont utilisés par app_gt.js et tabs.js. Si l'un d'eux change ici,
+  rechercher son nom dans scripts/ et tools/ avant de le renommer.
+
+  L'ordre des scripts en fin de fichier est intentionnel : les bases et fonctions
+  métier doivent exister avant les contrôleurs qui les consomment. Tous portent
+  `defer`, donc ils s'exécutent dans cet ordre après l'analyse du document.
+-->
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
@@ -17,6 +29,7 @@
 </div>
 <p class="subtitle">Discute avec l'assistant, fais le quiz, ou recherche directement une formation ou un lycée.</p>
 
+  <!-- Navigation ARIA entre les deux applications qui partagent cette page. -->
   <nav class="tabs" role="tablist" aria-label="Choix de la voie">
     <button type="button" class="tab is-active" data-vue="vue-pro" role="tab" id="tab-pro"
             aria-selected="true" aria-controls="vue-pro" tabindex="0">
@@ -28,6 +41,7 @@
     </button>
   </nav>
 
+  <!-- Voie professionnelle : chat à gauche, fiche dynamique exportable à droite. -->
   <section id="vue-pro" class="vue is-active" role="tabpanel" aria-labelledby="tab-pro" tabindex="0">
   <div class="grid">
     <!-- Zone de Chat -->
@@ -73,8 +87,10 @@
   </p>
   </section>
 
+  <!-- Conteneur volontairement vide : app_gt.js construit tout le comparateur. -->
   <section id="vue-2gt" class="vue" role="tabpanel" aria-labelledby="tab-2gt" tabindex="0" hidden></section>
 </div>
+<!-- Informations légales et contrôle d'opposition aux prochains envois statistiques. -->
 <div class="app-footer-minimal">
   <details class="app-confidentialite">
     <summary>Confidentialité &amp; statistiques</summary>
