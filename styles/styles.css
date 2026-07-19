@@ -112,7 +112,6 @@ body{
      margin:0;
      background:var(--paper);
      color:var(--ink);
-     /*font-family:'IBM Plex Sans',sans-serif;*/
      font-family: 'Outfit', sans-serif; 
      display: flex; 
      flex-direction: column; 
@@ -495,9 +494,12 @@ h1 {
      margin: 30px 0 10px;
 }
 .app-footer-minimal {
+     display: flex;
+     justify-content: center;
+     align-items: center; /* Aligne verticalement au centre */
+     gap: 25px;
      border-top: 1px solid var(--line);
      padding: 15px 20px;
-     text-align: center;
      font-size: 13px;
      color: var(--muted-strong);
      background: var(--paper2);
@@ -508,6 +510,11 @@ h1 {
 }
 .app-footer-minimal a:hover {
      text-decoration: underline;
+}
+.footer-logo {
+     width: auto; 
+     height: 50px;
+     object-fit: contain;
 }
 /* Notice « Confidentialité & statistiques ». Couleurs héritées du footer
    (aucune nouvelle paire texte/fond : le validateur de contrastes n'a rien de
