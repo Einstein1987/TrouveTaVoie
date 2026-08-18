@@ -197,6 +197,10 @@ console.log("\n── LES TROIS PISTES RESTENT CONSULTABLES ──");
   const p = pistes();
   if (!p.length) { KO("Aucune piste à consulter"); }
   else {
+    const chat = app.doc.getElementById("chatlog");
+    const nbMessagesAvant = chat.querySelectorAll(".msg-row").length;
+    chat.scrollTop = 123;   // position arbitraire : consulter une piste ne doit pas la modifier
+
     cliquer(app, p[0]);
     const encore = pistes().filter((x) => !x.disabled);
     if (encore.length >= 3) OK("Après avoir cliqué sur une piste, les trois restent cliquables");
@@ -210,6 +214,25 @@ console.log("\n── LES TROIS PISTES RESTENT CONSULTABLES ──");
     // Et une deuxième piste doit rester consultable
     const p2 = pistes().filter((x) => !x.disabled);
     if (p2.length > 1 && cliquer(app, p2[1])) OK("Une deuxième piste peut être consultée");
+
+    // Consulter les pistes agit comme des onglets : aucune nouvelle bulle ne
+    // doit s'ajouter et la position de lecture du fil doit rester inchangée.
+    const nbMessagesApres = chat.querySelectorAll(".msg-row").length;
+    if (nbMessagesApres === nbMessagesAvant) {
+      OK("Consulter plusieurs pistes n'ajoute aucun tour de conversation");
+    } else {
+      KO("RÉGRESSION : consulter les pistes ajoute " +
+         (nbMessagesApres - nbMessagesAvant) + " message(s) dans le fil");
+    }
+    if (chat.scrollTop === 123) OK("Consulter plusieurs pistes conserve la position du fil");
+    else KO("RÉGRESSION : le fil descend pendant la consultation des pistes");
+
+    const choisie = p2[1];
+    if (choisie && choisie.classList.contains("optbtn-choisi")) {
+      OK("La piste consultée reste mise en évidence");
+    } else {
+      KO("La piste consultée n'est pas mise en évidence");
+    }
   }
 }
 

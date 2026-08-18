@@ -840,6 +840,7 @@ function afficherResultatQuiz() {
     });
   }
   lignes.push({ label: "Aucune ne me parle, refaire le quiz", action: "start_quiz", payload: null });
+  lignes.push({ label: "Retour au menu", action: "menu", payload: null });
 
   addBotMessage(
     "Voilà, c'est fini ! D'après tes réponses, voici " + combien + " " +
@@ -886,15 +887,9 @@ function choisirPisteQuiz(domainKey) {
   // première, sinon le taux de complétion du quiz dépasserait 100 %.
   selection.sansStat = quizStatEnvoyee;
   quizStatEnvoyee    = true;
-  addBotMessage(
-    "Très bien ! Voici ce que propose ce secteur, dans le panneau de droite. " +
-    "Tu peux la télécharger en PDF — ou remonter un peu dans la discussion pour cliquer " +
-    "sur l'une des autres pistes, elles restent disponibles.",
-    [
-      { label: "Refaire le quiz",  action: "start_quiz", payload: null },
-      { label: "Retour au menu",   action: "menu",       payload: null }
-    ]
-  );
+  // La liste des pistes reste en place : ce clic ne crée ni bulle utilisateur,
+  // ni réponse supplémentaire du bot. Le bouton actif fournit le retour visuel
+  // et la fiche de droite, annoncée par aria-live, est la seule zone actualisée.
   fillCardCustom(selection);      // envoie aussi la statistique quiz_resultat
   state = 'quiz_resultat';
 }
@@ -1164,7 +1159,11 @@ function processSearchNettoye(text, type) {
 
 // Affiche le libellé du bouton choisi puis transmet son action au routeur central.
 function handleUserChoice(displayText, action, payload){
-  addUserMessage(displayText);
+  // Consulter une piste du quiz agit comme un onglet : le bouton choisi est déjà
+  // mis en évidence et la fiche de droite est mise à jour. Ajouter une bulle
+  // utilisateur transformerait cette simple consultation en nouveau tour de
+  // conversation et ferait descendre inutilement le fil.
+  if (action !== "quiz_choix") addUserMessage(displayText);
   applyChoice(action, payload);
 }
 
