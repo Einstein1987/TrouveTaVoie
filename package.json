@@ -19,7 +19,7 @@
     "test": "npm run lint && npm run verifier:donnees && npm run verifier:coefficients && npm run verifier:contrastes && npm run test:pdf && npm run test:parcours && npm run verifier:readme"
   },
   "devDependencies": {
-    "eslint": "10.7.0",
+    "eslint": "10.8.1",
     "jsdom": "30.0.1"
   }
 }
